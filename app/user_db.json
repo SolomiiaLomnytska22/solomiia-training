@@ -1,0 +1,103 @@
+{
+    "users":[
+    {
+        "id": 1,
+        "name": "John",
+        "surname": "Doe",
+        "dateOfBirth": "1990-05-15",
+        "position": "Developer",
+        "online": true,
+        "country": "USA"
+      },
+      {
+        "id": 2,
+        "name": "Jane",
+        "surname": "Smith",
+        "dateOfBirth": "1985-08-22",
+        "position": "Project Manager",
+        "online": false,
+        "country": "Canada"
+      },
+      {
+        "id": 3,
+        "name": "Alex",
+        "surname": "Johnson",
+        "dateOfBirth": "1995-12-10",
+        "position": "Trainee",
+        "online": true,
+        "country": "UK"
+      },
+      {
+        "id": 4,
+        "name": "Eva",
+        "surname": "Brown",
+        "dateOfBirth": "1992-03-25",
+        "position": "Junior Developer",
+        "online": true,
+        "country": "Germany"
+      },
+      {
+        "id": 5,
+        "name": "Michael",
+        "surname": "Miller",
+        "dateOfBirth": "1988-07-08",
+        "position": "Senior Developer",
+        "online": false,
+        "country": "Australia"
+      },
+      {
+        "id": 6,
+        "name": "Sophia",
+        "surname": "Williams",
+        "dateOfBirth": "1993-09-20",
+        "position": "UX Designer",
+        "online": true,
+        "country": "France"
+      },
+      {
+        "id": 7,
+        "name": "Daniel",
+        "surname": "Johnson",
+        "dateOfBirth": "1986-01-12",
+        "position": "Tech Lead",
+        "online": false,
+        "country": "Sweden"
+      },
+      {
+        "id": 8,
+        "name": "Olivia",
+        "surname": "White",
+        "dateOfBirth": "1991-04-30",
+        "position": "QA Tester",
+        "online": true,
+        "country": "Spain"
+      },
+      {
+        "id": 9,
+        "name": "William",
+        "surname": "Davis",
+        "dateOfBirth": "1984-11-05",
+        "position": "Product Manager",
+        "online": false,
+        "country": "Brazil"
+      },
+      {
+        "id": 10,
+        "name": "Emma",
+        "surname": "Anderson",
+        "dateOfBirth": "1994-06-18",
+        "position": "Intern",
+        "online": true,
+        "country": "Netherlands"
+      },
+      {
+        "id": 11,
+        "name": "Liam",
+        "surname": "Jones",
+        "dateOfBirth": "1987-02-28",
+        "position": "DevOps Engineer",
+        "online": true,
+        "country": "India"
+      }
+    ]
+}
