@@ -2,7 +2,7 @@
     <div class="table-page">
       <div class="heading">
         <h1>User Table</h1>
-        <button class="edit-button" @click="editUser(user.id)">Add</button>
+        <AddUser @user-added="handleUserAdded" />
       </div>
       <div class="table-container">
         <table class="user-table">
@@ -46,7 +46,11 @@
   
   <script>
   import axios from "axios";
+  import AddUser from "./AddUser.vue";
   export default {
+    components:{
+      AddUser
+    },
     data() {
       return {
         users: [],
@@ -67,6 +71,9 @@
         });
    
       },
+      handleUserAdded(){
+        this.getData();
+      }
     },
   };
   </script>
