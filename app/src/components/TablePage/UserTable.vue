@@ -51,3 +51,77 @@
     },
   };
   </script>
+
+  <style scoped>
+
+   @media only screen and (max-width: 768px) {
+    .table-container {
+      overflow-x: auto;
+    }
+  }
+
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .user-table th,
+  .user-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .user-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .user-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .online-dot,
+  .offline-dot {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+  
+  .online-dot {
+    background-color: #4caf50;
+    animation: pulse 1s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  .offline-dot {
+    background-color: #ccc; 
+  }
+
+  .edit-button {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    max-height: 32px;
+  }
+  
+  .edit-button:hover {
+    background-color: #327136;
+  }
+  </style>

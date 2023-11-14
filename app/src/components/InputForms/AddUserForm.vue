@@ -1,59 +1,57 @@
 <template>
-          <div>
-            <form @submit.prevent="addUser">
-              <TextInput
-                label="Name"
-                id="name"
-                :value="newUser.name"
-                @update:value="updateUser('name', $event)"
-                :isRequired="true"
-                pattern="[A-Za-z '\-]+"
-                title="Only letters, spaces, hyphens, apostrophes, and backticks are allowed"
-              />
-              <TextInput
-                label="Surname"
-                id="surname"
-                :value="newUser.surname"
-                @update:value="updateUser('surname', $event)"
-                :isRequired="true"
-                pattern="[A-Za-z '\-]+"
-                title="Only letters, spaces, hyphens, apostrophes, and backticks are allowed"
-              />
+  <form @submit.prevent="addUser">
+    <TextInput
+      label="Name"
+      id="name"
+      :value="newUser.name"
+      @update:value="updateUser('name', $event)"
+      :isRequired="true"
+      pattern="[A-Za-z '\-]+"
+      title="Only letters, spaces, hyphens, apostrophes, and backticks are allowed"
+    />
+    <TextInput
+      label="Surname"
+      id="surname"
+      :value="newUser.surname"
+      @update:value="updateUser('surname', $event)"
+      :isRequired="true"
+      pattern="[A-Za-z '\-]+"
+      title="Only letters, spaces, hyphens, apostrophes, and backticks are allowed"
+    />
 
-              <DateInputField
-                label="Date of Birth"
-                id="dateOfBirth"
-                :value="newUser.dateOfBirth"
-                @update:value="updateUser('dateOfBirth', $event)"
-                :isRequired="true"
-              />
+    <DateInputField
+      label="Date of Birth"
+      id="dateOfBirth"
+      :value="newUser.dateOfBirth"
+      @update:value="updateUser('dateOfBirth', $event)"
+      :isRequired="true"
+    />
 
-              <TextInput
-                label="Position"
-                id="position"
-                :value="newUser.position"
-                @update:value="updateUser('position', $event)"
-                :isRequired="true"
-                pattern="[A-Za-z '\-]+"
-                title="Only letters, spaces, hyphens, apostrophes, and backticks are allowed"
-              />
+    <TextInput
+      label="Position"
+      id="position"
+      :value="newUser.position"
+      @update:value="updateUser('position', $event)"
+      :isRequired="true"
+      pattern="[A-Za-z '\-]+"
+      title="Only letters, spaces, hyphens, apostrophes, and backticks are allowed"
+    />
 
-              <TextInput
-                label="Country"
-                id="country"
-                :value="newUser.country"
-                @update:value="updateUser('country', $event)"
-                :isRequired="true"
-                pattern="[A-Za-z '\-]+"
-                title="Only letters, spaces, hyphens, apostrophes, and backticks are allowed"
-              />
+    <TextInput
+      label="Country"
+      id="country"
+      :value="newUser.country"
+      @update:value="updateUser('country', $event)"
+      :isRequired="true"
+      pattern="[A-Za-z '\-]+"
+      title="Only letters, spaces, hyphens, apostrophes, and backticks are allowed"
+    />
 
-              <div class ="modal-buttons">
-                <CustomButton class="close-btn" type="button" caption="Close" @click="closeClick"/>
-                <CustomButton type="submit" caption="Add"/>
-              </div>
-            </form>
-          </div>
+    <div class ="modal-buttons">
+      <CustomButton class="close-btn" type="button" caption="Close" @click="closeClick"/>
+      <CustomButton type="submit" caption="Add"/>
+    </div>
+  </form>
 </template>
 
 <script>
@@ -109,3 +107,30 @@ export default {
 }
 </script>
 
+<style scoped>
+form {
+    display: flex;
+    flex-direction: column;
+  }
+  .close-btn{
+    background: #fff;
+    border-color: #4caf50;
+    color:#4caf50;
+    border-width: 2px;
+    border-style: solid;
+  }
+  .close-btn:hover{
+    background: #c9c9c9;
+    border-color:#327136;
+    color:#327136;
+    border-width: 2px;
+    border-style: solid;
+  }
+  .modal-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  </style>

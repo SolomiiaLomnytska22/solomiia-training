@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="input-field">
       <label :for="id">{{ label }}:</label>
       <input type="text" :id="id" :value="value" @input="updateValue" :required="isRequired" :pattern="pattern" :title="title" />
     </div>
@@ -22,4 +22,36 @@
     },
   };
   </script>
+
+<style scoped>
+input {
+    margin-bottom: 15px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    
+  }
+
+  label {
+    margin-bottom: 5px;
+  }
+
+  input {
+    margin-bottom: 15px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    
+  }
+
+  label {
+    margin-bottom: 5px;
+  }
+
+  .input-field{
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+  }
+</style>
   
