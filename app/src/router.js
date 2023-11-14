@@ -1,14 +1,14 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import TablePage from "./components/TablePage"
+import MainPage from "./components/MainPage"
 
 Vue.use(VueRouter);
 
 const routes = [
-  { path: '/', component: TablePage },
-  { path: '/about', component: TablePage },
-  { path: '/contact', component: TablePage },
+  { path: '/', component: MainPage },
+  { path: '/about', component: MainPage },
+  { path: '/contact', component: MainPage },
 ];
 
 const router = new VueRouter({
