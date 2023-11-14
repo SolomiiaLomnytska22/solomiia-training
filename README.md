@@ -9,6 +9,7 @@ cd app
 ## Project setup
 ```
 npm install
+npm run start-json-server
 ```
 
 ### Compiles and hot-reloads for development
