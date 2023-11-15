@@ -25,7 +25,7 @@
               <span :class="{ 'online-dot': user.online, 'offline-dot': !user.online }"></span>
             </td>
             <td style="text-align: center;">
-              <button class="edit-button" @click="editUser(user.id)">Edit</button>
+              <CustomButton class="edit-button" type="button" caption="Edit" @click="editUser(user.id);"/>
             </td>
           </tr>
         </tbody>
