@@ -16,7 +16,6 @@
 
   <style scoped>
   .menu-content {
-    position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

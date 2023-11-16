@@ -1,14 +1,14 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import MainPage from "./components/MainPage"
+import Users from '@/Users.vue'
 
 Vue.use(VueRouter);
 
 const routes = [
-  { path: '/', component: MainPage },
-  { path: '/about', component: MainPage },
-  { path: '/contact', component: MainPage },
+  { path: '/', component: Users },
+  { path: '/about', component: Users },
+  { path: '/contact', component: Users },
 ];
 
 const router = new VueRouter({

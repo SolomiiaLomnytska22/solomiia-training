@@ -10,7 +10,7 @@
             <th>Position</th>
             <th>Country</th>
             <th>Online</th>
-            <th></th>
+            
           </tr>
         </thead>
         <tbody v-if="users.length > 0">
@@ -24,14 +24,12 @@
             <td style="text-align: center;">
               <span :class="{ 'online-dot': user.online, 'offline-dot': !user.online }"></span>
             </td>
-            <td style="text-align: center;">
-              <CustomButton class="edit-button" type="button" caption="Edit" @click="editUser(user.id);"/>
-            </td>
+            
           </tr>
         </tbody>
         <tbody v-else>
           <tr>
-            <td colspan="8">Fetching your data!</td>
+            <td :colspan="getColspan()">Fetching your data!</td>
           </tr>
         </tbody>
       </table>
@@ -39,16 +37,21 @@
   </template>
   
   <script>
-  
+ 
   export default {
     props: {
       users: Array,
     },
-    methods: {
-      editUser(userId) {
-        console.log(userId);
+    methods:{
+      getColspan() {
+        return new Promise((resolve) => {
+        this.$nextTick(() => {
+          const tableHeaders = this.$refs.userTable ? this.$refs.userTable.getElementsByTagName('th') : null;
+          resolve(tableHeaders ? tableHeaders.length : 0);
+        });
+      });
       },
-    },
+    }
   };
   </script>
 
@@ -111,17 +114,5 @@
     background-color: #ccc; 
   }
 
-  .edit-button {
-    background-color: #4caf50;
-    color: #fff;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    max-height: 32px;
-  }
-  
-  .edit-button:hover {
-    background-color: #327136;
-  }
+
   </style>

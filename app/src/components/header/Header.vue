@@ -1,7 +1,7 @@
 <template>
-    <header class="app-header">
-    
-        <div class="burger-menu" @click="handleToggle">
+  <div>
+    <header>
+        <div class="menu-icon" @click="handleToggle">
           <img v-if="!showMenu" src="../../assets/menu.svg" alt="MenuIcon">
           <img v-else src="../../assets/cross.svg" alt="CloseIcon">
         </div>
@@ -10,26 +10,36 @@
           <span>{{ userInfo.name }}</span>
           <img :src="userInfo.avatar" alt="User Avatar" />
         </div>
-      
     </header>
+    <HeaderMenu :menuItems="menuItems" v-if="showMenu" />
+    </div>
   </template>
   
   <script>
+import HeaderMenu from './HeaderMenu.vue';
   export default {
+    components:{
+      HeaderMenu
+    },
     props: {
-        showMenu: Boolean,
-        userInfo: Object
+        userInfo: Object,
+        menuItems: Array
+    },
+    data(){
+      return{
+        showMenu: false,
+      }
     },
     methods: {
       handleToggle() {
-        this.$emit('toggle');
+        this.showMenu = !this.showMenu;
       },
     },
   };
   </script>
 
   <style scoped>
-.app-header {
+  header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -43,14 +53,14 @@
     z-index: 1;
   }
   
-  .burger-menu {
+  .menu-icon {
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
   
-  .burger-menu img {
+  .menu-icon img {
     width: 25px;
   }
   
@@ -74,8 +84,6 @@
     border-radius: 50%;
     width: 30px;
     height: 30px;
-  }
-  
-  
+  }  
   </style>
   

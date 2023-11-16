@@ -25,6 +25,8 @@
       :value="newUser.dateOfBirth"
       @update:value="updateUser('dateOfBirth', $event)"
       :isRequired="true"
+      :minDate="minDate"
+      :maxDate="maxDate"
     />
 
     <TextInput
@@ -48,19 +50,22 @@
     />
 
     <div class ="modal-buttons">
-      <CustomButton class="close-btn" type="button" caption="Close" @click="closeClick"/>
-      <CustomButton type="submit" caption="Add"/>
+      <CustomButton styleType="secondary" type="button" title="Close" @click="closeClick"/>
+      <CustomButton type="submit" title="Add"/>
     </div>
   </form>
 </template>
 
 <script>
 import axios from 'axios';
-import CustomButton from "../AtomComponents/CustomButton.vue"
-import DateInputField from "../AtomComponents/DateInputField.vue"
-import TextInput from "../AtomComponents/TextInput.vue"
+import CustomButton from "../common/Button.vue"
+import DateInput from "../common/DateInput.vue"
+import TextInput from "../common/TextInput.vue"
+import { DATE_CONSTANTS } from '@/constants'
 export default {
   data(){
+    const currentDate = new Date();
+    const { MIN_YEAR_OFFSET, MAX_YEAR_OFFSET } = DATE_CONSTANTS;
     return{
       newUser: {
         name: '',
@@ -69,11 +74,15 @@ export default {
         position: '',
         country: '',
       },
-    }
+      //User cannot be older than 100 years old.
+      minDate: new Date(currentDate.getFullYear() - MIN_YEAR_OFFSET, currentDate.getMonth(), currentDate.getDay()).toISOString().split("T")[0],
+      //User cannot be younger than 14 years old.
+      maxDate: new Date(currentDate.getFullYear() - MAX_YEAR_OFFSET, currentDate.getMonth(), currentDate.getDay()).toISOString().split("T")[0],
+    };
   },
   components:{
     CustomButton,
-    DateInputField,
+    DateInputField: DateInput,
     TextInput
   },
   methods:{
@@ -112,20 +121,7 @@ form {
     display: flex;
     flex-direction: column;
   }
-  .close-btn{
-    background: #fff;
-    border-color: #4caf50;
-    color:#4caf50;
-    border-width: 2px;
-    border-style: solid;
-  }
-  .close-btn:hover{
-    background: #c9c9c9;
-    border-color:#327136;
-    color:#327136;
-    border-width: 2px;
-    border-style: solid;
-  }
+  
   .modal-buttons{
     display: flex;
     flex-direction: row;
