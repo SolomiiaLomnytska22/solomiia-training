@@ -21,13 +21,19 @@ import HeaderMenu from './HeaderMenu.vue';
     components:{
       HeaderMenu
     },
-    props: {
-        userInfo: Object,
-        menuItems: Array
-    },
     data(){
       return{
         showMenu: false,
+        userInfo: {
+        name: 'John Doe',
+        avatar: 'Man.jpg',
+      },
+      menuItems: [
+        { id: 1, route: '/', title: 'Home' },
+        { id: 2, route: '/about', title: 'About' },
+        { id: 3, route: '/contact', title: 'Contact' },
+      ],
+
       }
     },
     methods: {

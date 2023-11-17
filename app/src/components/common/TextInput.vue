@@ -1,7 +1,7 @@
 <template>
     <div class="input-field">
       <label :for="id">{{ label }}:</label>
-      <input type="text" :id="id" :value="value" @input="updateValue" :required="isRequired" :pattern="pattern" :title="title" />
+      <input type="text" :id="id" :value="value" @input="updateValue" :required="required" :pattern="pattern" :title="title" />
     </div>
   </template>
   
@@ -11,7 +11,7 @@
       label: String,
       id: String,
       value: String,
-      isRequired: Boolean,
+      required: Boolean,
       pattern: String,
       title: String,
     },

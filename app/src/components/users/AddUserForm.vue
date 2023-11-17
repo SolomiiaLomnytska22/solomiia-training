@@ -50,15 +50,15 @@
     />
 
     <div class ="modal-buttons">
-      <CustomButton styleType="secondary" type="button" title="Close" @click="closeClick"/>
-      <CustomButton type="submit" title="Add"/>
+      <Button styleType="secondary" type="button" title="Close" @click="closeClick"/>
+      <Button type="submit" title="Add"/>
     </div>
   </form>
 </template>
 
 <script>
 import axios from 'axios';
-import CustomButton from "../common/Button.vue"
+import Button from "../common/Button.vue"
 import DateInput from "../common/DateInput.vue"
 import TextInput from "../common/TextInput.vue"
 import { DATE_CONSTANTS } from '@/constants'
@@ -81,7 +81,7 @@ export default {
     };
   },
   components:{
-    CustomButton,
+    Button,
     DateInputField: DateInput,
     TextInput
   },

@@ -27,13 +27,18 @@
   };
   </script>
   <style scoped>
+  button{
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 10px;
+  }
   .primary {
     background-color: #4caf50;
     color: #fff;
     padding: 10px;
     border: none;
     border-radius: 4px;
-    cursor: pointer;
+
   }
   
   .primary:hover {
@@ -46,8 +51,7 @@
     color:#4caf50;
     border-width: 2px;
     border-style: solid;
-    border-radius: 4px;
-    padding: 10px;
+   
   }
   .secondary:hover{
     background: #c9c9c9;

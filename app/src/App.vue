@@ -1,30 +1,17 @@
 <template>
   <div id="app">
-    <PageHeader :userInfo="userInfo" :menuItems="menuItems" />
-    <router-view></router-view>
+    <Header />
+    <router-view />
   </div>
 </template>
 
 <script>
-import PageHeader from './components/header/Header.vue';
+import Header from './components/header/Header.vue';
 export default {
   name: 'App',
   components:{
-    PageHeader
-  },
-  data() {
-    return {
-      userInfo: {
-        name: 'John Doe',
-        avatar: 'Man.jpg',
-      },
-      menuItems: [
-        { id: 1, route: '/', caption: 'Home' },
-        { id: 2, route: '/about', caption: 'About' },
-        { id: 3, route: '/contact', caption: 'Contact' },
-      ],
-    };
-  },
+    Header
+  }
 }
 </script>
 
