@@ -5,7 +5,7 @@
       :id="id"
       type="date"
       :value="value"
-      :required="isRequired"
+      :required="required"
       :max="maxDate"
       :min="minDate"
       @input="updateValue"
@@ -19,7 +19,7 @@ export default {
     label: String,
     id: String,
     value: String,
-    isRequired: Boolean,
+    required: Boolean,
     maxDate: String,
     minDate: String
   },
