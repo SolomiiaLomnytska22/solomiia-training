@@ -1,61 +1,66 @@
 <template>
-    <button @click="handleClick" :class="styleType" :type="type">
-      {{title}}
-    </button>
-  </template>
-  
-  <script>
-  export default {
-    props: {
-      styleType: {
-        type: String,
-        default: 'primary',
-        validator: value => ['primary', 'secondary'].includes(value)
-      },
-      title: String,
-      type: {
+  <button
+    :class="styleType"
+    :type="type"
+    @click="handleClick"
+  >
+    {{ title }}
+  </button>
+</template>
+
+<script>
+export default {
+  props: {
+    styleType: {
+      type: String,
+      default: 'primary',
+      validator: (value) => ['primary', 'secondary'].includes(value)
+    },
+    title: String,
+    type: {
       type: String,
       default: 'button',
-      validator: value => ['button', 'submit', 'reset'].includes(value),
-      }
-    },
-    methods: {
-    handleClick() {
-      this.$emit('click'); 
-    },
+      validator: (value) => ['button', 'submit', 'reset'].includes(value)
+    }
   },
-  };
-  </script>
-  <style scoped>
-  button{
-    cursor: pointer;
-    border-radius: 4px;
-    padding: 10px;
+  methods: {
+    handleClick() {
+      this.$emit('click')
+    }
   }
-  .primary {
-    background-color: #4caf50;
-    color: #fff;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
+}
+</script>
 
-  }
-  
-  .primary:hover {
-    background-color: #45a049;
-  }
+<style scoped>
+button {
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 10px;
+}
 
-  .secondary{
-    background: #fff;
-    border-color: #4caf50;
-    color:#4caf50;
-    border-width: 2px;
-    border-style: solid;
-   
-  }
-  .secondary:hover{
-    background: #c9c9c9;
-    border-color:#327136;
-    color:#327136;
-  }
-  </style>
+.primary {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+}
+
+.primary:hover {
+  background-color: #45a049;
+}
+
+.secondary {
+  background: #fff;
+  border-color: #4caf50;
+  color: #4caf50;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.secondary:hover {
+  background: #c9c9c9;
+  border-color: #327136;
+  color: #327136;
+}
+</style>
