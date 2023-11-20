@@ -54,7 +54,8 @@
       />
       <Button
         type="submit"
-        title="Add" />
+        title="Add"
+      />
     </div>
   </form>
 </template>
