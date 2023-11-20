@@ -1,18 +1,17 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 import Users from '@/Users.vue'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   { path: '/', component: Users },
   { path: '/about', component: Users },
-  { path: '/contact', component: Users },
-];
+  { path: '/contact', component: Users }
+]
 
 const router = new VueRouter({
-  routes,
-});
+  routes
+})
 
-export default router;
+export default router

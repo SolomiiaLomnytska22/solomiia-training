@@ -1,95 +1,110 @@
 <template>
   <div>
     <header>
-        <div class="menu-icon" @click="handleToggle">
-          <img v-if="!showMenu" src="../../assets/menu.svg" alt="MenuIcon">
-          <img v-else src="../../assets/cross.svg" alt="CloseIcon">
-        </div>
-      
-        <div class="user-info">
-          <span>{{ userInfo.name }}</span>
-          <img :src="userInfo.avatar" alt="User Avatar" />
-        </div>
+      <div
+        class="menu-icon"
+        @click="handleToggle"
+      >
+        <img
+          v-if="!showMenu"
+          src="../../assets/menu.svg"
+          alt="MenuIcon"
+        >
+        <img
+          v-else
+          src="../../assets/cross.svg"
+          alt="CloseIcon"
+        >
+      </div>
+      <div class="user-info">
+        <span>{{ userInfo.name }}</span>
+        <img
+          :src="userInfo.avatar"
+          alt="User Avatar"
+        >
+      </div>
     </header>
-    <HeaderMenu :menuItems="menuItems" v-if="showMenu" />
-    </div>
-  </template>
-  
-  <script>
-import HeaderMenu from './HeaderMenu.vue';
-  export default {
-    components:{
-      HeaderMenu
-    },
-    data(){
-      return{
-        showMenu: false,
-        userInfo: {
+    <HeaderMenu
+      v-if="showMenu"
+      :menu-items="menuItems"
+    />
+  </div>
+</template>
+
+<script>
+import HeaderMenu from './HeaderMenu.vue'
+
+export default {
+  components: {
+    HeaderMenu
+  },
+  data() {
+    return {
+      showMenu: false,
+      userInfo: {
         name: 'John Doe',
-        avatar: 'Man.jpg',
+        avatar: 'Man.jpg'
       },
       menuItems: [
         { id: 1, route: '/', title: 'Home' },
         { id: 2, route: '/about', title: 'About' },
-        { id: 3, route: '/contact', title: 'Contact' },
-      ],
+        { id: 3, route: '/contact', title: 'Contact' }
+      ]
+    }
+  },
+  methods: {
+    handleToggle() {
+      this.showMenu = !this.showMenu
+    }
+  }
+}
+</script>
 
-      }
-    },
-    methods: {
-      handleToggle() {
-        this.showMenu = !this.showMenu;
-      },
-    },
-  };
-  </script>
+<style scoped>
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 5%;
+  background-color: #333;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
 
-  <style scoped>
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 5%;
-    background-color: #333;
-    color: white;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
-  }
-  
-  .menu-icon {
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .menu-icon img {
-    width: 25px;
-  }
-  
-  .user-info {
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
-  }
-  
-  .user-info span {
-    margin-right: 10px;
-    font-size: medium;
-  }
-  
-  .user-info span:hover {
-    color: #4caf50;
-    cursor: pointer;
-  }
-  
-  .user-info img {
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-  }  
-  </style>
-  
+.menu-icon {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menu-icon img {
+  width: 25px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.user-info span {
+  margin-right: 10px;
+  font-size: medium;
+}
+
+.user-info span:hover {
+  color: #4caf50;
+  cursor: pointer;
+}
+
+.user-info img {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+}
+</style>

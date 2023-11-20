@@ -1,7 +1,15 @@
 <template>
   <div class="input-field">
     <label :for="id">{{ label }}:</label>
-    <input type="date" :id="id" :value="value" @input="updateValue" :required="isRequired" :max="maxDate" :min="minDate" />
+    <input
+      :id="id"
+      type="date"
+      :value="value"
+      :required="isRequired"
+      :max="maxDate"
+      :min="minDate"
+      @input="updateValue"
+    >
   </div>
 </template>
 
@@ -17,10 +25,10 @@ export default {
   },
   methods: {
     updateValue(event) {
-      this.$emit("update:value", event.target.value);
-    },
-  },
-};
+      this.$emit('update:value', event.target.value)
+    }
+  }
+}
 </script>
 
 <style scoped>
