@@ -41,9 +41,7 @@ button {
 .primary {
   background-color: #4caf50;
   color: #fff;
-  padding: 10px;
   border: none;
-  border-radius: 4px;
 }
 
 .primary:hover {
