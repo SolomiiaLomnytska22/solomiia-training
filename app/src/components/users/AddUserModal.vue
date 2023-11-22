@@ -23,16 +23,16 @@
 import AddUserForm from './AddUserForm.vue'
 import Component from 'vue-class-component'
 import Vue from 'vue'
+import { Prop } from 'vue-property-decorator'
 
 @Component({
   components: {
     AddUserForm
-  },
-  props: {
-    showModal: Boolean
   }
 })
 export default class AddUserModal extends Vue {
+  @Prop({ type: Boolean }) showModal
+
   clickOutsideModal(event) {
     if (!this.$refs.modalContent.contains(event.target)) {
       this.closeAddUserModal()

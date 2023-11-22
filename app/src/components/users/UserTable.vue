@@ -47,13 +47,12 @@
 <script>
 import Component from 'vue-class-component'
 import Vue from 'vue'
+import { Prop } from 'vue-property-decorator'
 
-@Component({
-  props: {
-    users: Array
-  }
-})
+@Component
 export default class UserTable extends Vue {
+  @Prop({ type: Array }) users
+
   getColspan() {
     return new Promise((resolve) => {
       this.$nextTick(() => {

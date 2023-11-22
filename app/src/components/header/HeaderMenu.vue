@@ -13,13 +13,12 @@
 <script>
 import Component from 'vue-class-component'
 import Vue from 'vue'
+import { Prop } from 'vue-property-decorator'
 
-@Component({
-  props: {
-    menuItems: Array
-  }
-})
-export default class HeaderMenu extends Vue {}
+@Component
+export default class HeaderMenu extends Vue {
+  @Prop({ type: Array }) menuItems
+}
 </script>
 
 <style scoped>
