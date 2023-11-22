@@ -11,25 +11,26 @@
 <script>
 import Component from 'vue-class-component'
 import Vue from 'vue'
+import { Prop } from 'vue-property-decorator'
 
-@Component({
-  props: {
-    styleType: {
-      type: String,
-      required: false,
-      default: 'primary',
-      validator: (value) => ['primary', 'secondary'].includes(value)
-    },
-    title: String,
-    type: {
-      type: String,
-      required: false,
-      default: 'button',
-      validator: (value) => ['button', 'submit', 'reset'].includes(value)
-    }
-  }
-})
+@Component
 export default class Button extends Vue {
+  @Prop({
+    type: String,
+    required: false,
+    default: 'primary',
+    validator: (value) => ['primary', 'secondary'].includes(value)
+  })
+  styleType
+  @Prop({ type: String }) title
+  @Prop({
+    type: String,
+    required: false,
+    default: 'button',
+    validator: (value) => ['button', 'submit', 'reset'].includes(value)
+  })
+  type
+
   handleClick() {
     this.$emit('click')
   }

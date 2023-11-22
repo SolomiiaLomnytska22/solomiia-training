@@ -16,18 +16,16 @@
 <script>
 import Component from 'vue-class-component'
 import Vue from 'vue'
+import { Prop } from 'vue-property-decorator'
 
-@Component({
-  props: {
-    label: String,
-    id: String,
-    value: String,
-    required: Boolean,
-    maxDate: String,
-    minDate: String
-  }
-})
+@Component
 export default class DateInput extends Vue {
+  @Prop({ type: String }) label
+  @Prop({ type: String }) id
+  @Prop({ type: String }) value
+  @Prop({ type: Boolean }) required
+  @Prop({ type: String }) maxDate
+  @Prop({ type: String }) minDate
   updateValue(event) {
     this.$emit('update:value', event.target.value)
   }
