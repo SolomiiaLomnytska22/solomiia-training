@@ -12,7 +12,8 @@
     "axios": "^1.6.1",
     "core-js": "^3.8.3",
     "json-server": "^0.17.4",
-    "vue": "^2.6.14",
+    "vue": "^2.7.15",
+    "vue-class-component": "^7.2.6",
     "vue-router": "^2.8.1"
   },
   "devDependencies": {

@@ -14,7 +14,10 @@
 </template>
 
 <script>
-export default {
+import Component from 'vue-class-component'
+import Vue from 'vue'
+
+@Component({
   props: {
     label: String,
     id: String,
@@ -22,11 +25,11 @@ export default {
     required: Boolean,
     maxDate: String,
     minDate: String
-  },
-  methods: {
-    updateValue(event) {
-      this.$emit('update:value', event.target.value)
-    }
+  }
+})
+export default class DateInput extends Vue {
+  updateValue(event) {
+    this.$emit('update:value', event.target.value)
   }
 }
 </script>

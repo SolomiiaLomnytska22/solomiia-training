@@ -45,21 +45,24 @@
 </template>
 
 <script>
-export default {
+import Component from 'vue-class-component'
+import Vue from 'vue'
+
+@Component({
   props: {
     users: Array
-  },
-  methods: {
-    getColspan() {
-      return new Promise((resolve) => {
-        this.$nextTick(() => {
-          const tableHeaders = this.$refs.userTable
-            ? this.$refs.userTable.getElementsByTagName('th')
-            : null
-          resolve(tableHeaders ? tableHeaders.length : 0)
-        })
+  }
+})
+export default class UserTable extends Vue {
+  getColspan() {
+    return new Promise((resolve) => {
+      this.$nextTick(() => {
+        const tableHeaders = this.$refs.userTable
+          ? this.$refs.userTable.getElementsByTagName('th')
+          : null
+        resolve(tableHeaders ? tableHeaders.length : 0)
       })
-    }
+    })
   }
 }
 </script>

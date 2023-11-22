@@ -9,24 +9,29 @@
 </template>
 
 <script>
-export default {
+import Component from 'vue-class-component'
+import Vue from 'vue'
+
+@Component({
   props: {
     styleType: {
       type: String,
+      required: false,
       default: 'primary',
       validator: (value) => ['primary', 'secondary'].includes(value)
     },
     title: String,
     type: {
       type: String,
+      required: false,
       default: 'button',
       validator: (value) => ['button', 'submit', 'reset'].includes(value)
     }
-  },
-  methods: {
-    handleClick() {
-      this.$emit('click')
-    }
+  }
+})
+export default class Button extends Vue {
+  handleClick() {
+    this.$emit('click')
   }
 }
 </script>
