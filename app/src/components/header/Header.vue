@@ -33,29 +33,28 @@
 
 <script>
 import HeaderMenu from './HeaderMenu.vue'
+import Component from 'vue-class-component'
+import Vue from 'vue'
 
-export default {
+@Component({
   components: {
     HeaderMenu
-  },
-  data() {
-    return {
-      showMenu: false,
-      userInfo: {
-        name: 'John Doe',
-        avatar: 'Man.jpg'
-      },
-      menuItems: [
-        { id: 1, route: '/', title: 'Home' },
-        { id: 2, route: '/about', title: 'About' },
-        { id: 3, route: '/contact', title: 'Contact' }
-      ]
-    }
-  },
-  methods: {
-    handleToggle() {
-      this.showMenu = !this.showMenu
-    }
+  }
+})
+export default class Header extends Vue {
+  showMenu = false
+  userInfo = {
+    name: 'John Doe',
+    avatar: 'Man.jpg'
+  }
+  menuItems = [
+    { id: 1, route: '/', title: 'Home' },
+    { id: 2, route: '/about', title: 'About' },
+    { id: 3, route: '/contact', title: 'Contact' }
+  ]
+
+  handleToggle() {
+    this.showMenu = !this.showMenu
   }
 }
 </script>

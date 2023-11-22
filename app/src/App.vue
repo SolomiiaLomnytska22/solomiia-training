@@ -7,13 +7,15 @@
 
 <script>
 import Header from './components/header/Header.vue'
+import Component from 'vue-class-component'
+import Vue from 'vue'
 
-export default {
-  name: 'App',
+@Component({
   components: {
     Header
   }
-}
+})
+export default class App extends Vue {}
 </script>
 
 <style>
