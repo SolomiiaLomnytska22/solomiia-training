@@ -18,7 +18,7 @@
       title="Only letters, spaces, hyphens, apostrophes, and backticks are allowed"
       @update:value="updateUser('surname', $event)"
     />
-    <DateInputField
+    <DateInput
       id="dateOfBirth"
       label="Date of Birth"
       :value="newUser.dateOfBirth"
@@ -66,70 +66,70 @@ import Button from '../common/Button.vue'
 import DateInput from '../common/DateInput.vue'
 import TextInput from '../common/TextInput.vue'
 import { DATE_CONSTANTS } from '@/constants'
+import Component from 'vue-class-component'
+import Vue from 'vue'
 
-export default {
+const currentDate = new Date()
+const { MIN_YEAR_OFFSET, MAX_YEAR_OFFSET } = DATE_CONSTANTS
+@Component({
   components: {
     Button,
-    DateInputField: DateInput,
+    DateInput,
     TextInput
-  },
-  data() {
-    const currentDate = new Date()
-    const { MIN_YEAR_OFFSET, MAX_YEAR_OFFSET } = DATE_CONSTANTS
-    return {
-      newUser: {
-        name: '',
-        surname: '',
-        dateOfBirth: '',
-        position: '',
-        country: ''
-      },
-      //User cannot be older than 100 years old.
-      minDate: new Date(
-        currentDate.getFullYear() - MIN_YEAR_OFFSET,
-        currentDate.getMonth(),
-        currentDate.getDay()
-      )
-        .toISOString()
-        .split('T')[0],
-      //User cannot be younger than 14 years old.
-      maxDate: new Date(
-        currentDate.getFullYear() - MAX_YEAR_OFFSET,
-        currentDate.getMonth(),
-        currentDate.getDay()
-      )
-        .toISOString()
-        .split('T')[0]
-    }
-  },
-  methods: {
-    closeClick() {
-      this.resetNewUser()
-      this.$emit('close')
-    },
-    addUser() {
-      axios
-        .post('http://localhost:3000/users', this.newUser)
-        .then((response) => {
-          if (response.status === 201) {
-            this.$emit('user-added')
-            this.closeClick()
-          } else {
-            window.alert('Error while adding user: ' + response.statusText)
-          }
-        })
-    },
-    updateUser(field, value) {
-      this.$set(this.newUser, field, value)
-    },
-    resetNewUser() {
-      this.newUser = {
-        name: '',
-        surname: '',
-        dateOfBirth: '',
-        position: '',
-        country: ''
+  }
+})
+export default class AddUserForm extends Vue {
+  newUser = {
+    name: '',
+    surname: '',
+    dateOfBirth: '',
+    position: '',
+    country: ''
+  }
+  //User cannot be older than 100 years old.
+  minDate = new Date(
+    currentDate.getFullYear() - MIN_YEAR_OFFSET,
+    currentDate.getMonth(),
+    currentDate.getDay()
+  )
+    .toISOString()
+    .split('T')[0]
+  //User cannot be younger than 14 years old.
+  maxDate = new Date(
+    currentDate.getFullYear() - MAX_YEAR_OFFSET,
+    currentDate.getMonth(),
+    currentDate.getDay()
+  )
+    .toISOString()
+    .split('T')[0]
+
+  closeClick() {
+    this.resetNewUser()
+    this.$emit('close')
+  }
+
+  addUser() {
+    axios.post('http://localhost:3000/users', this.newUser).then((response) => {
+      if (response.status === 201) {
+        this.$emit('user-added')
+        this.closeClick()
+      } else {
+        window.alert('Error while adding user: ' + response.statusText)
       }
+    })
+  }
+
+  updateUser(field, value) {
+    this.$set(this.newUser, field, value)
+  }
+
+  resetNewUser() {
+    this.newUser = {
+      name: '',
+      surname: '',
+      dateOfBirth: '',
+      position: '',
+      country: ''
     }
   }
 }

@@ -14,19 +14,21 @@
 </template>
 
 <script>
-export default {
-  props: {
-    label: String,
-    id: String,
-    value: String,
-    required: Boolean,
-    pattern: String,
-    title: String
-  },
-  methods: {
-    updateValue(event) {
-      this.$emit('update:value', event.target.value)
-    }
+import Component from 'vue-class-component'
+import Vue from 'vue'
+import { Prop } from 'vue-property-decorator'
+
+@Component
+export default class TextInput extends Vue {
+  @Prop({ type: String }) label
+  @Prop({ type: String }) id
+  @Prop({ type: String }) value
+  @Prop({ type: Boolean }) required
+  @Prop({ type: String }) pattern
+  @Prop({ type: String }) title
+
+  updateValue(event) {
+    this.$emit('update:value', event.target.value)
   }
 }
 </script>

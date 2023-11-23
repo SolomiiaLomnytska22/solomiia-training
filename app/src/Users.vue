@@ -22,34 +22,32 @@ import axios from 'axios'
 import AddUserModal from './components/users/AddUserModal.vue'
 import UserTable from './components/users/UserTable.vue'
 import Button from './components/common/Button.vue'
+import Component from 'vue-class-component'
+import Vue from 'vue'
 
-export default {
+@Component({
   components: {
     AddUserModal,
     UserTable,
     Button
-  },
-  data() {
-    return {
-      users: [],
-      showAddUserModal: false
-    }
-  },
+  }
+})
+export default class Users extends Vue {
+  users = []
+  showAddUserModal = false
+
   mounted() {
     this.getData()
-  },
-  methods: {
-    getData() {
-      axios.get('http://localhost:3000/users').then((response) => {
-        if (response.status === 200) {
-          this.users = response.data
-        } else {
-          window.alert(
-            'Error while loading information: ' + response.statusText
-          )
-        }
-      })
-    }
+  }
+
+  getData() {
+    axios.get('http://localhost:3000/users').then((response) => {
+      if (response.status === 200) {
+        this.users = response.data
+      } else {
+        window.alert('Error while loading information: ' + response.statusText)
+      }
+    })
   }
 }
 </script>

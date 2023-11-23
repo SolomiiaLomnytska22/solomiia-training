@@ -21,31 +21,30 @@
 
 <script>
 import AddUserForm from './AddUserForm.vue'
+import Component from 'vue-class-component'
+import Vue from 'vue'
+import { Prop } from 'vue-property-decorator'
 
-export default {
+@Component({
   components: {
     AddUserForm
-  },
-  props: {
-    showModal: Boolean
-  },
-  data() {
-    return {
-      showAddUserModal: true
+  }
+})
+export default class AddUserModal extends Vue {
+  @Prop({ type: Boolean }) showModal
+
+  clickOutsideModal(event) {
+    if (!this.$refs.modalContent.contains(event.target)) {
+      this.closeAddUserModal()
     }
-  },
-  methods: {
-    clickOutsideModal(event) {
-      if (!this.$refs.modalContent.contains(event.target)) {
-        this.closeAddUserModal()
-      }
-    },
-    closeAddUserModal() {
-      this.$emit('toggle')
-    },
-    handleAddition() {
-      this.$emit('user-added', 'toggle')
-    }
+  }
+
+  closeAddUserModal() {
+    this.$emit('toggle')
+  }
+
+  handleAddition() {
+    this.$emit('user-added', 'toggle')
   }
 }
 </script>

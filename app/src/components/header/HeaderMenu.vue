@@ -11,10 +11,13 @@
 </template>
 
 <script>
-export default {
-  props: {
-    menuItems: Array
-  }
+import Component from 'vue-class-component'
+import Vue from 'vue'
+import { Prop } from 'vue-property-decorator'
+
+@Component
+export default class HeaderMenu extends Vue {
+  @Prop({ type: Array }) menuItems
 }
 </script>
 
