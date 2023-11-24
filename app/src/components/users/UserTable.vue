@@ -48,7 +48,7 @@
 import Component from 'vue-class-component'
 import Vue from 'vue'
 import {Prop} from 'vue-property-decorator'
-import UserModel from "@/models/UserModel";
+import UserModel from '@/models/UserModel';
 
 
 @Component

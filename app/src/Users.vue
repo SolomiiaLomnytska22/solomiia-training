@@ -3,17 +3,17 @@
     <div class="heading">
       <h1>User Table</h1>
       <Button
-        type="button"
-        title="Add"
-        @click="showAddUserModal = true"
+          type="button"
+          title="Add"
+          @click="showAddUserModal = true"
       />
       <AddUserModal
-        :show-modal="showAddUserModal"
-        @user-added="getData"
-        @toggle="showAddUserModal = !showAddUserModal"
+          :show-modal="showAddUserModal"
+          @user-added="getData"
+          @toggle="showAddUserModal = !showAddUserModal"
       />
     </div>
-    <UserTable :users="users" />
+    <UserTable :users="users"/>
   </div>
 </template>
 
@@ -24,7 +24,7 @@ import UserTable from './components/users/UserTable.vue'
 import Button from './components/common/Button.vue'
 import Component from 'vue-class-component'
 import Vue from 'vue'
-import UserModel from "@/models/UserModel";
+import UserModel from '@/models/UserModel';
 
 @Component({
   components: {
