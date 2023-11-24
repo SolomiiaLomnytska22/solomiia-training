@@ -17,13 +17,14 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios'
 import AddUserModal from './components/users/AddUserModal.vue'
 import UserTable from './components/users/UserTable.vue'
 import Button from './components/common/Button.vue'
 import Component from 'vue-class-component'
 import Vue from 'vue'
+import UserModel from "@/models/UserModel";
 
 @Component({
   components: {
@@ -33,14 +34,14 @@ import Vue from 'vue'
   }
 })
 export default class Users extends Vue {
-  users = []
+  users: UserModel[] = []
   showAddUserModal = false
 
   mounted() {
     this.getData()
   }
 
-  getData() {
+  getData(): void {
     axios.get('http://localhost:3000/users').then((response) => {
       if (response.status === 200) {
         this.users = response.data

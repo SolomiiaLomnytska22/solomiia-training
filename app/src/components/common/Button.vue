@@ -8,30 +8,28 @@
   </button>
 </template>
 
-<script>
+<script lang="ts">
 import Component from 'vue-class-component'
 import Vue from 'vue'
-import { Prop } from 'vue-property-decorator'
+import {Prop} from 'vue-property-decorator'
 
 @Component
 export default class Button extends Vue {
   @Prop({
-    type: String,
     required: false,
     default: 'primary',
-    validator: (value) => ['primary', 'secondary'].includes(value)
+    validator: (value: string) => ['primary', 'secondary'].includes(value)
   })
-  styleType
-  @Prop({ type: String }) title
+  styleType!: string
+  @Prop({required: true}) title!: string
   @Prop({
-    type: String,
     required: false,
     default: 'button',
-    validator: (value) => ['button', 'submit', 'reset'].includes(value)
+    validator: (value: string) => ['button', 'submit', 'reset'].includes(value)
   })
-  type
+  type!: string
 
-  handleClick() {
+  handleClick(): void {
     this.$emit('click')
   }
 }

@@ -44,24 +44,26 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Component from 'vue-class-component'
 import Vue from 'vue'
-import { Prop } from 'vue-property-decorator'
+import {Prop} from 'vue-property-decorator'
+import UserModel from "@/models/UserModel";
+
 
 @Component
 export default class UserTable extends Vue {
-  @Prop({ type: Array }) users
+  @Prop({required: true}) users!: UserModel[]
 
-  getColspan() {
+  getColspan(): Promise<number> {
     return new Promise((resolve) => {
       this.$nextTick(() => {
         const tableHeaders = this.$refs.userTable
-          ? this.$refs.userTable.getElementsByTagName('th')
-          : null
-        resolve(tableHeaders ? tableHeaders.length : 0)
-      })
-    })
+            ? (this.$refs.userTable as HTMLTableElement).getElementsByTagName('th')
+            : null;
+        resolve(tableHeaders ? tableHeaders.length : 0);
+      });
+    });
   }
 }
 </script>
