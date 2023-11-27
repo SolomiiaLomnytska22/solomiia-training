@@ -11,7 +11,7 @@
 <script lang="ts">
 import Component from 'vue-class-component'
 import Vue from 'vue'
-import {Prop} from 'vue-property-decorator'
+import { Prop } from 'vue-property-decorator'
 
 @Component
 export default class Button extends Vue {
@@ -21,7 +21,7 @@ export default class Button extends Vue {
     validator: (value: string) => ['primary', 'secondary'].includes(value)
   })
   styleType!: string
-  @Prop({required: true}) title!: string
+  @Prop({ required: true }) title!: string
   @Prop({
     required: false,
     default: 'button',

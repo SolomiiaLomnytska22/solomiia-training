@@ -17,7 +17,11 @@ import { Prop } from 'vue-property-decorator'
 
 @Component
 export default class HeaderMenu extends Vue {
-  @Prop({ required:true }) menuItems!:{ id: number; route: string; title: string }[]
+  @Prop({ required: true }) menuItems!: {
+    id: number
+    route: string
+    title: string
+  }[]
 }
 </script>
 

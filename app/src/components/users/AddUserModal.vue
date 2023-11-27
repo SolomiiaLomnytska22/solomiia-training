@@ -23,7 +23,7 @@
 import AddUserForm from './AddUserForm.vue'
 import Component from 'vue-class-component'
 import Vue from 'vue'
-import {Prop} from 'vue-property-decorator'
+import { Prop } from 'vue-property-decorator'
 
 @Component({
   components: {
@@ -38,10 +38,10 @@ export default class AddUserModal extends Vue {
   showModal!: boolean
 
   clickOutsideModal(event: Event): void {
-    const modalContent = this.$refs.modalContent as HTMLElement | undefined;
+    const modalContent = this.$refs.modalContent as HTMLElement | undefined
 
     if (modalContent && !modalContent.contains(event.target as Node)) {
-      this.closeAddUserModal();
+      this.closeAddUserModal()
     }
   }
 

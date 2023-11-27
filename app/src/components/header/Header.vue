@@ -42,19 +42,19 @@ import Vue from 'vue'
   }
 })
 export default class Header extends Vue {
-  showMenu: boolean = false;
+  showMenu: boolean = false
   userInfo: { name: string; avatar: string } = {
     name: 'John Doe',
-    avatar: 'Man.jpg',
-  };
+    avatar: 'Man.jpg'
+  }
   menuItems: { id: number; route: string; title: string }[] = [
-    {id: 1, route: '/', title: 'Home'},
-    {id: 2, route: '/about', title: 'About'},
-    {id: 3, route: '/contact', title: 'Contact'},
-  ];
+    { id: 1, route: '/', title: 'Home' },
+    { id: 2, route: '/about', title: 'About' },
+    { id: 3, route: '/contact', title: 'Contact' }
+  ]
 
   handleToggle(): void {
-    this.showMenu = !this.showMenu;
+    this.showMenu = !this.showMenu
   }
 }
 </script>

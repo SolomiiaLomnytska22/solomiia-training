@@ -103,27 +103,29 @@ export default class AddUserForm extends Vue {
     .toISOString()
     .split('T')[0]
 
-  closeClick():void {
+  closeClick(): void {
     this.resetNewUser()
     this.$emit('close')
   }
 
-  addUser() :void{
-    axios.post('http://localhost:3000/users', this.newUserData).then((response) => {
-      if (response.status === 201) {
-        this.$emit('user-added')
-        this.closeClick()
-      } else {
-        window.alert('Error while adding user: ' + response.statusText)
-      }
-    })
+  addUser(): void {
+    axios
+      .post('http://localhost:3000/users', this.newUserData)
+      .then((response) => {
+        if (response.status === 201) {
+          this.$emit('user-added')
+          this.closeClick()
+        } else {
+          window.alert('Error while adding user: ' + response.statusText)
+        }
+      })
   }
 
-  updateUser(field:string, value:string) : void{
+  updateUser(field: string, value: string): void {
     this.$set(this.newUserData, field, value)
   }
 
-  resetNewUser() :void{
+  resetNewUser(): void {
     this.newUserData = {
       name: '',
       surname: '',
