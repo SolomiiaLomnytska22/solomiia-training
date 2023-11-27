@@ -18,18 +18,18 @@ export default class Button extends Vue {
   @Prop({
     required: false,
     default: 'primary',
-    validator: (value: string) => ['primary', 'secondary'].includes(value)
+    validator: (value: string) => [ 'primary', 'secondary' ].includes(value)
   })
   styleType!: string
   @Prop({ required: true }) title!: string
   @Prop({
     required: false,
     default: 'button',
-    validator: (value: string) => ['button', 'submit', 'reset'].includes(value)
+    validator: (value: string) => [ 'button', 'submit', 'reset' ].includes(value)
   })
   type!: string
 
-  handleClick(): void {
+  handleClick (): void {
     this.$emit('click')
   }
 }

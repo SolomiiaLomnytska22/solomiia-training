@@ -54,7 +54,7 @@ import UserModel from '@/models/UserModel'
 export default class UserTable extends Vue {
   @Prop({ required: true }) users!: UserModel[]
 
-  getColspan(): Promise<number> {
+  getColspan (): Promise<number> {
     return new Promise((resolve) => {
       this.$nextTick(() => {
         const tableHeaders = this.$refs.userTable

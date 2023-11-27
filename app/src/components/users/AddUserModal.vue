@@ -37,7 +37,7 @@ export default class AddUserModal extends Vue {
   })
   showModal!: boolean
 
-  clickOutsideModal(event: Event): void {
+  clickOutsideModal (event: Event): void {
     const modalContent = this.$refs.modalContent as HTMLElement | undefined
 
     if (modalContent && !modalContent.contains(event.target as Node)) {
@@ -45,11 +45,11 @@ export default class AddUserModal extends Vue {
     }
   }
 
-  closeAddUserModal(): void {
+  closeAddUserModal (): void {
     this.$emit('toggle')
   }
 
-  handleAddition(): void {
+  handleAddition (): void {
     this.$emit('user-added', 'toggle')
   }
 }

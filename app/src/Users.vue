@@ -37,11 +37,11 @@ export default class Users extends Vue {
   users: UserModel[] = []
   showAddUserModal = false
 
-  mounted() {
+  mounted () {
     this.getData()
   }
 
-  getData(): void {
+  getData (): void {
     axios.get('http://localhost:3000/users').then((response) => {
       if (response.status === 200) {
         this.users = response.data

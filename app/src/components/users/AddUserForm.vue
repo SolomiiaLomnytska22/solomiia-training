@@ -93,7 +93,7 @@ export default class AddUserForm extends Vue {
     currentDate.getDay()
   )
     .toISOString()
-    .split('T')[0]
+    .split('T')[ 0 ]
   //User cannot be younger than 14 years old.
   maxDate = new Date(
     currentDate.getFullYear() - MAX_YEAR_OFFSET,
@@ -101,14 +101,14 @@ export default class AddUserForm extends Vue {
     currentDate.getDay()
   )
     .toISOString()
-    .split('T')[0]
+    .split('T')[ 0 ]
 
-  closeClick(): void {
+  closeClick (): void {
     this.resetNewUser()
     this.$emit('close')
   }
 
-  addUser(): void {
+  addUser (): void {
     axios
       .post('http://localhost:3000/users', this.newUserData)
       .then((response) => {
@@ -121,11 +121,11 @@ export default class AddUserForm extends Vue {
       })
   }
 
-  updateUser(field: string, value: string): void {
+  updateUser (field: string, value: string): void {
     this.$set(this.newUserData, field, value)
   }
 
-  resetNewUser(): void {
+  resetNewUser (): void {
     this.newUserData = {
       name: '',
       surname: '',

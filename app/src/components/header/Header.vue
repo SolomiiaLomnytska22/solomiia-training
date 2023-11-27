@@ -53,7 +53,7 @@ export default class Header extends Vue {
     { id: 3, route: '/contact', title: 'Contact' }
   ]
 
-  handleToggle(): void {
+  handleToggle (): void {
     this.showMenu = !this.showMenu
   }
 }
