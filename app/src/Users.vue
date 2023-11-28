@@ -4,22 +4,27 @@
       <h1>User Table</h1>
       <Button
         type="button"
-        title="Add"
-        @click="showAddUserModal = true"
-      />
-      <AddUserModal
+        @click="handleAddClick"
+      >
+        Add
+      </Button>
+      <UserInfoModal
         :show-modal="showAddUserModal"
+        :selected-user="selectedUser"
         @user-added="getData"
         @toggle="showAddUserModal = !showAddUserModal"
       />
     </div>
-    <UserTable :users="users" />
+    <UserTable
+      :users="users"
+      @edit="handleEditEvent"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import axios from 'axios'
-import AddUserModal from './components/users/AddUserModal.vue'
+import UserInfoModal from './components/users/UserInfoModal.vue'
 import UserTable from './components/users/UserTable.vue'
 import Button from './components/common/Button.vue'
 import Component from 'vue-class-component'
@@ -28,7 +33,7 @@ import { User } from './types'
 
 @Component({
   components: {
-    AddUserModal,
+    UserInfoModal,
     UserTable,
     Button
   }
@@ -36,9 +41,20 @@ import { User } from './types'
 export default class Users extends Vue {
   users: User[] = []
   showAddUserModal = false
+  selectedUser: User | null = null
 
   mounted () {
     this.getData()
+  }
+
+  handleEditEvent (user: User) {
+    this.selectedUser = user
+    this.showAddUserModal = true
+  }
+
+  handleAddClick (): void {
+    this.showAddUserModal = true
+    this.selectedUser = null
   }
 
   getData (): void {

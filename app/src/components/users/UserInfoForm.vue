@@ -1,61 +1,56 @@
 <template>
-  <form @submit.prevent="addUser">
+  <form @submit.prevent="submitForm">
     <TextInput
       id="name"
+      v-model="newUserData.name"
       label="Name"
-      :value="newUserData.name"
       :required="true"
       pattern="[A-Za-z '\-]+"
       title="Only letters, spaces, hyphens, apostrophes, and backticks are allowed"
-      @update:value="updateUser('name', $event)"
     />
     <TextInput
       id="surname"
+      v-model="newUserData.surname"
       label="Surname"
-      :value="newUserData.surname"
       :required="true"
       pattern="[A-Za-z '\-]+"
       title="Only letters, spaces, hyphens, apostrophes, and backticks are allowed"
-      @update:value="updateUser('surname', $event)"
     />
     <DateInput
       id="dateOfBirth"
+      v-model="newUserData.dateOfBirth"
       label="Date of Birth"
-      :value="newUserData.dateOfBirth"
       :required="true"
       :min-date="minDate"
       :max-date="maxDate"
-      @update:value="updateUser('dateOfBirth', $event)"
     />
     <TextInput
       id="position"
+      v-model="newUserData.position"
       label="Position"
-      :value="newUserData.position"
       :required="true"
       pattern="[A-Za-z '\-]+"
       title="Only letters, spaces, hyphens, apostrophes, and backticks are allowed"
-      @update:value="updateUser('position', $event)"
     />
     <TextInput
       id="country"
+      v-model="newUserData.country"
       label="Country"
-      :value="newUserData.country"
       :required="true"
       pattern="[A-Za-z '\-]+"
       title="Only letters, spaces, hyphens, apostrophes, and backticks are allowed"
-      @update:value="updateUser('country', $event)"
     />
     <div class="modal-buttons">
       <Button
         style-type="secondary"
         type="button"
-        title="Close"
         @click="closeClick"
-      />
-      <Button
-        type="submit"
-        title="Add"
-      />
+      >
+        Close
+      </Button>
+      <Button type="submit">
+        {{ action === 'add' ? 'Add' : 'Save' }}
+      </Button>
     </div>
   </form>
 </template>
@@ -68,6 +63,8 @@ import TextInput from '../common/TextInput.vue'
 import { DATE_CONSTANTS } from '@/constants'
 import Component from 'vue-class-component'
 import Vue from 'vue'
+import { User } from '@/types'
+import { Prop } from 'vue-property-decorator'
 
 const currentDate = new Date()
 const { MIN_YEAR_OFFSET, MAX_YEAR_OFFSET } = DATE_CONSTANTS
@@ -79,12 +76,17 @@ const { MIN_YEAR_OFFSET, MAX_YEAR_OFFSET } = DATE_CONSTANTS
   }
 })
 export default class AddUserForm extends Vue {
-  newUserData = {
+  @Prop({ required: true }) action!: string
+  @Prop({ required: false, default: null }) selectedUser!: User | null
+
+  newUserData: User = {
+    id: null,
     name: '',
     surname: '',
     dateOfBirth: '',
     position: '',
-    country: ''
+    country: '',
+    online: false
   }
   //User cannot be older than 100 years old.
   minDate = new Date(
@@ -103,8 +105,13 @@ export default class AddUserForm extends Vue {
     .toISOString()
     .split('T')[ 0 ]
 
+  mounted () {
+    this.newUserData = this.selectedUser
+      ? { ...this.selectedUser }
+      : this.newUserData
+  }
+
   closeClick (): void {
-    this.resetNewUser()
     this.$emit('close')
   }
 
@@ -121,17 +128,27 @@ export default class AddUserForm extends Vue {
       })
   }
 
-  updateUser (field: string, value: string): void {
-    this.$set(this.newUserData, field, value)
+  saveUser (): void {
+    axios
+      .put(
+        `http://localhost:3000/users/${this.newUserData.id}`,
+        this.newUserData
+      )
+      .then((response) => {
+        if (response.status === 200) {
+          this.$emit('user-added')
+          this.closeClick()
+        } else {
+          window.alert('Error while editing user: ' + response.statusText)
+        }
+      })
   }
 
-  resetNewUser (): void {
-    this.newUserData = {
-      name: '',
-      surname: '',
-      dateOfBirth: '',
-      position: '',
-      country: ''
+  submitForm (): void {
+    if (this.action === 'add') {
+      this.addUser()
+    } else {
+      this.saveUser()
     }
   }
 }

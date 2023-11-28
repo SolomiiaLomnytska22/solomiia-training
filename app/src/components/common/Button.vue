@@ -4,7 +4,7 @@
     :type="type"
     @click="handleClick"
   >
-    {{ title }}
+    <slot />
   </button>
 </template>
 
@@ -21,7 +21,7 @@ export default class Button extends Vue {
     validator: (value: string) => [ 'primary', 'secondary' ].includes(value)
   })
   styleType!: string
-  @Prop({ required: true }) title!: string
+  /*@Prop({ required: true }) title!: string*/
   @Prop({
     required: false,
     default: 'button',
@@ -40,24 +40,25 @@ button {
   cursor: pointer;
   border-radius: 4px;
   padding: 10px;
+  border-width: 2px;
+  border-style: solid;
 }
 
 .primary {
   background-color: #4caf50;
+  border-color: #4caf50;
   color: #fff;
-  border: none;
 }
 
 .primary:hover {
   background-color: #45a049;
+  border-color: #45a049;
 }
 
 .secondary {
   background: #fff;
   border-color: #4caf50;
   color: #4caf50;
-  border-width: 2px;
-  border-style: solid;
 }
 
 .secondary:hover {

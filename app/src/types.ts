@@ -1,5 +1,5 @@
 interface User {
-  id: number
+  id: number | null
   name: string
   surname: string
   dateOfBirth: string

@@ -28,7 +28,7 @@ export default class TextInput extends Vue {
   @Prop({ required: false, default: '' }) title!: string
 
   updateValue (event: Event): void {
-    this.$emit('update:value', (event.target as HTMLInputElement).value)
+    this.$emit('input', (event.target as HTMLInputElement).value)
   }
 }
 </script>

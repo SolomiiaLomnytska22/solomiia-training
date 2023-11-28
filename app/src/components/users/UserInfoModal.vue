@@ -9,9 +9,11 @@
       class="modal-content"
     >
       <div class="heading">
-        <h2>Add New User</h2>
+        <h2>{{ selectedUser === null ? 'Add New User' : 'Edit User' }}</h2>
       </div>
-      <AddUserForm
+      <UserInfoForm
+        :action="selectedUser === null ? 'add' : 'edit'"
+        :selected-user="selectedUser"
         @close="closeAddUserModal"
         @user-added="handleAddition"
       />
@@ -20,14 +22,15 @@
 </template>
 
 <script lang="ts">
-import AddUserForm from './AddUserForm.vue'
+import UserInfoForm from './UserInfoForm.vue'
 import Component from 'vue-class-component'
 import Vue from 'vue'
 import { Prop } from 'vue-property-decorator'
+import { User } from '@/types'
 
 @Component({
   components: {
-    AddUserForm
+    UserInfoForm
   }
 })
 export default class AddUserModal extends Vue {
@@ -36,6 +39,7 @@ export default class AddUserModal extends Vue {
     default: true
   })
   showModal!: boolean
+  @Prop({ required: false, default: null }) selectedUser!: User | null
 
   clickOutsideModal (event: Event): void {
     const modalContent = this.$refs.modalContent as HTMLElement | undefined
