@@ -13,21 +13,26 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Component from 'vue-class-component'
 import Vue from 'vue'
 import { Prop } from 'vue-property-decorator'
 
 @Component
 export default class DateInput extends Vue {
-  @Prop({ type: String }) label
-  @Prop({ type: String }) id
-  @Prop({ type: String }) value
-  @Prop({ type: Boolean }) required
-  @Prop({ type: String }) maxDate
-  @Prop({ type: String }) minDate
-  updateValue(event) {
-    this.$emit('update:value', event.target.value)
+  @Prop({ required: true }) label!: string
+  @Prop({ required: true }) id!: string
+  @Prop({ required: true }) value!: string
+  @Prop({
+    required: false,
+    default: false
+  })
+  required!: boolean
+  @Prop({ required: true }) maxDate!: string
+  @Prop({ required: true }) minDate!: string
+
+  updateValue (event: Event): void {
+    this.$emit('update:value', (event.target as HTMLInputElement).value)
   }
 }
 </script>

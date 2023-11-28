@@ -31,10 +31,11 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import HeaderMenu from './HeaderMenu.vue'
 import Component from 'vue-class-component'
 import Vue from 'vue'
+import { MenuItem } from '@/types'
 
 @Component({
   components: {
@@ -42,18 +43,18 @@ import Vue from 'vue'
   }
 })
 export default class Header extends Vue {
-  showMenu = false
-  userInfo = {
+  showMenu: boolean = false
+  userInfo: { name: string; avatar: string } = {
     name: 'John Doe',
     avatar: 'Man.jpg'
   }
-  menuItems = [
+  menuItems: MenuItem[] = [
     { id: 1, route: '/', title: 'Home' },
     { id: 2, route: '/about', title: 'About' },
     { id: 3, route: '/contact', title: 'Contact' }
   ]
 
-  handleToggle() {
+  handleToggle (): void {
     this.showMenu = !this.showMenu
   }
 }

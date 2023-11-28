@@ -19,7 +19,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import AddUserForm from './AddUserForm.vue'
 import Component from 'vue-class-component'
 import Vue from 'vue'
@@ -31,19 +31,25 @@ import { Prop } from 'vue-property-decorator'
   }
 })
 export default class AddUserModal extends Vue {
-  @Prop({ type: Boolean }) showModal
+  @Prop({
+    required: false,
+    default: true
+  })
+  showModal!: boolean
 
-  clickOutsideModal(event) {
-    if (!this.$refs.modalContent.contains(event.target)) {
+  clickOutsideModal (event: Event): void {
+    const modalContent = this.$refs.modalContent as HTMLElement | undefined
+
+    if (modalContent && !modalContent.contains(event.target as Node)) {
       this.closeAddUserModal()
     }
   }
 
-  closeAddUserModal() {
+  closeAddUserModal (): void {
     this.$emit('toggle')
   }
 
-  handleAddition() {
+  handleAddition (): void {
     this.$emit('user-added', 'toggle')
   }
 }

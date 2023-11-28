@@ -13,22 +13,22 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Component from 'vue-class-component'
 import Vue from 'vue'
 import { Prop } from 'vue-property-decorator'
 
 @Component
 export default class TextInput extends Vue {
-  @Prop({ type: String }) label
-  @Prop({ type: String }) id
-  @Prop({ type: String }) value
-  @Prop({ type: Boolean }) required
-  @Prop({ type: String }) pattern
-  @Prop({ type: String }) title
+  @Prop({ required: true }) label!: string
+  @Prop({ required: true }) id!: string
+  @Prop({ required: true }) value!: string
+  @Prop({ required: false, default: false }) required!: boolean
+  @Prop({ required: false, default: null }) pattern!: string
+  @Prop({ required: false, default: '' }) title!: string
 
-  updateValue(event) {
-    this.$emit('update:value', event.target.value)
+  updateValue (event: Event): void {
+    this.$emit('update:value', (event.target as HTMLInputElement).value)
   }
 }
 </script>

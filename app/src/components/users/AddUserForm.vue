@@ -3,7 +3,7 @@
     <TextInput
       id="name"
       label="Name"
-      :value="newUser.name"
+      :value="newUserData.name"
       :required="true"
       pattern="[A-Za-z '\-]+"
       title="Only letters, spaces, hyphens, apostrophes, and backticks are allowed"
@@ -12,7 +12,7 @@
     <TextInput
       id="surname"
       label="Surname"
-      :value="newUser.surname"
+      :value="newUserData.surname"
       :required="true"
       pattern="[A-Za-z '\-]+"
       title="Only letters, spaces, hyphens, apostrophes, and backticks are allowed"
@@ -21,7 +21,7 @@
     <DateInput
       id="dateOfBirth"
       label="Date of Birth"
-      :value="newUser.dateOfBirth"
+      :value="newUserData.dateOfBirth"
       :required="true"
       :min-date="minDate"
       :max-date="maxDate"
@@ -30,7 +30,7 @@
     <TextInput
       id="position"
       label="Position"
-      :value="newUser.position"
+      :value="newUserData.position"
       :required="true"
       pattern="[A-Za-z '\-]+"
       title="Only letters, spaces, hyphens, apostrophes, and backticks are allowed"
@@ -39,7 +39,7 @@
     <TextInput
       id="country"
       label="Country"
-      :value="newUser.country"
+      :value="newUserData.country"
       :required="true"
       pattern="[A-Za-z '\-]+"
       title="Only letters, spaces, hyphens, apostrophes, and backticks are allowed"
@@ -60,7 +60,7 @@
   </form>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios'
 import Button from '../common/Button.vue'
 import DateInput from '../common/DateInput.vue'
@@ -79,7 +79,7 @@ const { MIN_YEAR_OFFSET, MAX_YEAR_OFFSET } = DATE_CONSTANTS
   }
 })
 export default class AddUserForm extends Vue {
-  newUser = {
+  newUserData = {
     name: '',
     surname: '',
     dateOfBirth: '',
@@ -93,7 +93,7 @@ export default class AddUserForm extends Vue {
     currentDate.getDay()
   )
     .toISOString()
-    .split('T')[0]
+    .split('T')[ 0 ]
   //User cannot be younger than 14 years old.
   maxDate = new Date(
     currentDate.getFullYear() - MAX_YEAR_OFFSET,
@@ -101,30 +101,32 @@ export default class AddUserForm extends Vue {
     currentDate.getDay()
   )
     .toISOString()
-    .split('T')[0]
+    .split('T')[ 0 ]
 
-  closeClick() {
+  closeClick (): void {
     this.resetNewUser()
     this.$emit('close')
   }
 
-  addUser() {
-    axios.post('http://localhost:3000/users', this.newUser).then((response) => {
-      if (response.status === 201) {
-        this.$emit('user-added')
-        this.closeClick()
-      } else {
-        window.alert('Error while adding user: ' + response.statusText)
-      }
-    })
+  addUser (): void {
+    axios
+      .post('http://localhost:3000/users', this.newUserData)
+      .then((response) => {
+        if (response.status === 201) {
+          this.$emit('user-added')
+          this.closeClick()
+        } else {
+          window.alert('Error while adding user: ' + response.statusText)
+        }
+      })
   }
 
-  updateUser(field, value) {
-    this.$set(this.newUser, field, value)
+  updateUser (field: string, value: string): void {
+    this.$set(this.newUserData, field, value)
   }
 
-  resetNewUser() {
-    this.newUser = {
+  resetNewUser (): void {
+    this.newUserData = {
       name: '',
       surname: '',
       dateOfBirth: '',
