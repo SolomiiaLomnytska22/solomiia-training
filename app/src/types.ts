@@ -1,4 +1,4 @@
-export default interface UserModel {
+interface User {
   id: number
   name: string
   surname: string
@@ -7,3 +7,11 @@ export default interface UserModel {
   online: boolean
   country: string
 }
+
+interface MenuItem {
+  id: number
+  route: string
+  title: string
+}
+
+export { User, MenuItem }

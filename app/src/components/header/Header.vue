@@ -35,7 +35,7 @@
 import HeaderMenu from './HeaderMenu.vue'
 import Component from 'vue-class-component'
 import Vue from 'vue'
-import MenuItemModel from '@/models/MenuItemModel'
+import { MenuItem } from '@/types'
 
 @Component({
   components: {
@@ -48,7 +48,7 @@ export default class Header extends Vue {
     name: 'John Doe',
     avatar: 'Man.jpg'
   }
-  menuItems: MenuItemModel[] = [
+  menuItems: MenuItem[] = [
     { id: 1, route: '/', title: 'Home' },
     { id: 2, route: '/about', title: 'About' },
     { id: 3, route: '/contact', title: 'Contact' }

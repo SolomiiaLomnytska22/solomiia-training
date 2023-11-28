@@ -48,11 +48,11 @@
 import Component from 'vue-class-component'
 import Vue from 'vue'
 import { Prop } from 'vue-property-decorator'
-import UserModel from '@/models/UserModel'
+import { User } from '@/types'
 
 @Component
 export default class UserTable extends Vue {
-  @Prop({ required: true }) users!: UserModel[]
+  @Prop({ required: true }) users!: User[]
 
   getColspan (): Promise<number> {
     return new Promise((resolve) => {

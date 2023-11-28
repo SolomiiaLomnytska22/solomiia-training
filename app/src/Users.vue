@@ -24,7 +24,7 @@ import UserTable from './components/users/UserTable.vue'
 import Button from './components/common/Button.vue'
 import Component from 'vue-class-component'
 import Vue from 'vue'
-import UserModel from '@/models/UserModel'
+import { User } from './types'
 
 @Component({
   components: {
@@ -34,7 +34,7 @@ import UserModel from '@/models/UserModel'
   }
 })
 export default class Users extends Vue {
-  users: UserModel[] = []
+  users: User[] = []
   showAddUserModal = false
 
   mounted () {
