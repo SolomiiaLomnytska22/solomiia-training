@@ -49,7 +49,7 @@
         Close
       </Button>
       <Button type="submit">
-        {{ action === 'add' ? 'Add' : 'Save' }}
+        {{ title }}
       </Button>
     </div>
   </form>
@@ -109,6 +109,10 @@ export default class AddUserForm extends Vue {
     this.newUserData = this.selectedUser
       ? { ...this.selectedUser }
       : this.newUserData
+  }
+
+  get title (): string {
+    return this.action === 'add' ? 'Add' : 'Save'
   }
 
   closeClick (): void {
