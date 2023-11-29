@@ -44,7 +44,7 @@
       </tbody>
       <tbody v-else>
         <tr>
-          <td :colspan="getColspan()">
+          <td :colspan="colspan">
             <p>Fetching your data!</p>
           </td>
         </tr>
@@ -65,18 +65,11 @@ import Button from '@/components/common/Button.vue'
 })
 export default class UserTable extends Vue {
   @Prop({ required: true }) users!: User[]
+  colspan: number = 0
 
-  getColspan (): Promise<number> {
-    return new Promise((resolve) => {
-      this.$nextTick(() => {
-        const tableHeaders = this.$refs.userTable
-          ? (this.$refs.userTable as HTMLTableElement).getElementsByTagName(
-              'th'
-            )
-          : null
-        resolve(tableHeaders ? tableHeaders.length : 0)
-      })
-    })
+  mounted () {
+    this.colspan =
+      this.$el.querySelector('.user-table thead tr')?.childElementCount || 0
   }
 }
 </script>

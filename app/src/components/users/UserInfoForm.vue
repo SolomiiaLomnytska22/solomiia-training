@@ -56,7 +56,7 @@
 </template>
 
 <script lang="ts">
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import Button from '../common/Button.vue'
 import DateInput from '../common/DateInput.vue'
 import TextInput from '../common/TextInput.vue'
@@ -119,33 +119,40 @@ export default class AddUserForm extends Vue {
     this.$emit('close')
   }
 
-  addUser (): void {
-    axios
-      .post('http://localhost:3000/users', this.newUserData)
-      .then((response) => {
-        if (response.status === 201) {
-          this.$emit('user-added')
-          this.closeClick()
-        } else {
-          window.alert('Error while adding user: ' + response.statusText)
-        }
-      })
+  async addUser (): Promise<void> {
+    try {
+      const response: AxiosResponse = await axios.post(
+        'http://localhost:3000/users',
+        this.newUserData
+      )
+
+      if (response.status === 201) {
+        this.$emit('data-saved')
+        this.closeClick()
+      } else {
+        window.alert('Error while adding user: ' + response.statusText)
+      }
+    } catch (error) {
+      window.alert('An error occurred while adding user.')
+    }
   }
 
-  saveUser (): void {
-    axios
-      .put(
+  async saveUser (): Promise<void> {
+    try {
+      const response: AxiosResponse = await axios.put(
         `http://localhost:3000/users/${this.newUserData.id}`,
         this.newUserData
       )
-      .then((response) => {
-        if (response.status === 200) {
-          this.$emit('user-added')
-          this.closeClick()
-        } else {
-          window.alert('Error while editing user: ' + response.statusText)
-        }
-      })
+
+      if (response.status === 200) {
+        this.$emit('data-saved')
+        this.closeClick()
+      } else {
+        window.alert('Error while editing user: ' + response.statusText)
+      }
+    } catch (error) {
+      window.alert('An error occurred while editing user.')
+    }
   }
 
   submitForm (): void {

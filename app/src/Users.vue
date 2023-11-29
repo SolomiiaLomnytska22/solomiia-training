@@ -4,26 +4,26 @@
       <h1>User Table</h1>
       <Button
         type="button"
-        @click="handleAddClick"
+        @click="handleAddUser"
       >
         Add
       </Button>
       <UserInfoModal
-        :show-modal="showAddUserModal"
+        :show-modal="showUserInfoModal"
         :selected-user="selectedUser"
         @user-added="getData"
-        @toggle="showAddUserModal = !showAddUserModal"
+        @toggle="showUserInfoModal = !showUserInfoModal"
       />
     </div>
     <UserTable
       :users="users"
-      @edit="handleEditEvent"
+      @edit="handleEditUser"
     />
   </div>
 </template>
 
 <script lang="ts">
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import UserInfoModal from './components/users/UserInfoModal.vue'
 import UserTable from './components/users/UserTable.vue'
 import Button from './components/common/Button.vue'
@@ -40,31 +40,37 @@ import { User } from './types'
 })
 export default class Users extends Vue {
   users: User[] = []
-  showAddUserModal = false
+  showUserInfoModal = false
   selectedUser: User | null = null
 
   mounted () {
     this.getData()
   }
 
-  handleEditEvent (user: User) {
+  handleEditUser (user: User) {
     this.selectedUser = user
-    this.showAddUserModal = true
+    this.showUserInfoModal = true
   }
 
-  handleAddClick (): void {
-    this.showAddUserModal = true
+  handleAddUser (): void {
+    this.showUserInfoModal = true
     this.selectedUser = null
   }
 
-  getData (): void {
-    axios.get('http://localhost:3000/users').then((response) => {
+  async getData (): Promise<void> {
+    try {
+      const response: AxiosResponse = await axios.get(
+        'http://localhost:3000/users'
+      )
+
       if (response.status === 200) {
         this.users = response.data
       } else {
         window.alert('Error while loading information: ' + response.statusText)
       }
-    })
+    } catch (error) {
+      window.alert('An error occurred while loading information.')
+    }
   }
 }
 </script>

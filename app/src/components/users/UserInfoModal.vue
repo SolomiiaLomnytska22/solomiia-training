@@ -9,13 +9,13 @@
       class="modal-content"
     >
       <div class="heading">
-        <h2>{{ selectedUser === null ? 'Add New User' : 'Edit User' }}</h2>
+        <h2>{{ heading }}</h2>
       </div>
       <UserInfoForm
         :action="selectedUser === null ? 'add' : 'edit'"
         :selected-user="selectedUser"
-        @close="closeAddUserModal"
-        @user-added="handleAddition"
+        @close="closeUserInfoModal"
+        @data-saved="handleUserDataSave"
       />
     </div>
   </div>
@@ -45,15 +45,19 @@ export default class AddUserModal extends Vue {
     const modalContent = this.$refs.modalContent as HTMLElement | undefined
 
     if (modalContent && !modalContent.contains(event.target as Node)) {
-      this.closeAddUserModal()
+      this.closeUserInfoModal()
     }
   }
 
-  closeAddUserModal (): void {
+  get heading () {
+    return this.selectedUser === null ? 'Add New User' : 'Edit User'
+  }
+
+  closeUserInfoModal (): void {
     this.$emit('toggle')
   }
 
-  handleAddition (): void {
+  handleUserDataSave (): void {
     this.$emit('user-added', 'toggle')
   }
 }
