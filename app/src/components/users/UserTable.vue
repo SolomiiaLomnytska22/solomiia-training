@@ -39,6 +39,13 @@
             >
               Edit
             </Button>
+            <Button
+              type="button"
+              style-type="secondary"
+              @click="$emit('delete', user)"
+            >
+              Remove
+            </Button>
           </td>
         </tr>
       </tbody>
