@@ -9,25 +9,28 @@
       class="modal-content"
     >
       <div class="heading">
-        <h2>Add New User</h2>
+        <h2>{{ heading }}</h2>
       </div>
-      <AddUserForm
-        @close="closeAddUserModal"
-        @user-added="handleAddition"
+      <UserInfoForm
+        :action="selectedUser === null ? 'add' : 'edit'"
+        :selected-user="selectedUser"
+        @close="closeUserInfoModal"
+        @data-saved="handleUserDataSave"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import AddUserForm from './AddUserForm.vue'
+import UserInfoForm from './UserInfoForm.vue'
 import Component from 'vue-class-component'
 import Vue from 'vue'
 import { Prop } from 'vue-property-decorator'
+import { User } from '@/types'
 
 @Component({
   components: {
-    AddUserForm
+    UserInfoForm
   }
 })
 export default class AddUserModal extends Vue {
@@ -36,20 +39,25 @@ export default class AddUserModal extends Vue {
     default: true
   })
   showModal!: boolean
+  @Prop({ required: false, default: null }) selectedUser!: User | null
 
   clickOutsideModal (event: Event): void {
     const modalContent = this.$refs.modalContent as HTMLElement | undefined
 
     if (modalContent && !modalContent.contains(event.target as Node)) {
-      this.closeAddUserModal()
+      this.closeUserInfoModal()
     }
   }
 
-  closeAddUserModal (): void {
+  get heading () {
+    return this.selectedUser === null ? 'Add New User' : 'Edit User'
+  }
+
+  closeUserInfoModal (): void {
     this.$emit('toggle')
   }
 
-  handleAddition (): void {
+  handleUserDataSave (): void {
     this.$emit('user-added', 'toggle')
   }
 }

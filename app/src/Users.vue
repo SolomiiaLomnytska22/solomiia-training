@@ -4,22 +4,27 @@
       <h1>User Table</h1>
       <Button
         type="button"
-        title="Add"
-        @click="showAddUserModal = true"
-      />
-      <AddUserModal
-        :show-modal="showAddUserModal"
+        @click="handleAddUser"
+      >
+        Add
+      </Button>
+      <UserInfoModal
+        :show-modal="showUserInfoModal"
+        :selected-user="selectedUser"
         @user-added="getData"
-        @toggle="showAddUserModal = !showAddUserModal"
+        @toggle="showUserInfoModal = !showUserInfoModal"
       />
     </div>
-    <UserTable :users="users" />
+    <UserTable
+      :users="users"
+      @edit="handleEditUser"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import axios from 'axios'
-import AddUserModal from './components/users/AddUserModal.vue'
+import axios, { AxiosResponse } from 'axios'
+import UserInfoModal from './components/users/UserInfoModal.vue'
 import UserTable from './components/users/UserTable.vue'
 import Button from './components/common/Button.vue'
 import Component from 'vue-class-component'
@@ -28,27 +33,44 @@ import { User } from './types'
 
 @Component({
   components: {
-    AddUserModal,
+    UserInfoModal,
     UserTable,
     Button
   }
 })
 export default class Users extends Vue {
   users: User[] = []
-  showAddUserModal = false
+  showUserInfoModal = false
+  selectedUser: User | null = null
 
   mounted () {
     this.getData()
   }
 
-  getData (): void {
-    axios.get('http://localhost:3000/users').then((response) => {
+  handleEditUser (user: User) {
+    this.selectedUser = user
+    this.showUserInfoModal = true
+  }
+
+  handleAddUser (): void {
+    this.showUserInfoModal = true
+    this.selectedUser = null
+  }
+
+  async getData (): Promise<void> {
+    try {
+      const response: AxiosResponse = await axios.get(
+        'http://localhost:3000/users'
+      )
+
       if (response.status === 200) {
         this.users = response.data
       } else {
         window.alert('Error while loading information: ' + response.statusText)
       }
-    })
+    } catch (error) {
+      window.alert('An error occurred while loading information.')
+    }
   }
 }
 </script>

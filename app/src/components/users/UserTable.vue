@@ -10,6 +10,7 @@
           <th>Position</th>
           <th>Country</th>
           <th>Online</th>
+          <th />
         </tr>
       </thead>
       <tbody v-if="users.length > 0">
@@ -31,12 +32,20 @@
               }"
             />
           </td>
+          <td class="button-col">
+            <Button
+              type="button"
+              @click="$emit('edit', user)"
+            >
+              Edit
+            </Button>
+          </td>
         </tr>
       </tbody>
       <tbody v-else>
         <tr>
-          <td :colspan="getColspan()">
-            Fetching your data!
+          <td :colspan="colspan">
+            <p>Fetching your data!</p>
           </td>
         </tr>
       </tbody>
@@ -49,22 +58,18 @@ import Component from 'vue-class-component'
 import Vue from 'vue'
 import { Prop } from 'vue-property-decorator'
 import { User } from '@/types'
+import Button from '@/components/common/Button.vue'
 
-@Component
+@Component({
+  components: { Button }
+})
 export default class UserTable extends Vue {
   @Prop({ required: true }) users!: User[]
+  colspan: number = 0
 
-  getColspan (): Promise<number> {
-    return new Promise((resolve) => {
-      this.$nextTick(() => {
-        const tableHeaders = this.$refs.userTable
-          ? (this.$refs.userTable as HTMLTableElement).getElementsByTagName(
-              'th'
-            )
-          : null
-        resolve(tableHeaders ? tableHeaders.length : 0)
-      })
-    })
+  mounted () {
+    this.colspan =
+      this.$el.querySelector('.user-table thead tr')?.childElementCount || 0
   }
 }
 </script>
@@ -80,6 +85,16 @@ export default class UserTable extends Vue {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
+}
+
+.button-col {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.button-col Button {
+  margin: 0 5px;
 }
 
 .user-table th,
