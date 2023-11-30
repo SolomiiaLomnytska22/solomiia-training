@@ -9,6 +9,11 @@
     "start-json-server": "json-server --watch user_db.json --port 3000"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.5.0",
+    "@fortawesome/free-brands-svg-icons": "^6.5.0",
+    "@fortawesome/free-regular-svg-icons": "^6.5.0",
+    "@fortawesome/free-solid-svg-icons": "^6.5.0",
+    "@fortawesome/vue-fontawesome": "^2.0.10",
     "axios": "^1.6.1",
     "core-js": "^3.8.3",
     "json-server": "^0.17.4",
@@ -51,10 +56,22 @@
     "rules": {
       "vue/multi-word-component-names": "off",
       "space-before-function-paren": 2,
-      "object-curly-spacing": ["error", "always"],
-      "array-bracket-spacing": ["error", "always"],
-      "computed-property-spacing": ["error", "always"],
-      "quotes": ["error", "single"]
+      "object-curly-spacing": [
+        "error",
+        "always"
+      ],
+      "array-bracket-spacing": [
+        "error",
+        "always"
+      ],
+      "computed-property-spacing": [
+        "error",
+        "always"
+      ],
+      "quotes": [
+        "error",
+        "single"
+      ]
     }
   },
   "prettier": {
