@@ -102,9 +102,9 @@ export default class Users extends Vue {
   }
 
   showToast (message: string, style: string) {
-    this.message = message
-    this.styleType = style
-    ;(this.$refs.toast as Toast).showToast(5000)
+    this.message = message;
+    this.styleType = style;
+    (this.$refs.toast as Toast).showToast(5000)
   }
 
   async deleteUser (user: User): Promise<void> {
@@ -131,14 +131,10 @@ export default class Users extends Vue {
       if (response.status === 200) {
         this.users = response.data
       } else {
-        this.message = 'Error while loading information: ' + response.statusText
-        this.styleType = 'danger'
-        ;(this.$refs.toast as Toast).showToast(5000)
+        this.showToast('Error while loading information: ' + response.statusText, 'danger')
       }
     } catch (error) {
-      this.message = 'An error occurred while loading information.'
-      this.styleType = 'danger'
-      ;(this.$refs.toast as Toast).showToast(5000)
+      this.showToast('An error occurred while loading information.', 'danger')
     }
   }
 }
