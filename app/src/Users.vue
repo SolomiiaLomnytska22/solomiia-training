@@ -79,7 +79,6 @@ export default class Users extends Vue {
   }
 
   handleAddUser (): void {
-    console.log('here')
     this.showUserInfoModal = true
     this.selectedUser = null
   }
