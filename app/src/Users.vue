@@ -51,6 +51,7 @@ import Vue from 'vue'
 import { User } from './types'
 import ConfirmationDialog from '@/components/common/ConfirmationDialog.vue'
 import Toast from './components/common/Toast.vue'
+import { Ref } from 'vue-property-decorator'
 
 @Component({
   components: {
@@ -62,6 +63,7 @@ import Toast from './components/common/Toast.vue'
   }
 })
 export default class Users extends Vue {
+  @Ref('toast') ToastNotification!:Toast
   users: User[] = []
   showUserInfoModal: boolean = false
   selectedUser: User | null = null
@@ -102,9 +104,9 @@ export default class Users extends Vue {
   }
 
   showToast (message: string, style: string) {
-    this.message = message;
-    this.styleType = style;
-    (this.$refs.toast as Toast).showToast(5000)
+    this.message = message
+    this.styleType = style
+    this.ToastNotification.showToast(5000)
   }
 
   async deleteUser (user: User): Promise<void> {
