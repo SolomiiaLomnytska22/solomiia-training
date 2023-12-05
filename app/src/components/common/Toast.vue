@@ -6,9 +6,7 @@
     :style="{ animationDuration: getAnimationDuration }"
   >
     <div class="icon">
-      <font-awesome-icon
-        :icon="getIcon"
-      />
+      <font-awesome-icon :icon="getIcon" />
     </div>
     <slot />
   </div>
@@ -23,7 +21,7 @@ export default class Toast extends Vue {
     required: false,
     default: 'success',
     validator: (value: string) =>
-        [ 'success', 'danger', 'info', 'warning' ].includes(value)
+      [ 'success', 'danger', 'info', 'warning' ].includes(value)
   })
   styleType!: string
   timeout: number = 0
@@ -32,13 +30,15 @@ export default class Toast extends Vue {
     success: 'fa-check-circle',
     danger: 'fa-circle-xmark',
     info: 'fa-info-circle',
-    warning: 'fa-exclamation-triangle',
+    warning: 'fa-exclamation-triangle'
   }
+
   get getAnimationDuration (): string {
-    return `${this.timeout / 1000}s`;
+    return `${this.timeout / 1000}s`
   }
-  get getIcon ():string{
-    return this.icons[ this.styleType ];
+
+  get getIcon (): string {
+    return this.icons[ this.styleType ]
   }
 
   showToast (timeout: number) {
@@ -65,9 +65,10 @@ export default class Toast extends Vue {
   color: #fff;
 }
 
-.icon{
-  padding-right: 10px
+.icon {
+  padding-right: 10px;
 }
+
 .success {
   background-color: #4caf50;
 }
