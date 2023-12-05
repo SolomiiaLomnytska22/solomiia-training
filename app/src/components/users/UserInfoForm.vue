@@ -136,11 +136,9 @@ export default class AddUserForm extends Vue {
           'Error while adding user: ' + response.statusText,
           'danger'
         )
-        this.closeClick()
       }
     } catch (error) {
       this.$emit('show-toast', 'An error occurred while adding user.', 'danger')
-      this.closeClick()
     }
   }
 
@@ -161,7 +159,6 @@ export default class AddUserForm extends Vue {
           'Error while editing user: ' + response.statusText,
           'danger'
         )
-        this.closeClick()
       }
     } catch (error) {
       this.$emit(
@@ -169,7 +166,6 @@ export default class AddUserForm extends Vue {
         'An error occurred while editing user.',
         'danger'
       )
-      this.closeClick()
     }
   }
 

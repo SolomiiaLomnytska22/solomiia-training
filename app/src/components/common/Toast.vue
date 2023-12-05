@@ -55,6 +55,7 @@ export default class Toast extends Vue {
   animation: fadeOut ease-in-out infinite;
   display: flex;
   flex-direction: row;
+  z-index: 2;
 }
 
 .icon{
