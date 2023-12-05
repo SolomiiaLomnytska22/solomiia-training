@@ -90,6 +90,7 @@ export default class Users extends Vue {
   handleDeleteUser (user: User): void {
     this.showConfirmation = true
     this.selectedUser = user
+    this.ToastNotification.show = false
   }
 
   handleConfirmDelete (): void {
