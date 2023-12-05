@@ -3,11 +3,11 @@
     v-if="show"
     class="toast-container"
     :class="styleType"
-    :style="{ animationDuration: `${timeout / 1000}s` }"
+    :style="{ animationDuration: getAnimationDuration }"
   >
     <div class="icon">
       <font-awesome-icon
-        :icon="icons[styleType]"
+        :icon="getIcon"
       />
     </div>
     <slot />
@@ -33,6 +33,12 @@ export default class Toast extends Vue {
     danger: 'fa-circle-xmark',
     info: 'fa-info-circle',
     warning: 'fa-exclamation-triangle',
+  }
+  get getAnimationDuration (): string {
+    return `${this.timeout / 1000}s`;
+  }
+  get getIcon ():string{
+    return this.icons[ this.styleType ];
   }
 
   showToast (timeout: number) {
