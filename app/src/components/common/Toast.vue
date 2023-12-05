@@ -5,10 +5,11 @@
     :class="styleType"
     :style="{ animationDuration: `${timeout / 1000}s` }"
   >
-    <font-awesome-icon
-      :icon="getIcon()"
-      style="padding-right: 10px"
-    />
+    <div class="icon">
+      <font-awesome-icon
+        :icon="icons[styleType]"
+      />
+    </div>
     <slot />
   </div>
 </template>
@@ -22,25 +23,16 @@ export default class Toast extends Vue {
     required: false,
     default: 'success',
     validator: (value: string) =>
-      [ 'success', 'danger', 'info', 'warning' ].includes(value)
+        [ 'success', 'danger', 'info', 'warning' ].includes(value)
   })
   styleType!: string
   timeout: number = 0
   show: boolean = false
-
-  getIcon (): string {
-    switch (this.styleType) {
-      case 'success':
-        return 'fa-check-circle'
-      case 'danger':
-        return 'fa-circle-xmark'
-      case 'info':
-        return 'fa-info-circle'
-      case 'warning':
-        return 'fa-exclamation-triangle'
-      default:
-        return ''
-    }
+  icons: Record<string, string> = {
+    success: 'fa-check-circle',
+    danger: 'fa-circle-xmark',
+    info: 'fa-info-circle',
+    warning: 'fa-exclamation-triangle',
   }
 
   showToast (timeout: number) {
@@ -61,8 +53,13 @@ export default class Toast extends Vue {
   padding: 10px 20px;
   border-radius: 8px;
   animation: fadeOut ease-in-out infinite;
+  display: flex;
+  flex-direction: row;
 }
 
+.icon{
+  padding-right: 10px
+}
 .success {
   background-color: #4caf50;
   color: #fff;
