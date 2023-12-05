@@ -62,6 +62,7 @@ export default class Toast extends Vue {
   display: flex;
   flex-direction: row;
   z-index: 2;
+  color: #fff;
 }
 
 .icon{
@@ -69,22 +70,18 @@ export default class Toast extends Vue {
 }
 .success {
   background-color: #4caf50;
-  color: #fff;
 }
 
 .info {
   background-color: #235ac7;
-  color: #fff;
 }
 
 .danger {
   background-color: #c43221;
-  color: #fff;
 }
 
 .warning {
   background-color: #ca8544;
-  color: #fff;
 }
 
 @keyframes fadeOut {
