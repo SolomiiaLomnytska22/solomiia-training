@@ -63,7 +63,7 @@ import { Ref } from 'vue-property-decorator'
   }
 })
 export default class Users extends Vue {
-  @Ref('toast') ToastNotification!:Toast
+  @Ref('toast') ToastNotification!: Toast
   users: User[] = []
   showUserInfoModal: boolean = false
   selectedUser: User | null = null
@@ -78,11 +78,13 @@ export default class Users extends Vue {
   handleEditUser (user: User) {
     this.selectedUser = user
     this.showUserInfoModal = true
+    this.ToastNotification.show = false
   }
 
   handleAddUser (): void {
     this.showUserInfoModal = true
     this.selectedUser = null
+    this.ToastNotification.show = false
   }
 
   handleDeleteUser (user: User): void {
@@ -133,7 +135,10 @@ export default class Users extends Vue {
       if (response.status === 200) {
         this.users = response.data
       } else {
-        this.showToast('Error while loading information: ' + response.statusText, 'danger')
+        this.showToast(
+          'Error while loading information: ' + response.statusText,
+          'danger'
+        )
       }
     } catch (error) {
       this.showToast('An error occurred while loading information.', 'danger')
