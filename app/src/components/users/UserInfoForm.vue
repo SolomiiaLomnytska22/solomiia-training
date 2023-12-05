@@ -66,7 +66,7 @@ import Vue from 'vue'
 import { User } from '@/types'
 import { Prop } from 'vue-property-decorator'
 
-const currentDate = new Date()
+const currentDate = new Date(Date.now());
 const { MIN_YEAR_OFFSET, MAX_YEAR_OFFSET } = DATE_CONSTANTS
 @Component({
   components: {
