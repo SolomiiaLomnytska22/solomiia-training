@@ -128,12 +128,17 @@ export default class AddUserForm extends Vue {
 
       if (response.status === 201) {
         this.$emit('data-saved')
+        this.$emit('show-toast', 'Successfully added user.', 'success')
         this.closeClick()
       } else {
-        window.alert('Error while adding user: ' + response.statusText)
+        this.$emit(
+          'show-toast',
+          'Error while adding user: ' + response.statusText,
+          'danger'
+        )
       }
     } catch (error) {
-      window.alert('An error occurred while adding user.')
+      this.$emit('show-toast', 'An error occurred while adding user.', 'danger')
     }
   }
 
@@ -146,12 +151,21 @@ export default class AddUserForm extends Vue {
 
       if (response.status === 200) {
         this.$emit('data-saved')
+        this.$emit('show-toast', 'Successfully edited user.', 'success')
         this.closeClick()
       } else {
-        window.alert('Error while editing user: ' + response.statusText)
+        this.$emit(
+          'show-toast',
+          'Error while editing user: ' + response.statusText,
+          'danger'
+        )
       }
     } catch (error) {
-      window.alert('An error occurred while editing user.')
+      this.$emit(
+        'show-toast',
+        'An error occurred while editing user.',
+        'danger'
+      )
     }
   }
 

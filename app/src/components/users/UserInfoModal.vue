@@ -16,6 +16,7 @@
         :selected-user="selectedUser"
         @close="closeUserInfoModal"
         @data-saved="handleUserDataSave"
+        @show-toast="handleShowToast"
       />
     </div>
   </div>
@@ -55,6 +56,10 @@ export default class AddUserModal extends Vue {
 
   closeUserInfoModal (): void {
     this.$emit('toggle')
+  }
+
+  handleShowToast (message: string, style: string) {
+    this.$emit('show-toast', message, style)
   }
 
   handleUserDataSave (): void {
