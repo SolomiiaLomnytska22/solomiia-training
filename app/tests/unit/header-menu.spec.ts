@@ -32,7 +32,7 @@ describe('HeaderMenu.vue', () => {
       propsData: { menuItems: [] }
     });
 
-    expect(wrapper.findAll('router-link')).toHaveLength(0);
+    expect(wrapper.findAllComponents(RouterLinkStub)).toHaveLength(0);
   });
 
 });

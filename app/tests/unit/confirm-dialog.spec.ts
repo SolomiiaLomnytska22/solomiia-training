@@ -15,15 +15,11 @@ describe('ConfirmationDialog.vue', () => {
 
   it('emits confirm event when Confirm button is clicked', async () => {
     await wrapper.findComponent(Button).trigger('click');
-    await wrapper.vm.$nextTick();
-
     expect(wrapper.emitted().confirm).toBeTruthy();
   });
 
   it('emits cancel event when Cancel button is clicked', async () => {
     await wrapper.findAllComponents(Button).at(1).trigger('click');
-    await wrapper.vm.$nextTick();
-
     expect(wrapper.emitted().cancel).toBeTruthy();
   });
 

@@ -22,8 +22,6 @@ describe('DateInput.vue', () => {
   })
 
   it('renders label and input with correct attributes', async () => {
-    await wrapper.vm.$nextTick()
-
     expect(wrapper.find('label').text()).toBe(`${wrapper.props('label')}:`)
     expect(wrapper.find('label').attributes('for')).toBe(wrapper.props('id'))
     expect(wrapper.find('input').attributes('id')).toBe(wrapper.props('id'))
@@ -41,12 +39,10 @@ describe('DateInput.vue', () => {
   })
 
   it('emits input event when input value changes', async () => {
-    const inputField = wrapper.find('input')
-    ;(inputField.element as HTMLInputElement).value = '2023-01-01'
-    inputField.trigger('input')
-
+    const inputField = (wrapper.find('input').element as HTMLInputElement);
+    inputField.value = '2023-01-01'
+    wrapper.find('input').trigger('input')
     await wrapper.vm.$nextTick()
-
     expect(wrapper.emitted()?.input).toBeTruthy()
     expect(wrapper.emitted()?.input?.[ 0 ]?.[ 0 ]).toBe('2023-01-01')
   })

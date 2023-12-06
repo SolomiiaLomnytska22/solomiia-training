@@ -104,7 +104,6 @@ describe('UserInfoForm.vue', () => {
     });
 
     await editWrapper.find('form').trigger('submit.prevent');
-    await editWrapper.vm.$nextTick();
 
     expect(editWrapper.emitted('data-saved')).toBeTruthy();
     expect(editWrapper.emitted('close')).toBeTruthy();

@@ -94,9 +94,8 @@ export default class Users extends Vue {
   }
 
   handleConfirmDelete (): void {
-    if (this.selectedUser) {
+    if (this.selectedUser!==null) {
       this.deleteUser(this.selectedUser)
-      this.selectedUser = null
     }
   }
 
@@ -118,8 +117,10 @@ export default class Users extends Vue {
       )
       if (response.status === 200) {
         this.showConfirmation = false
-        await this.getData()
+        this.selectedUser = null
         this.showToast('Successfully deleted user.', 'success')
+        await this.getData()
+
       } else {
         this.showToast('An error occurred while deleting the user.', 'danger')
       }
