@@ -32,20 +32,22 @@
               }"
             />
           </td>
-          <td class="button-col">
-            <Button
-              type="button"
-              @click="$emit('edit', user)"
-            >
-              Edit
-            </Button>
-            <Button
-              type="button"
-              style-type="secondary"
-              @click="$emit('delete', user)"
-            >
-              Remove
-            </Button>
+          <td>
+            <div class="button-col">
+              <Button
+                type="button"
+                @click="$emit('edit', user)"
+              >
+                Edit
+              </Button>
+              <Button
+                type="button"
+                style-type="secondary"
+                @click="$emit('delete', user)"
+              >
+                Remove
+              </Button>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -95,6 +97,7 @@ export default class UserTable extends Vue {
 }
 
 .button-col {
+  height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;

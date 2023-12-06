@@ -13,6 +13,7 @@
         :selected-user="selectedUser"
         @user-added="getData"
         @toggle="showUserInfoModal = !showUserInfoModal"
+        @show-toast="showToast"
       />
       <ConfirmationDialog
         v-if="showConfirmation"
@@ -31,6 +32,12 @@
       @edit="handleEditUser"
       @delete="handleDeleteUser"
     />
+    <Toast
+      ref="toast"
+      :style-type="styleType"
+    >
+      {{ message }}
+    </Toast>
   </div>
 </template>
 
@@ -43,20 +50,26 @@ import Component from 'vue-class-component'
 import Vue from 'vue'
 import { User } from './types'
 import ConfirmationDialog from '@/components/common/ConfirmationDialog.vue'
+import Toast from './components/common/Toast.vue'
+import { Ref } from 'vue-property-decorator'
 
 @Component({
   components: {
     ConfirmationDialog,
     UserInfoModal,
     UserTable,
-    Button
+    Button,
+    Toast
   }
 })
 export default class Users extends Vue {
+  @Ref('toast') ToastNotification!: Toast
   users: User[] = []
-  showUserInfoModal = false
+  showUserInfoModal: boolean = false
   selectedUser: User | null = null
-  showConfirmation = false
+  showConfirmation: boolean = false
+  message: string = ''
+  styleType: string = 'success'
 
   mounted () {
     this.getData()
@@ -65,22 +78,24 @@ export default class Users extends Vue {
   handleEditUser (user: User) {
     this.selectedUser = user
     this.showUserInfoModal = true
+    this.ToastNotification.show = false
   }
 
   handleAddUser (): void {
     this.showUserInfoModal = true
     this.selectedUser = null
+    this.ToastNotification.show = false
   }
 
   handleDeleteUser (user: User): void {
     this.showConfirmation = true
     this.selectedUser = user
+    this.ToastNotification.show = false
   }
 
   handleConfirmDelete (): void {
     if (this.selectedUser) {
       this.deleteUser(this.selectedUser)
-      this.showConfirmation = false
       this.selectedUser = null
     }
   }
@@ -90,6 +105,12 @@ export default class Users extends Vue {
     this.selectedUser = null
   }
 
+  showToast (message: string, style: string) {
+    this.message = message
+    this.styleType = style
+    this.ToastNotification.showToast(5000)
+  }
+
   async deleteUser (user: User): Promise<void> {
     try {
       const response: AxiosResponse = await axios.delete(
@@ -97,11 +118,13 @@ export default class Users extends Vue {
       )
       if (response.status === 200) {
         await this.getData()
+        this.showConfirmation = false
+        this.showToast('Successfully deleted user.', 'success')
       } else {
-        window.alert('Error deleting user: ' + response.statusText)
+        this.showToast('Error deleting user: ' + response.statusText, 'danger')
       }
     } catch (error) {
-      window.alert('An error occurred while deleting the user.')
+      this.showToast('An error occurred while deleting the user.', 'danger')
     }
   }
 
@@ -110,14 +133,16 @@ export default class Users extends Vue {
       const response: AxiosResponse = await axios.get(
         'http://localhost:3000/users'
       )
-
       if (response.status === 200) {
         this.users = response.data
       } else {
-        window.alert('Error while loading information: ' + response.statusText)
+        this.showToast(
+          'Error while loading information: ' + response.statusText,
+          'danger'
+        )
       }
     } catch (error) {
-      window.alert('An error occurred while loading information.')
+      this.showToast('An error occurred while loading information.', 'danger')
     }
   }
 }
