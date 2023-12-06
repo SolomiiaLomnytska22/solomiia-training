@@ -14,4 +14,24 @@ interface MenuItem {
   title: string
 }
 
-export { User, MenuItem }
+interface CardItem {
+  id: number
+  image: string
+  title: string
+  description: string
+}
+
+interface SocialLink {
+  href: string
+  size: string
+  icon: string
+}
+
+interface TimelineItem {
+  id: number
+  date: string
+  title: string
+  description: string
+}
+
+export { User, MenuItem, CardItem, TimelineItem, SocialLink }

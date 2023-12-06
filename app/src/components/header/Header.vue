@@ -27,6 +27,7 @@
     <HeaderMenu
       v-if="showMenu"
       :menu-items="menuItems"
+      @close="handleToggle"
     />
   </div>
 </template>
@@ -46,7 +47,7 @@ export default class Header extends Vue {
   showMenu: boolean = false
   userInfo: { name: string; avatar: string } = {
     name: 'John Doe',
-    avatar: 'Man.jpg'
+    avatar: './images/Man.jpg'
   }
   menuItems: MenuItem[] = [
     { id: 1, route: '/', title: 'Home' },
@@ -72,7 +73,7 @@ header {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1;
+  z-index: 3;
 }
 
 .menu-icon {
