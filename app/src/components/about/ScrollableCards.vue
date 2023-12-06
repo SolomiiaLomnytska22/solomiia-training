@@ -1,10 +1,10 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { CardsItem } from '@/types'
+import { CardItem } from '@/types'
 
 @Component({})
 export default class ScrollableCards extends Vue {
-  @Prop({ required: true }) items!: CardsItem[]
+  @Prop({ required: true }) items!: CardItem[]
 }
 </script>
 

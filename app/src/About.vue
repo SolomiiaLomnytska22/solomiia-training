@@ -31,11 +31,11 @@ import { Vue, Component } from 'vue-property-decorator'
 import Timeline from '@/components/about/Timeline.vue'
 import ScrollableCards from '@/components/about/ScrollableCards.vue'
 import Button from '@/components/common/Button.vue'
-import { CardsItem } from '@/types'
+import { CardItem } from '@/types'
 
 @Component({ components: { Button, Timeline, ScrollableCards } })
 export default class About extends Vue {
-  items: CardsItem[] = [
+  items: CardItem[] = [
     {
       id: 1,
       image: './images/download.jpeg',

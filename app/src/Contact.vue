@@ -38,10 +38,11 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import { SocialLink } from '@/types'
 
 @Component({})
 export default class Contact extends Vue {
-  socialLinks = [
+  socialLinks: SocialLink[] = [
     {
       href: 'https://www.facebook.com',
       size: 'xl',

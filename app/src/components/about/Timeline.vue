@@ -18,10 +18,11 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import { TimelineItem } from '@/types'
 
 @Component({})
 export default class Timeline extends Vue {
-  timeline = [
+  timeline: TimelineItem[] = [
     {
       id: 1,
       date: 'January 2010',
@@ -55,6 +56,7 @@ export default class Timeline extends Vue {
   ]
 
   getStyleType (id: number): string {
+    //calculating style for component: even on left side of the timeline and odd on the right side.
     return id % 2 === 0 ? 'left' : 'right'
   }
 }
