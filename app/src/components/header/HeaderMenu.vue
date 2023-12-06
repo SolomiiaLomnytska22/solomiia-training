@@ -5,7 +5,9 @@
       :key="item.id"
       :to="item.route"
     >
-      <h3>{{ item.title }}</h3>
+      <h3 @click="handleItemClick">
+        {{ item.title }}
+      </h3>
     </router-link>
   </div>
 </template>
@@ -22,6 +24,9 @@ export default class HeaderMenu extends Vue {
     route: string
     title: string
   }[]
+  handleItemClick ():void{
+    this.$emit('close');
+  }
 }
 </script>
 
@@ -32,11 +37,11 @@ export default class HeaderMenu extends Vue {
   justify-content: flex-start;
   align-items: flex-start;
   width: 15%;
-  height: 90vh;
+  height: 100vh;
   background-color: rgba(51, 51, 51, 0.9);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   padding: 20px 5%;
-  z-index: 1;
+  z-index: 3;
   position: fixed;
 }
 
@@ -50,7 +55,7 @@ export default class HeaderMenu extends Vue {
   color: #4caf50;
 }
 
-@media only screen and (max-width: 786px) {
+@media only screen and (max-width: 600px) {
   .menu-content {
     width: 100%;
   }

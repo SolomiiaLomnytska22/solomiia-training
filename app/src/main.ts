@@ -9,8 +9,21 @@ import {
   faExclamationTriangle,
   faCircleXmark
 } from '@fortawesome/free-solid-svg-icons'
+import {
+  faInstagram,
+  faLinkedin,
+  faXTwitter
+} from '@fortawesome/free-brands-svg-icons'
 
-library.add(faCheckCircle, faCircleXmark, faInfoCircle, faExclamationTriangle)
+library.add(
+  faCheckCircle,
+  faCircleXmark,
+  faInfoCircle,
+  faExclamationTriangle,
+  faInstagram,
+  faLinkedin,
+  faXTwitter
+)
 Vue.component('FontAwesomeIcon', FontAwesomeIcon)
 Vue.config.productionTip = false
 new Vue({
