@@ -5,9 +5,9 @@
     <section class="company-intro">
       <h1>Who We Are</h1>
       <p>
-        We are a passionate team dedicated to providing innovative solutions
-        and excellent services. Our journey started with a vision to make a
-        positive impact in the world.
+        We are a passionate team dedicated to providing innovative solutions and
+        excellent services. Our journey started with a vision to make a positive
+        impact in the world.
       </p>
     </section>
 
@@ -21,7 +21,7 @@
 
     <h1>Let's build our future together!</h1>
     <router-link to="/contact">
-      <Button><p>Contact Us</p></Button>
+      <Button>Contact Us</Button>
     </router-link>
   </div>
 </template>
@@ -31,40 +31,45 @@ import { Vue, Component } from 'vue-property-decorator'
 import Timeline from '@/components/about/Timeline.vue'
 import ScrollableCards from '@/components/about/ScrollableCards.vue'
 import Button from '@/components/common/Button.vue'
+import { CardsItem } from '@/types'
 
 @Component({ components: { Button, Timeline, ScrollableCards } })
 export default class About extends Vue {
-  items = [
+  items: CardsItem[] = [
     {
       id: 1,
-      image: 'download.jpeg',
+      image: './images/download.jpeg',
       title: 'Versatile medical project',
       description:
         'Our client - one of the most successful and well-known medical clinic in Ukraine. '
     },
     {
       id: 2,
-      image: 'employees.webp',
+      image: './images/employees.webp',
       title: 'Innovate Hub',
-      description: 'We worked in cooperation with the best universities in Ukraine to create innovative working space.'
+      description:
+        'We worked in cooperation with the best universities in Ukraine to create innovative working space.'
     },
     {
       id: 3,
-      image: 'employees.webp',
+      image: './images/employees.webp',
       title: 'TechConnect360',
-      description: 'TechConnect360 facilitates seamless connectivity and knowledge sharing among employees in the IT area.'
+      description:
+        'TechConnect360 facilitates seamless connectivity and knowledge sharing among employees in the IT area.'
     },
     {
       id: 4,
-      image: 'employees.webp',
+      image: './images/employees.webp',
       title: 'Online Banking',
-      description: 'Do you know ThisBank or ThatBank? Thanks to us you can use mobile applications to manage your account without any trouble!'
+      description:
+        'Do you know ThisBank or ThatBank? Thanks to us you can use mobile applications to manage your account without any trouble!'
     },
     {
       id: 5,
-      image: 'employees.webp',
+      image: './images/employees.webp',
       title: 'Your Project!',
-      description: 'Contact Us and this card will display perfect solution executed just for you!'
+      description:
+        'Contact Us and this card will display perfect solution executed just for you!'
     }
   ]
 }
@@ -80,7 +85,9 @@ export default class About extends Vue {
   align-items: center;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   color: #333;
   padding: 10px;
 }
@@ -105,7 +112,8 @@ h1, h2, h3 {
   backdrop-filter: blur(2px);
 }
 
-.company-intro h1, .company-intro p {
+.company-intro h1,
+.company-intro p {
   z-index: 1;
   position: relative;
   padding: 10px;
@@ -131,16 +139,10 @@ p {
   color: #555;
 }
 
-Button p {
+Button {
+  margin-bottom: 30px;
   font-size: large;
-  font-weight: normal;
-  margin: 0;
   color: white;
   text-decoration: none;
 }
-
-Button {
-  margin-bottom: 30px;
-}
 </style>
-

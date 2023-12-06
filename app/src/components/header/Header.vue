@@ -47,7 +47,7 @@ export default class Header extends Vue {
   showMenu: boolean = false
   userInfo: { name: string; avatar: string } = {
     name: 'John Doe',
-    avatar: 'Man.jpg'
+    avatar: './images/Man.jpg'
   }
   menuItems: MenuItem[] = [
     { id: 1, route: '/', title: 'Home' },

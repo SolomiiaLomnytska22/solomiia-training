@@ -13,5 +13,11 @@ interface MenuItem {
   route: string
   title: string
 }
+interface CardsItem{
+  id: number
+  image: string
+  title: string
+  description: string
+}
 
-export { User, MenuItem }
+export { User, MenuItem, CardsItem }
