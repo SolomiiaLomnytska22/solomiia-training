@@ -74,6 +74,7 @@ describe('UserInfoForm.vue', () => {
   });
 
   it('edits user when form is submitted for "edit" action', async () => {
+
     (axios.put as jest.MockedFunction<typeof axios.put>).mockResolvedValueOnce({ status: 200, data: {} });
     const editWrapper = mount(UserInfoForm, {
       propsData: {
@@ -118,28 +119,27 @@ describe('UserInfoForm.vue', () => {
       online: false,
     });
 
-    expect((editWrapper.vm as any).selectedUser).not.toBeNull();
+    expect(editWrapper.emitted('data-saved')).toBeTruthy();
+    expect(editWrapper.emitted('show-toast')).toBeTruthy();
+    expect(editWrapper.emitted('show-toast')![ 0 ]).toEqual([ 'Successfully edited user.', 'success' ]);
   });
 
   it('handles errors when adding user', async () => {
-    const alertSpy = jest.spyOn(window, 'alert');
     (axios.post as jest.MockedFunction<typeof axios.post>).mockRejectedValueOnce(new Error('Add user error'));
 
     await wrapper.find('form').trigger('submit.prevent');
     await wrapper.vm.$nextTick();
 
     expect(axios.post).toHaveBeenCalledWith('http://localhost:3000/users', expect.any(Object));
-    expect(alertSpy).toHaveBeenCalled();
 
     expect(wrapper.emitted('data-saved')).toBeUndefined();
     expect(wrapper.emitted('close')).toBeUndefined();
-    expect(alertSpy).toHaveBeenCalled();
+    expect(wrapper.emitted('show-toast')).toBeTruthy();
+    expect(wrapper.emitted('show-toast')![ 0 ]).toEqual([ 'An error occurred while adding user.', 'danger' ]);
 
-    alertSpy.mockRestore();
   });
 
   it('handles errors when saving user', async () => {
-    const alertSpy = jest.spyOn(window, 'alert');
     const editWrapper = mount(UserInfoForm, {
       propsData: {
         action: 'edit',
@@ -173,12 +173,10 @@ describe('UserInfoForm.vue', () => {
     await editWrapper.vm.$nextTick();
 
     expect(axios.put).toHaveBeenCalledWith(`http://localhost:3000/users/${(editWrapper.vm as any).selectedUser.id}`, expect.any(Object));
-    expect(alertSpy).toHaveBeenCalled();
 
     expect(editWrapper.emitted('data-saved')).toBeUndefined();
     expect(editWrapper.emitted('close')).toBeUndefined();
-    expect(alertSpy).toHaveBeenCalled();
-
-    alertSpy.mockRestore();
+    expect(editWrapper.emitted('show-toast')).toBeTruthy();
+    expect(editWrapper.emitted('show-toast')![ 0 ]).toEqual([ 'An error occurred while editing user.', 'danger' ]);
   });
 });

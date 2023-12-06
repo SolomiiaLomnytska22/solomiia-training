@@ -117,11 +117,11 @@ export default class Users extends Vue {
         `http://localhost:3000/users/${user.id}`
       )
       if (response.status === 200) {
-        await this.getData()
         this.showConfirmation = false
+        await this.getData()
         this.showToast('Successfully deleted user.', 'success')
       } else {
-        this.showToast('Error deleting user: ' + response.statusText, 'danger')
+        this.showToast('An error occurred while deleting the user.', 'danger')
       }
     } catch (error) {
       this.showToast('An error occurred while deleting the user.', 'danger')
@@ -133,11 +133,11 @@ export default class Users extends Vue {
       const response: AxiosResponse = await axios.get(
         'http://localhost:3000/users'
       )
-      if (response.status === 200) {
+      if (response.status === 200&&response.data!=null) {
         this.users = response.data
       } else {
         this.showToast(
-          'Error while loading information: ' + response.statusText,
+          'An error occurred while loading information.',
           'danger'
         )
       }
