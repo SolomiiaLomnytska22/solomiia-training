@@ -3,7 +3,7 @@
     <div
       v-for="event in timeline"
       :key="event.id"
-      :class="['container', event.id % 2 === 0 ? 'left' : 'right']"
+      :class="['container', getStyleType(event.id)]"
     >
       <div class="event-details">
         <div class="event-date">
@@ -53,6 +53,10 @@ export default class Timeline extends Vue {
       description: 'Continuing to evolve and grow with our customers.'
     }
   ]
+
+  getStyleType (id:number):string{
+    return id % 2 === 0 ? 'left' : 'right'
+  }
 }
 </script>
 
