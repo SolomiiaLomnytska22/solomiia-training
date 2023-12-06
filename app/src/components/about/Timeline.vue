@@ -54,14 +54,13 @@ export default class Timeline extends Vue {
     }
   ]
 
-  getStyleType (id:number):string{
+  getStyleType (id: number): string {
     return id % 2 === 0 ? 'left' : 'right'
   }
 }
 </script>
 
 <style scoped>
-
 .timeline {
   position: relative;
   margin: 0 auto;
@@ -85,7 +84,10 @@ export default class Timeline extends Vue {
 }
 
 .event-details {
-  transition: padding 0.3s, background-color 0.3s, transform 0.3s;
+  transition:
+    padding 0.3s,
+    background-color 0.3s,
+    transform 0.3s;
 }
 
 .event-details:hover {
@@ -107,7 +109,8 @@ export default class Timeline extends Vue {
   z-index: 1;
 }
 
-.left, .right {
+.left,
+.right {
   position: relative;
   text-align: left;
 }
@@ -120,7 +123,8 @@ export default class Timeline extends Vue {
   left: 50%;
 }
 
-.left::before, .right::before {
+.left::before,
+.right::before {
   content: ' ';
   height: 0;
   position: absolute;
@@ -168,13 +172,14 @@ export default class Timeline extends Vue {
     border-color: transparent white transparent transparent;
   }
 
-  .left::after, .right::after {
+  .left::after,
+  .right::after {
     left: 15px;
   }
 
-  .left, .right {
+  .left,
+  .right {
     left: 0;
   }
 }
 </style>
-
