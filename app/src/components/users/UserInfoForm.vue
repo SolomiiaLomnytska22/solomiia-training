@@ -66,7 +66,7 @@ import Vue from 'vue'
 import { User } from '@/types'
 import { Prop } from 'vue-property-decorator'
 
-const currentDate = new Date()
+const currentDate = new Date(Date.now());
 const { MIN_YEAR_OFFSET, MAX_YEAR_OFFSET } = DATE_CONSTANTS
 @Component({
   components: {
@@ -133,7 +133,7 @@ export default class AddUserForm extends Vue {
       } else {
         this.$emit(
           'show-toast',
-          'Error while adding user: ' + response.statusText,
+          'An error occurred while adding user.',
           'danger'
         )
       }
@@ -148,7 +148,6 @@ export default class AddUserForm extends Vue {
         `http://localhost:3000/users/${this.newUserData.id}`,
         this.newUserData
       )
-
       if (response.status === 200) {
         this.$emit('data-saved')
         this.$emit('show-toast', 'Successfully edited user.', 'success')
@@ -156,7 +155,7 @@ export default class AddUserForm extends Vue {
       } else {
         this.$emit(
           'show-toast',
-          'Error while editing user: ' + response.statusText,
+          'An error occurred while editing user.',
           'danger'
         )
       }
