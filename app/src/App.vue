@@ -1,27 +1,33 @@
 <template>
   <div id="app">
-    <HelloWorld msg="Initial Commit"/>
+    <Header />
+    <router-view />
   </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script lang="ts">
+import Header from './components/header/Header.vue'
+import Component from 'vue-class-component'
+import Vue from 'vue'
 
-export default {
-  name: 'App',
+@Component({
   components: {
-    HelloWorld
+    Header
   }
-}
+})
+export default class App extends Vue {}
 </script>
 
 <style>
+body {
+  margin: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
