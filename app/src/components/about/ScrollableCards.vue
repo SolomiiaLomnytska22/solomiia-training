@@ -85,9 +85,11 @@ export default class ScrollableCards extends Vue {
     }
   }
 }
+
 .card:hover {
   transform: scale(105%);
   cursor: pointer;
+
   .card-image .image-overlay {
     background: rgba(32, 73, 34, 0.6);
   }

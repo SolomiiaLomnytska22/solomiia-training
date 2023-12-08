@@ -9,10 +9,21 @@ import {
   faCheckCircle,
   faInfoCircle,
   faExclamationTriangle,
-  faCircleXmark
+  faCircleXmark,
+  faPlus,
+  faPencil,
+  faTrashCan
 } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faCheckCircle, faCircleXmark, faInfoCircle, faExclamationTriangle)
+library.add(
+  faCheckCircle,
+  faCircleXmark,
+  faInfoCircle,
+  faExclamationTriangle,
+  faPlus,
+  faPencil,
+  faTrashCan
+)
 const localVue = createLocalVue()
 localVue.component('FontAwesomeIcon', FontAwesomeIcon)
 jest.mock('axios', () => ({
@@ -24,14 +35,6 @@ describe('Users.vue', () => {
   let wrapper: Wrapper<Vue>
 
   beforeEach(() => {
-    (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValue({
-      status: 200,
-      data: []
-    })
-    ;(
-      axios.delete as jest.MockedFunction<typeof axios.delete>
-    ).mockResolvedValue({ status: 200 })
-
     wrapper = mount(Users, {
       localVue
     })
@@ -41,8 +44,7 @@ describe('Users.vue', () => {
     wrapper.destroy()
   })
 
-  it('fetches data on mount', async () => {
-    await wrapper.vm.$nextTick()
+  it('fetches data on mount', () => {
     expect(axios.get).toHaveBeenCalledWith('http://localhost:3000/users')
     expect((wrapper.vm as any).users).toEqual([])
   })
@@ -55,11 +57,6 @@ describe('Users.vue', () => {
 
   it('opens UserInfoModal when Edit button is clicked', async () => {
     const usersData = [ { id: 1, name: 'John', surname: 'Doe' } ]
-    ;(axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValue({
-      status: 200,
-      data: usersData
-    })
-
     await (wrapper.vm as any).getData()
     wrapper.findComponent(UserTable).vm.$emit('edit', usersData[ 0 ])
     expect((wrapper.vm as any).showUserInfoModal).toBe(true)
@@ -68,13 +65,7 @@ describe('Users.vue', () => {
 
   it('opens ConfirmationDialog when Delete button is clicked', async () => {
     const usersData = [ { id: 1, name: 'John', surname: 'Doe' } ]
-    ;(axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValue({
-      status: 200,
-      data: usersData
-    })
-
     await (wrapper.vm as any).getData()
-
     wrapper.findComponent(UserTable).vm.$emit('delete', usersData[ 0 ])
     expect((wrapper.vm as any).showConfirmation).toBe(true)
     expect((wrapper.vm as any).selectedUser).toEqual(usersData[ 0 ])
@@ -84,7 +75,6 @@ describe('Users.vue', () => {
     const showToastSpy = jest.spyOn(wrapper.vm as any, 'showToast')
     const selectedUser = { id: 1, name: 'John', surname: 'Doe' }
     await wrapper.setData({ selectedUser, showConfirmation: true })
-
     ;(
       axios.delete as jest.MockedFunction<typeof axios.delete>
     ).mockResolvedValueOnce({ status: 200, data: {} })
@@ -110,7 +100,6 @@ describe('Users.vue', () => {
     const showToastSpy = jest.spyOn(wrapper.vm as any, 'showToast')
     const selectedUser = { id: 1, name: 'John', surname: 'Doe' }
     await wrapper.setData({ selectedUser, showConfirmation: true })
-
     ;(
       axios.delete as jest.MockedFunction<typeof axios.delete>
     ).mockRejectedValueOnce(new Error('Delete error'))
