@@ -34,20 +34,20 @@
           </td>
           <td>
             <div class="button-col">
-              <Tooltip text="Edit">
+              <div v-tooltip="{ text: 'Edit', styleType: 'top' }">
                 <font-awesome-icon
                   icon="fa-pencil"
                   class="icon-button"
                   @click="$emit('edit', user)"
                 />
-              </Tooltip>
-              <Tooltip text="Delete">
+              </div>
+              <div v-tooltip="{ text: 'Delete', styleType: 'top' }">
                 <font-awesome-icon
                   icon="fa-trash-can"
                   class="icon-button"
                   @click="$emit('delete', user)"
                 />
-              </Tooltip>
+              </div>
             </div>
           </td>
         </tr>
@@ -69,10 +69,9 @@ import Vue from 'vue'
 import { Prop } from 'vue-property-decorator'
 import { User } from '@/types'
 import Button from '@/components/common/Button.vue'
-import Tooltip from '@/components/common/Tooltip.vue'
 
 @Component({
-  components: { Button, Tooltip }
+  components: { Button }
 })
 export default class UserTable extends Vue {
   @Prop({ required: true }) users!: User[]

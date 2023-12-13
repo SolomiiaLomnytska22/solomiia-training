@@ -30,8 +30,13 @@ library.add(
   faPencil,
   faTrashCan
 )
+import TooltipDirective from './directives/TooltipDirective';
+
+Vue.directive('tooltip', TooltipDirective);
+
 Vue.component('FontAwesomeIcon', FontAwesomeIcon)
 Vue.config.productionTip = false
+
 new Vue({
   render: (h) => h(App),
   router: router
