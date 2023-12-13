@@ -4,10 +4,11 @@ import { Point, Size } from '@/types'
 
 const position: Point = { x: 0, y: 0 }
 const boxSize: Size = { width: 0, height: 0 }
-let currClass: string = 'top'
+let currClass: string;
 
 export default {
   bind (el: HTMLElement, binding: VNodeDirective):void {
+
     setupTooltipElements(el, binding)
     el.addEventListener('mousemove', (event) => handleMouseMove(event, el))
   },
@@ -25,18 +26,19 @@ export default {
 function setupTooltipElements (el: HTMLElement, binding: VNodeDirective):void {
   el.classList.add('tooltip-element')
 
-  const tooltipElement = createTooltipElement(binding.value.text)
+  const tooltipElement = createTooltipElement(binding.value.text, binding.value.styleType)
   el.appendChild(tooltipElement)
 }
 
-function createTooltipElement (text: string):HTMLElement {
+function createTooltipElement (text: string, styleType:string):HTMLElement {
+  currClass = styleType
   const tooltipElement: HTMLElement = document.createElement('div')
   tooltipElement.classList.add('tooltip')
   tooltipElement.classList.add(currClass)
   const textElement: HTMLElement = document.createElement('span')
   textElement.classList.add('text')
   textElement.textContent = text
-  textElement.classList.add(currClass)
+  textElement.classList.add(styleType)
   tooltipElement.appendChild(textElement)
   return tooltipElement
 }
@@ -83,10 +85,13 @@ function handleMouseMove (event: MouseEvent, el: HTMLElement):void {
 function getStyleType (el: HTMLElement): string {
   getSize(el)
   if (position.y < boxSize.height + 50) {
+    //header height: 50px
     return 'bottom'
   } else if (position.x > window.innerWidth - (boxSize.width + 20)) {
+    //page padding: 20px
     return 'left'
   } else if (position.x < boxSize.width + 20) {
+    //page padding: 20px
     return 'right'
   } else {
     return 'top'
