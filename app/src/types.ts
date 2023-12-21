@@ -34,4 +34,10 @@ interface TimelineItem {
   description: string
 }
 
-export { User, MenuItem, CardItem, TimelineItem, SocialLink }
+interface TableColumn {
+  key: string
+  label?: string
+  slot?: string
+}
+
+export { User, MenuItem, CardItem, TimelineItem, SocialLink, TableColumn }
