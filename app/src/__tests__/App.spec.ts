@@ -12,7 +12,7 @@ describe('App.vue', () => {
   let wrapper:Wrapper<Vue>;
 
   beforeEach(() => {
-    wrapper = mount(App, { localVue, router });
+    wrapper = mount(App, { localVue, router })
   });
 
   afterEach(() => {

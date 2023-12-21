@@ -84,7 +84,6 @@ describe('Users.vue', () => {
     const showToastSpy = jest.spyOn(wrapper.vm as any, 'showToast')
     const selectedUser = { id: 1, name: 'John', surname: 'Doe' }
     await wrapper.setData({ selectedUser, showConfirmation: true })
-
     ;(
       axios.delete as jest.MockedFunction<typeof axios.delete>
     ).mockResolvedValueOnce({ status: 200, data: {} })
@@ -110,7 +109,6 @@ describe('Users.vue', () => {
     const showToastSpy = jest.spyOn(wrapper.vm as any, 'showToast')
     const selectedUser = { id: 1, name: 'John', surname: 'Doe' }
     await wrapper.setData({ selectedUser, showConfirmation: true })
-
     ;(
       axios.delete as jest.MockedFunction<typeof axios.delete>
     ).mockRejectedValueOnce(new Error('Delete error'))

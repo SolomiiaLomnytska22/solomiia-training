@@ -1,64 +1,37 @@
 <template>
-  <div class="table-container">
-    <table class="user-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Surname</th>
-          <th>Date of birth</th>
-          <th>Position</th>
-          <th>Country</th>
-          <th>Online</th>
-          <th />
-        </tr>
-      </thead>
-      <tbody v-if="users.length > 0">
-        <tr
-          v-for="user in users"
-          :key="user.id"
-        >
-          <td>{{ user.id }}</td>
-          <td>{{ user.name }}</td>
-          <td>{{ user.surname }}</td>
-          <td>{{ user.dateOfBirth }}</td>
-          <td>{{ user.position }}</td>
-          <td>{{ user.country }}</td>
-          <td style="text-align: center">
-            <span
-              :class="{
-                'online-dot': user.online,
-                'offline-dot': !user.online
-              }"
-            />
-          </td>
-          <td>
-            <div class="button-col">
-              <Button
-                type="button"
-                @click="$emit('edit', user)"
-              >
-                Edit
-              </Button>
-              <Button
-                type="button"
-                style-type="secondary"
-                @click="$emit('delete', user)"
-              >
-                Remove
-              </Button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-      <tbody v-else>
-        <tr>
-          <td :colspan="colspan">
-            <p>Fetching your data!</p>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div>
+    <Table
+      :columns="columns"
+      :data="users"
+    >
+      <template #actions="{ item }">
+        <div class="button-col">
+          <Button
+            type="button"
+            @click="$emit('edit', item)"
+          >
+            Edit
+          </Button>
+          <Button
+            type="button"
+            style-type="secondary"
+            @click="$emit('delete', item)"
+          >
+            Remove
+          </Button>
+        </div>
+      </template>
+      <template #online="{ item }">
+        <div class="button-col">
+          <span
+            :class="{
+              'online-dot': getOnline(item),
+              'offline-dot': !getOnline(item)
+            }"
+          />
+        </div>
+      </template>
+    </Table>
   </div>
 </template>
 
@@ -66,15 +39,30 @@
 import Component from 'vue-class-component'
 import Vue from 'vue'
 import { Prop } from 'vue-property-decorator'
-import { User } from '@/types'
+import { TableColumn, User } from '@/types'
 import Button from '@/components/common/Button.vue'
+import Table from '@/components/common/Table.vue'
 
 @Component({
-  components: { Button }
+  components: { Button, Table }
 })
 export default class UserTable extends Vue {
   @Prop({ required: true }) users!: User[]
   colspan: number = 0
+  columns: TableColumn[] = [
+    { key: 'id', label: 'ID' },
+    { key: 'name', label: 'Name' },
+    { key: 'surname', label: 'Surname' },
+    { key: 'dateOfBirth', label: 'Date of birth' },
+    { key: 'position', label: 'Position' },
+    { key: 'country', label: 'Country' },
+    { key: 'online', label: 'Online', slot: 'online' },
+    { key: 'actions', label: 'Actions', slot: 'actions' }
+  ]
+
+  getOnline (user: User): boolean {
+    return user.online
+  }
 
   mounted () {
     this.colspan =
@@ -84,18 +72,6 @@ export default class UserTable extends Vue {
 </script>
 
 <style scoped>
-@media only screen and (max-width: 768px) {
-  .table-container {
-    overflow-x: auto;
-  }
-}
-
-.user-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
 .button-col {
   height: 100%;
   display: flex;
@@ -105,21 +81,6 @@ export default class UserTable extends Vue {
 
 .button-col Button {
   margin: 0 5px;
-}
-
-.user-table th,
-.user-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: left;
-}
-
-.user-table th {
-  background-color: #f2f2f2;
-}
-
-.user-table tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
 }
 
 .online-dot,
