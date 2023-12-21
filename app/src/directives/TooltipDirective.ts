@@ -8,16 +8,15 @@ let currClass: string;
 
 export default {
   bind (el: HTMLElement, binding: VNodeDirective):void {
-
     setupTooltipElements(el, binding)
     el.addEventListener('mousemove', (event) => handleMouseMove(event, el))
   },
 
-  update (el: HTMLElement, binding: VNodeDirective) {
+  update (el: HTMLElement, binding: VNodeDirective):void {
     updateTooltipContent(el, binding)
   },
 
-  unbind (el: HTMLElement) {
+  unbind (el: HTMLElement):void  {
     el.removeEventListener('mousemove', (event) => handleMouseMove(event, el))
     removeTooltipElements(el)
   }
@@ -68,12 +67,16 @@ function updateTooltipStyle (el: HTMLElement):void {
   }
 }
 
-function removeTooltipElements (el: HTMLElement):void {
-  const tooltipElement = el.querySelector('.tooltip') as HTMLElement
-  const textElement = el.querySelector('.text') as HTMLElement
+function removeTooltipElements(el: HTMLElement): void {
+  const tooltipElement = el.querySelector('.tooltip') as HTMLElement;
+  const textElement = el.querySelector('.text') as HTMLElement;
+  if (tooltipElement && tooltipElement.parentNode === el) {
+    el.removeChild(tooltipElement);
+  }
 
-  tooltipElement && el.removeChild(tooltipElement)
-  textElement && el.removeChild(textElement)
+  if (textElement && textElement.parentNode === tooltipElement) {
+    tooltipElement.removeChild(textElement);
+  }
 }
 
 function handleMouseMove (event: MouseEvent, el: HTMLElement):void {

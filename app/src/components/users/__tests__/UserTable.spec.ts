@@ -7,9 +7,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import VTooltip from '@/directives/TooltipDirective'
 library.add(faPlus, faPencil, faTrashCan)
 const localVue = createLocalVue()
 localVue.component('FontAwesomeIcon', FontAwesomeIcon)
+localVue.directive('tooltip', VTooltip)
 describe('UserTable.vue', () => {
   let wrapper: Wrapper<Vue>
 
