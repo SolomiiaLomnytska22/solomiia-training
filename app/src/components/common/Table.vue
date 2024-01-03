@@ -1,13 +1,13 @@
 <template>
   <div class="table-container">
     <table class="user-table">
-      <thead v-if="columns.length > 0">
+      <thead v-if="columns.length">
         <tr>
           <th
             v-for="column in columns"
             :key="column.key"
           >
-            {{ column.label }}
+            {{ getLabel(column) }}
           </th>
         </tr>
       </thead>
@@ -27,7 +27,7 @@
               />
             </template>
             <template v-else>
-              {{ item[column.key] }}
+              {{ getEntry(column, item) }}
             </template>
           </td>
         </tr>
@@ -51,6 +51,14 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 export default class Table extends Vue {
   @Prop({ required: true }) columns!: TableColumn[]
   @Prop({ required: true }) data!: Array<any>
+
+  getLabel (column: TableColumn): string {
+    return column.label ? column.label : ''
+  }
+
+  getEntry (column: TableColumn, item: any): string {
+    return item[ column.key ]
+  }
 }
 </script>
 
