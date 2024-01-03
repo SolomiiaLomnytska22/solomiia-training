@@ -7,7 +7,10 @@ import {
   faCheckCircle,
   faInfoCircle,
   faExclamationTriangle,
-  faCircleXmark
+  faCircleXmark,
+  faPlus,
+  faPencil,
+  faTrashCan
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faInstagram,
@@ -22,10 +25,18 @@ library.add(
   faExclamationTriangle,
   faInstagram,
   faLinkedin,
-  faXTwitter
+  faXTwitter,
+  faPlus,
+  faPencil,
+  faTrashCan
 )
+import TooltipDirective from './directives/TooltipDirective';
+
+Vue.directive('tooltip', TooltipDirective);
+
 Vue.component('FontAwesomeIcon', FontAwesomeIcon)
 Vue.config.productionTip = false
+
 new Vue({
   render: (h) => h(App),
   router: router

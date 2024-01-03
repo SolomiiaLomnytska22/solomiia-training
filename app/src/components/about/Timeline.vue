@@ -125,28 +125,6 @@ export default class Timeline extends Vue {
   left: 50%;
 }
 
-.left::before,
-.right::before {
-  content: ' ';
-  height: 0;
-  position: absolute;
-  top: 22px;
-  width: 0;
-  z-index: 1;
-}
-
-.left::before {
-  right: 63px;
-  border-width: 10px 0 10px 10px;
-  border-color: transparent transparent transparent #ffffff;
-}
-
-.right::before {
-  left: 30px;
-  border-width: 10px 10px 10px 0;
-  border-color: transparent #ffffff transparent transparent;
-}
-
 .right::after {
   left: -16px;
 }

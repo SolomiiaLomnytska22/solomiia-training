@@ -34,4 +34,14 @@ interface TimelineItem {
   description: string
 }
 
-export { User, MenuItem, CardItem, TimelineItem, SocialLink }
+interface Point {
+  x: number
+  y: number
+}
+
+interface Size {
+  width: number
+  height: number
+}
+
+export { User, MenuItem, CardItem, TimelineItem, SocialLink, Point, Size }
