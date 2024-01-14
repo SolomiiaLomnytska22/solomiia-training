@@ -7,10 +7,31 @@ import {
   faLinkedin,
   faXTwitter
 } from '@fortawesome/free-brands-svg-icons'
+import {
+  faCheckCircle,
+  faInfoCircle,
+  faExclamationTriangle,
+  faCircleXmark,
+  faPlus,
+  faPencil,
+  faTrashCan
+} from '@fortawesome/free-solid-svg-icons'
+
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faInstagram, faLinkedin, faXTwitter)
+library.add(
+  faInstagram,
+  faLinkedin,
+  faXTwitter,
+  faCheckCircle,
+  faCircleXmark,
+  faInfoCircle,
+  faExclamationTriangle,
+  faPlus,
+  faPencil,
+  faTrashCan
+)
 const localVue = createLocalVue()
 localVue.component('FontAwesomeIcon', FontAwesomeIcon)
 

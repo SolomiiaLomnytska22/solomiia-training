@@ -8,16 +8,16 @@
         <div class="button-col">
           <div v-tooltip="{ text: 'Edit', styleType: 'top' }">
             <font-awesome-icon
-                icon="fa-pencil"
-                class="icon-button"
-                @click="$emit('edit', item)"
+              icon="fa-pencil"
+              class="icon-button"
+              @click="$emit('edit', item)"
             />
           </div>
           <div v-tooltip="{ text: 'Delete', styleType: 'top' }">
             <font-awesome-icon
-                icon="fa-trash-can"
-                class="icon-button"
-                @click="$emit('delete', item)"
+              icon="fa-trash-can"
+              class="icon-button"
+              @click="$emit('delete', item)"
             />
           </div>
         </div>
