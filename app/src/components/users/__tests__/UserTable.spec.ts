@@ -1,8 +1,18 @@
-import { mount, Wrapper } from '@vue/test-utils'
+import { createLocalVue, mount, Wrapper } from '@vue/test-utils'
 import UserTable from '@/components/users/UserTable.vue'
-import Button from '@/components/common/Button.vue'
 import { User } from '@/types'
-
+import {
+  faPlus,
+  faPencil,
+  faTrashCan
+} from '@fortawesome/free-solid-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import VTooltip from '@/directives/TooltipDirective'
+library.add(faPlus, faPencil, faTrashCan)
+const localVue = createLocalVue()
+localVue.component('FontAwesomeIcon', FontAwesomeIcon)
+localVue.directive('tooltip', VTooltip)
 describe('UserTable.vue', () => {
   let wrapper: Wrapper<Vue>
 
@@ -20,6 +30,7 @@ describe('UserTable.vue', () => {
     ]
 
     wrapper = mount(UserTable, {
+      localVue,
       propsData: { users: defaultUsers }
     })
   })
@@ -35,7 +46,7 @@ describe('UserTable.vue', () => {
   })
 
   it('emits edit event when Edit button is clicked', async () => {
-    const editButton = wrapper.findComponent(Button)
+    const editButton = wrapper.findComponent(FontAwesomeIcon)
     await editButton.trigger('click')
 
     expect(wrapper.emitted('edit')).toHaveLength(1)
@@ -44,7 +55,7 @@ describe('UserTable.vue', () => {
   })
 
   it('emits delete event when Remove button is clicked', () => {
-    const deleteButton = wrapper.findAllComponents(Button).at(1)
+    const deleteButton = wrapper.findAllComponents(FontAwesomeIcon).at(1)
     deleteButton.trigger('click')
 
     expect(wrapper.emitted('delete')).toHaveLength(1)

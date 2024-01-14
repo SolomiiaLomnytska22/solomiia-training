@@ -6,19 +6,20 @@
     >
       <template #actions="{ item }">
         <div class="button-col">
-          <Button
-            type="button"
-            @click="$emit('edit', item)"
-          >
-            Edit
-          </Button>
-          <Button
-            type="button"
-            style-type="secondary"
-            @click="$emit('delete', item)"
-          >
-            Remove
-          </Button>
+          <div v-tooltip="{ text: 'Edit', styleType: 'top' }">
+            <font-awesome-icon
+                icon="fa-pencil"
+                class="icon-button"
+                @click="$emit('edit', item)"
+            />
+          </div>
+          <div v-tooltip="{ text: 'Delete', styleType: 'top' }">
+            <font-awesome-icon
+                icon="fa-trash-can"
+                class="icon-button"
+                @click="$emit('delete', item)"
+            />
+          </div>
         </div>
       </template>
       <template #online="{ item }">
@@ -111,5 +112,15 @@ export default class UserTable extends Vue {
 
 .offline-dot {
   background-color: #ccc;
+}
+
+.icon-button {
+  color: #333;
+  margin: 10px;
+}
+
+.icon-button:hover {
+  cursor: pointer;
+  color: #4caf50;
 }
 </style>

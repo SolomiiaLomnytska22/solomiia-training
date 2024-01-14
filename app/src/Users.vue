@@ -6,6 +6,7 @@
         type="button"
         @click="handleAddUser"
       >
+        <font-awesome-icon icon="fa-plus" />
         Add
       </Button>
       <UserInfoModal
@@ -94,7 +95,7 @@ export default class Users extends Vue {
   }
 
   handleConfirmDelete (): void {
-    if (this.selectedUser!==null) {
+    if (this.selectedUser !== null) {
       this.deleteUser(this.selectedUser)
     }
   }
@@ -120,7 +121,6 @@ export default class Users extends Vue {
         this.selectedUser = null
         this.showToast('Successfully deleted user.', 'success')
         await this.getData()
-
       } else {
         this.showToast('An error occurred while deleting the user.', 'danger')
       }
@@ -134,13 +134,10 @@ export default class Users extends Vue {
       const response: AxiosResponse = await axios.get(
         'http://localhost:3000/users'
       )
-      if (response.status === 200&&response.data!=null) {
+      if (response.status === 200 && response.data != null) {
         this.users = response.data
       } else {
-        this.showToast(
-          'An error occurred while loading information.',
-          'danger'
-        )
+        this.showToast('An error occurred while loading information.', 'danger')
       }
     } catch (error) {
       this.showToast('An error occurred while loading information.', 'danger')
