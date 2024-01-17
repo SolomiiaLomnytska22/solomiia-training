@@ -34,6 +34,12 @@ interface TimelineItem {
   description: string
 }
 
+interface TableColumn {
+  key: string
+  label?: string
+  slot?: string
+}
+
 interface Point {
   x: number
   y: number
@@ -44,4 +50,4 @@ interface Size {
   height: number
 }
 
-export { User, MenuItem, CardItem, TimelineItem, SocialLink, Point, Size }
+export { User, MenuItem, CardItem, TimelineItem, SocialLink, Point, Size, TableColumn }
