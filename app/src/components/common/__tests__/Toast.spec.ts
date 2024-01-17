@@ -23,7 +23,7 @@ describe('Toast.vue', () => {
       },
       localVue
     })
-    vm = wrapper.vm
+    vm = wrapper.vm as Toast
   })
 
   afterEach(() => {
@@ -43,18 +43,18 @@ describe('Toast.vue', () => {
 
   it('calculates animation duration in seconds based on timeout', async () => {
     await wrapper.setData({ timeout: 1000 })
-    expect((vm as any).getAnimationDuration).toBe('1s')
+    expect(vm.getAnimationDuration).toBe('1s')
   })
 
   it('sets the correct icon based on styleType prop', async () => {
     await wrapper.setProps({ styleType: 'info' })
-    expect((vm as any).getIcon).toBe('fa-info-circle')
+    expect(vm.getIcon).toBe('fa-info-circle')
   })
 
   it('shows and hides the toast after the specified timeout duration', async () => {
-    (vm as any).showToast(3000)
-    expect((vm as any).show).toBe(true)
+    vm.showToast(3000)
+    expect(vm.show).toBe(true)
     await new Promise((resolve) => setTimeout(resolve, 3000))
-    expect((vm as any).show).toBe(false)
+    expect(vm.show).toBe(false)
   })
 })

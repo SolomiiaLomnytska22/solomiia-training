@@ -73,7 +73,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 })
 export default class Table extends Vue {
   @Prop({ required: true }) columns!: TableColumn[]
-  @Prop({ required: true }) data!: Array<any>
+  @Prop({ required: true }) data!: Array<{ [key: string]: string }>
   sortedData: Array<any> = []
   sortingColumn: TableColumn | undefined = undefined
   sortingRules : SortRule[] = [
@@ -111,7 +111,7 @@ export default class Table extends Vue {
     return column.label || ''
   }
 
-  getEntry (column: TableColumn, item: any): string {
+  getEntry (column: TableColumn, item: { [key: string]: string }): string {
     return item[ column.key ]
   }
 
