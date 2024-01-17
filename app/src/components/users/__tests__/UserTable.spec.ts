@@ -1,5 +1,6 @@
 import { createLocalVue, mount, Wrapper } from '@vue/test-utils'
 import UserTable from '@/components/users/UserTable.vue'
+import { User } from '@/types'
 import {
   faPlus,
   faPencil,
@@ -16,7 +17,7 @@ describe('UserTable.vue', () => {
   let wrapper: Wrapper<Vue>
 
   beforeEach(() => {
-    const defaultUsers = [
+    const defaultUsers:User[] = [
       {
         id: 1,
         name: 'John',
@@ -41,7 +42,7 @@ describe('UserTable.vue', () => {
 
   it('renders loading message when no users are provided', async () => {
     await wrapper.setProps({ users: [] })
-    expect(wrapper.find('p').text()).toBe('Fetching your data!')
+    expect(wrapper.find('p').text()).toBe('Waiting for your data!')
   })
 
   it('emits edit event when Edit button is clicked', async () => {
