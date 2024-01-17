@@ -50,13 +50,13 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 @Component
 export default class Table extends Vue {
   @Prop({ required: true }) columns!: TableColumn[]
-  @Prop({ required: true }) data!: Array<any>
+  @Prop({ required: true }) data!: Array<{ [key: string]: string }>
 
   getLabel (column: TableColumn): string {
     return column.label ? column.label : ''
   }
 
-  getEntry (column: TableColumn, item: any): string {
+  getEntry (column: TableColumn, item: { [key: string]: string }): string {
     return item[ column.key ]
   }
 }
