@@ -28,8 +28,34 @@
         <p>You can't undo this action.</p>
       </ConfirmationDialog>
     </div>
+    <div class="search">
+      <TextInput
+        id="search"
+        v-model="searchPhrase"
+        pattern="^.{0,100}$"
+        title="Your search phrase is too long!"
+      />
+      <Button
+        style-type="primary"
+        @click="handleSearch"
+      >
+        <font-awesome-icon icon="fa-magnifying-glass" />
+      </Button>
+      <Button
+        style-type="secondary"
+        @click="emptyInput"
+      >
+        <font-awesome-icon icon="fa-trash-can" />
+      </Button>
+      <Button
+        style-type="secondary"
+        @click="handleFilterChange"
+      >
+        {{ filterLabel }}
+      </Button>
+    </div>
     <UserTable
-      :users="users"
+      :users="filteredUsers"
       @edit="handleEditUser"
       @delete="handleDeleteUser"
     />
@@ -49,13 +75,15 @@ import UserTable from './components/users/UserTable.vue'
 import Button from './components/common/Button.vue'
 import Component from 'vue-class-component'
 import Vue from 'vue'
-import { User } from './types'
+import { onlineFilter, User } from './types'
 import ConfirmationDialog from '@/components/common/ConfirmationDialog.vue'
 import Toast from './components/common/Toast.vue'
 import { Ref } from 'vue-property-decorator'
+import TextInput from '@/components/common/TextInput.vue'
 
 @Component({
   components: {
+    TextInput,
     ConfirmationDialog,
     UserInfoModal,
     UserTable,
@@ -71,9 +99,74 @@ export default class Users extends Vue {
   showConfirmation: boolean = false
   message: string = ''
   styleType: string = 'success'
-
+  searchPhrase: string = ''
+  filters: onlineFilter[] = [
+    { name: 'none', nextFilter: 'online', label: 'Display online users' },
+    { name: 'online', nextFilter: 'offline', label: 'Display offline users' },
+    { name: 'offline', nextFilter: 'none', label: 'Disable filter' }
+  ]
+  currentFilter: string = 'none'
+  filteredUsers: User[] = []
+  maxSymbols: number = 100
   mounted () {
     this.getData()
+  }
+
+  emptyInput () {
+    this.searchPhrase = ''
+    this.currentFilter = 'none'
+    this.handleSearch()
+  }
+
+  get filterLabel () : string {
+    return this.filters.find((filter) => filter.name === this.currentFilter)!
+      .label
+  }
+
+  handleFilterChange () {
+    this.currentFilter = this.filters.find(
+      (filter) => filter.name === this.currentFilter
+    )!.nextFilter
+    this.filteredUsers = this.filterOnline()
+    this.filteredUsers = this.findPhrase()
+    if (!this.findPhrase().length) {
+      this.showToast('There is no entry with your search query filter msg.', 'warning')
+      this.filteredUsers = this.users.slice()
+    }
+  }
+
+  handleSearch () {
+    if (this.searchPhrase.length <= this.maxSymbols) {
+      if (this.findPhrase().length) {
+        this.filteredUsers = this.filterOnline()
+        this.filteredUsers = this.findPhrase()
+      } else {
+        this.showToast('There is no entry with your search query.', 'warning')
+        this.filteredUsers = this.users.slice()
+      }
+    } else {
+      this.showToast('Your searching phrase is too long.', 'danger')
+      this.filteredUsers = this.users.slice()
+      this.emptyInput()
+    }
+  }
+
+  filterOnline () : User[]{
+    if (this.currentFilter != 'none')
+      return this.users.filter((user) =>
+          this.currentFilter === 'online' ? user.online : !user.online
+      )
+    else return this.users.slice()
+  }
+
+  findPhrase (): User[] {
+    const searchTerm = this.searchPhrase.toLowerCase()
+    return this.filteredUsers.filter((user) => {
+      const searchableValues = Object.values(user).map((value) =>
+        value ? value.toString().toLowerCase() : ''
+      )
+      return searchableValues.some((value) => value.includes(searchTerm))
+    })
   }
 
   handleEditUser (user: User) {
@@ -136,6 +229,7 @@ export default class Users extends Vue {
       )
       if (response.status === 200 && response.data != null) {
         this.users = response.data
+        this.filteredUsers = this.users
       } else {
         this.showToast('An error occurred while loading information.', 'danger')
       }
@@ -157,5 +251,23 @@ export default class Users extends Vue {
 
 .table-page {
   margin: 50px 5% 10px;
+}
+
+.search button {
+  margin-left: 5px;
+}
+
+.search {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+@media screen and (max-width: 200px) {
+  .search {
+    flex-direction: column;
+  }
 }
 </style>

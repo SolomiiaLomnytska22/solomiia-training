@@ -67,7 +67,7 @@ function updateTooltipStyle (el: HTMLElement):void {
   }
 }
 
-function removeTooltipElements(el: HTMLElement): void {
+function removeTooltipElements (el: HTMLElement): void {
   const tooltipElement = el.querySelector('.tooltip') as HTMLElement;
   const textElement = el.querySelector('.text') as HTMLElement;
   if (tooltipElement && tooltipElement.parentNode === el) {

@@ -1,6 +1,9 @@
 <template>
   <div class="input-field">
-    <label :for="id">{{ label }}:</label>
+    <label
+      v-if="label"
+      :for="id"
+    >{{ label }}:</label>
     <input
       :id="id"
       type="text"
@@ -20,7 +23,7 @@ import { Prop } from 'vue-property-decorator'
 
 @Component
 export default class TextInput extends Vue {
-  @Prop({ required: true }) label!: string
+  @Prop({ required: false }) label!: string
   @Prop({ required: true }) id!: string
   @Prop({ required: true }) value!: string
   @Prop({ required: false, default: false }) required!: boolean
@@ -50,6 +53,10 @@ input {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+input:invalid {
+  background-color: #ffd6db;
 }
 
 label {

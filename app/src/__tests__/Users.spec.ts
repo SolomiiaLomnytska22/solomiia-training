@@ -12,8 +12,10 @@ import {
   faCircleXmark,
   faPlus,
   faPencil,
-  faTrashCan
+  faTrashCan,
+  faMagnifyingGlass
 } from '@fortawesome/free-solid-svg-icons'
+import VTooltip from '@/directives/TooltipDirective'
 
 library.add(
   faCheckCircle,
@@ -22,10 +24,12 @@ library.add(
   faExclamationTriangle,
   faPlus,
   faPencil,
-  faTrashCan
+  faTrashCan,
+  faMagnifyingGlass
 )
 const localVue = createLocalVue()
 localVue.component('FontAwesomeIcon', FontAwesomeIcon)
+localVue.directive('tooltip', VTooltip)
 jest.mock('axios', () => ({
   get: jest.fn(),
   delete: jest.fn()
@@ -33,11 +37,17 @@ jest.mock('axios', () => ({
 
 describe('Users.vue', () => {
   let wrapper: Wrapper<Vue>
-
+  const usersData = [
+    { id: 1, name: 'John', surname: 'Doe', online: true },
+    { id: 2, name: 'Jane', surname: 'Doe', online: false },
+    { id: 3, name: 'Alice', surname: 'Smith', online: true }
+  ];
+  let vm : Users | any
   beforeEach(() => {
     wrapper = mount(Users, {
       localVue
     })
+    vm = wrapper.vm as Users
   })
 
   afterEach(() => {
@@ -46,29 +56,29 @@ describe('Users.vue', () => {
 
   it('fetches data on mount', () => {
     expect(axios.get).toHaveBeenCalledWith('http://localhost:3000/users')
-    expect((wrapper.vm as any).users).toEqual([])
+    expect(vm.users).toEqual([])
   })
 
   it('opens UserInfoModal when Add button is clicked', async () => {
     await wrapper.find('.heading Button').trigger('click')
-    expect((wrapper.vm as any).showUserInfoModal).toBe(true)
-    expect((wrapper.vm as any).selectedUser).toBeNull()
+    expect(vm.showUserInfoModal).toBe(true)
+    expect(vm.selectedUser).toBeNull()
   })
 
   it('opens UserInfoModal when Edit button is clicked', async () => {
     const usersData = [ { id: 1, name: 'John', surname: 'Doe' } ]
-    await (wrapper.vm as any).getData()
+    await vm.getData()
     wrapper.findComponent(UserTable).vm.$emit('edit', usersData[ 0 ])
-    expect((wrapper.vm as any).showUserInfoModal).toBe(true)
-    expect((wrapper.vm as any).selectedUser).toEqual(usersData[ 0 ])
+    expect(vm.showUserInfoModal).toBe(true)
+    expect(vm.selectedUser).toEqual(usersData[ 0 ])
   })
 
   it('opens ConfirmationDialog when Delete button is clicked', async () => {
     const usersData = [ { id: 1, name: 'John', surname: 'Doe' } ]
-    await (wrapper.vm as any).getData()
+    await vm.getData()
     wrapper.findComponent(UserTable).vm.$emit('delete', usersData[ 0 ])
-    expect((wrapper.vm as any).showConfirmation).toBe(true)
-    expect((wrapper.vm as any).selectedUser).toEqual(usersData[ 0 ])
+    expect(vm.showConfirmation).toBe(true)
+    expect(vm.selectedUser).toEqual(usersData[ 0 ])
   })
 
   it('deletes user when dialog is confirmed', async () => {
@@ -85,8 +95,8 @@ describe('Users.vue', () => {
     expect(axios.delete).toHaveBeenCalledWith(
       `http://localhost:3000/users/${selectedUser.id}`
     )
-    expect((wrapper.vm as any).selectedUser).toBeNull()
-    expect((wrapper.vm as any).showConfirmation).toBe(false)
+    expect(vm.selectedUser).toBeNull()
+    expect(vm.showConfirmation).toBe(false)
     await wrapper.vm.$nextTick()
     expect(showToastSpy).toHaveBeenCalledWith(
       'Successfully deleted user.',
@@ -110,8 +120,8 @@ describe('Users.vue', () => {
     expect(axios.delete).toHaveBeenCalledWith(
       `http://localhost:3000/users/${selectedUser.id}`
     )
-    expect((wrapper.vm as any).showConfirmation).toBe(true)
-    expect((wrapper.vm as any).selectedUser).not.toBeNull()
+    expect(vm.showConfirmation).toBe(true)
+    expect(vm.selectedUser).not.toBeNull()
 
     expect(showToastSpy).toHaveBeenCalledWith(
       'An error occurred while deleting the user.',
@@ -120,4 +130,54 @@ describe('Users.vue', () => {
 
     showToastSpy.mockRestore()
   })
+
+  it('filters data by a phrase', async () => {
+    await wrapper.setData({ users: usersData });
+    await wrapper.setData({ filteredUsers: usersData });
+    wrapper.setData({ searchPhrase: 'John' });
+
+    vm.handleSearch();
+    expect(vm.filteredUsers).toHaveLength(1);
+  })
+
+  it('returns all data when the empty string is entered', async () => {
+    await wrapper.setData({ users: usersData });
+    await wrapper.setData({ filteredUsers: usersData });
+    wrapper.setData({ searchPhrase: '' });
+
+    vm.handleSearch();
+    expect(vm.filteredUsers).toHaveLength(3);
+  })
+
+  it('shows toast notification when the unique string is entered', async () => {
+    const showToastSpy = jest.spyOn(wrapper.vm as any, 'showToast')
+    await wrapper.setData({ users: usersData });
+    await wrapper.setData({ filteredUsers: usersData });
+    wrapper.setData({ searchPhrase: 'helloworld' });
+
+    vm.handleSearch();
+    expect(vm.filteredUsers).toHaveLength(3);
+    expect(showToastSpy).toHaveBeenCalledWith('There is no entry with your search query.', 'warning')
+  })
+
+  it('shows toast notification when the string is too long', async () => {
+    const showToastSpy = jest.spyOn(wrapper.vm as any, 'showToast')
+    await wrapper.setData({ users: usersData });
+    await wrapper.setData({ filteredUsers: usersData });
+    wrapper.setData({ searchPhrase: Array(101).fill('x').join('') });
+
+    vm.handleSearch();
+    expect(vm.filteredUsers).toHaveLength(3);
+    expect(showToastSpy).toHaveBeenCalledWith('Your searching phrase is too long.', 'danger')
+  })
+
+  it('handles filtering by online value correctly', async () => {
+    await wrapper.setData({ users: usersData });
+    await wrapper.setData({ filteredUsers: usersData });
+    wrapper.setData({ currentFilter: 'online' });
+    await wrapper.vm.$nextTick();
+    //new filter will find offline users
+    vm.handleFilterChange();
+    expect(vm.filteredUsers).toHaveLength(1);
+  });
 })
