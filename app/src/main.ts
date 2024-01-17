@@ -10,7 +10,10 @@ import {
   faCircleXmark,
   faPlus,
   faPencil,
-  faTrashCan
+  faTrashCan,
+  faSortUp,
+  faSortDown,
+  faSort
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faInstagram,
@@ -28,11 +31,14 @@ library.add(
   faXTwitter,
   faPlus,
   faPencil,
-  faTrashCan
+  faTrashCan,
+  faSortUp,
+  faSortDown,
+  faSort
 )
-import TooltipDirective from './directives/TooltipDirective';
+import TooltipDirective from './directives/TooltipDirective'
 
-Vue.directive('tooltip', TooltipDirective);
+Vue.directive('tooltip', TooltipDirective)
 
 Vue.component('FontAwesomeIcon', FontAwesomeIcon)
 Vue.config.productionTip = false

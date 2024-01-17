@@ -51,14 +51,14 @@ export default class UserTable extends Vue {
   @Prop({ required: true }) users!: User[]
   colspan: number = 0
   columns: TableColumn[] = [
-    { key: 'id', label: 'ID' },
-    { key: 'name', label: 'Name' },
-    { key: 'surname', label: 'Surname' },
-    { key: 'dateOfBirth', label: 'Date of birth' },
-    { key: 'position', label: 'Position' },
-    { key: 'country', label: 'Country' },
-    { key: 'online', label: 'Online', slot: 'online' },
-    { key: 'actions', label: 'Actions', slot: 'actions' }
+    { key: 'id', label: 'ID', isSortable: true },
+    { key: 'name', label: 'Name', isSortable: true },
+    { key: 'surname', label: 'Surname', isSortable: true },
+    { key: 'dateOfBirth', label: 'Date of birth', isSortable: true },
+    { key: 'position', label: 'Position', isSortable: true },
+    { key: 'country', label: 'Country', isSortable: true },
+    { key: 'online', label: 'Online', slot: 'online', isSortable: false },
+    { key: 'actions', label: 'Actions', slot: 'actions', isSortable: false }
   ]
 
   getOnline (user: User): boolean {

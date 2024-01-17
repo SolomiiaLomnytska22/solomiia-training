@@ -12,7 +12,10 @@ import {
   faCircleXmark,
   faPlus,
   faPencil,
-  faTrashCan
+  faTrashCan,
+  faSortUp,
+  faSortDown,
+  faSort
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -22,7 +25,10 @@ library.add(
   faExclamationTriangle,
   faPlus,
   faPencil,
-  faTrashCan
+  faTrashCan,
+  faSortUp,
+  faSortDown,
+  faSort
 )
 const localVue = createLocalVue()
 localVue.component('FontAwesomeIcon', FontAwesomeIcon)
@@ -117,7 +123,6 @@ describe('Users.vue', () => {
       'An error occurred while deleting the user.',
       'danger'
     )
-
     showToastSpy.mockRestore()
   })
 })
