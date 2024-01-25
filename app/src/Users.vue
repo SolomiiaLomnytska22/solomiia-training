@@ -46,12 +46,6 @@
       >
         <font-awesome-icon icon="fa-trash-can" />
       </Button>
-      <Button
-        style-type="secondary"
-        @click="handleFilterChange"
-      >
-        {{ filterLabel }}
-      </Button>
     </div>
     <UserTable
       :users="filteredUsers"
@@ -74,7 +68,7 @@ import UserTable from './components/users/UserTable.vue'
 import Button from './components/common/Button.vue'
 import Component from 'vue-class-component'
 import Vue from 'vue'
-import { onlineFilter, User } from './types'
+import { User } from './types'
 import ConfirmationDialog from '@/components/common/ConfirmationDialog.vue'
 import Toast from './components/common/Toast.vue'
 import { Ref } from 'vue-property-decorator'
@@ -99,12 +93,6 @@ export default class Users extends Vue {
   message: string = ''
   styleType: string = 'success'
   searchPhrase: string = ''
-  filters: onlineFilter[] = [
-    { name: 'none', nextFilter: 'online', label: 'Display online users' },
-    { name: 'online', nextFilter: 'offline', label: 'Display offline users' },
-    { name: 'offline', nextFilter: 'none', label: 'Disable filter' }
-  ]
-  currentFilter: string = 'none'
   filteredUsers: User[] = []
   maxSymbols: number = 100
   mounted () {
@@ -113,31 +101,12 @@ export default class Users extends Vue {
 
   emptyInput () {
     this.searchPhrase = ''
-    this.currentFilter = 'none'
     this.handleSearch()
-  }
-
-  get filterLabel () : string {
-    return this.filters.find((filter) => filter.name === this.currentFilter)!
-      .label
-  }
-
-  handleFilterChange () {
-    this.currentFilter = this.filters.find(
-      (filter) => filter.name === this.currentFilter
-    )!.nextFilter
-    this.filteredUsers = this.filterOnline()
-    this.filteredUsers = this.findPhrase()
-    if (!this.findPhrase().length) {
-      this.showToast('There is no entry with your search query filter msg.', 'warning')
-      this.filteredUsers = this.users.slice()
-    }
   }
 
   handleSearch () {
     if (this.searchPhrase.length <= this.maxSymbols) {
       if (this.findPhrase().length) {
-        this.filteredUsers = this.filterOnline()
         this.filteredUsers = this.findPhrase()
       } else {
         this.showToast('There is no entry with your search query.', 'warning')
@@ -150,17 +119,9 @@ export default class Users extends Vue {
     }
   }
 
-  filterOnline () : User[]{
-    if (this.currentFilter != 'none')
-      return this.users.filter((user) =>
-          this.currentFilter === 'online' ? user.online : !user.online
-      )
-    else return this.users.slice()
-  }
-
   findPhrase (): User[] {
     const searchTerm = this.searchPhrase.toLowerCase()
-    return this.filteredUsers.filter((user) => {
+    return this.users.filter((user) => {
       const searchableValues = Object.values(user).map((value) =>
         value ? value.toString().toLowerCase() : ''
       )

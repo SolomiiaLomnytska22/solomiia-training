@@ -50,9 +50,4 @@ interface Size {
   height: number
 }
 
-interface onlineFilter {
-  name: string
-  nextFilter: string
-  label: string
-}
-export { User, MenuItem, CardItem, TimelineItem, SocialLink, Point, Size, TableColumn, onlineFilter }
+export { User, MenuItem, CardItem, TimelineItem, SocialLink, Point, Size, TableColumn }

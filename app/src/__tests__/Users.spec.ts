@@ -41,7 +41,7 @@ describe('Users.vue', () => {
         { id: 1, name: 'John', surname: 'Doe', online: true },
         { id: 2, name: 'Jane', surname: 'Doe', online: false },
         { id: 3, name: 'Alice', surname: 'Smith', online: true }
-    ];
+    ]
     let vm: Users | any
     beforeEach(() => {
         wrapper = mount(Users, {
@@ -132,54 +132,39 @@ describe('Users.vue', () => {
     })
 
     it('filters data by a phrase', async () => {
-        await wrapper.setData({ users: usersData });
-        await wrapper.setData({ filteredUsers: usersData });
-        wrapper.setData({ searchPhrase: 'John' });
+        await wrapper.setData({ users: usersData })
 
-        vm.handleSearch();
-        expect(vm.filteredUsers).toHaveLength(1);
+        wrapper.setData({ searchPhrase: 'John' })
+
+        vm.handleSearch()
+        expect(vm.filteredUsers).toHaveLength(1)
     })
 
     it('returns all data when the empty string is entered', async () => {
-        await wrapper.setData({ users: usersData });
-        await wrapper.setData({ filteredUsers: usersData });
-        wrapper.setData({ searchPhrase: '' });
+        await wrapper.setData({ users: usersData })
+        wrapper.setData({ searchPhrase: '' })
 
-        vm.handleSearch();
-        expect(vm.filteredUsers).toHaveLength(3);
+        vm.handleSearch()
+        expect(vm.filteredUsers).toHaveLength(3)
     })
 
     it('shows toast notification when the unique string is entered', async () => {
         const showToastSpy = jest.spyOn(wrapper.vm as any, 'showToast')
-        await wrapper.setData({ users: usersData });
-        await wrapper.setData({ filteredUsers: usersData });
-        wrapper.setData({ searchPhrase: 'helloworld' });
+        await wrapper.setData({ users: usersData })
+        wrapper.setData({ searchPhrase: 'helloworld' })
 
-        vm.handleSearch();
-        expect(vm.filteredUsers).toHaveLength(3);
+        vm.handleSearch()
+        expect(vm.filteredUsers).toHaveLength(3)
         expect(showToastSpy).toHaveBeenCalledWith('There is no entry with your search query.', 'warning')
     })
 
     it('shows toast notification when the string is too long', async () => {
         const showToastSpy = jest.spyOn(wrapper.vm as any, 'showToast')
-        await wrapper.setData({ users: usersData });
-        await wrapper.setData({ filteredUsers: usersData });
-        wrapper.setData({ searchPhrase: Array(101).fill('x').join('') });
+        await wrapper.setData({ users: usersData })
+        wrapper.setData({ searchPhrase: Array(101).fill('x').join('') })
 
-        vm.handleSearch();
-        expect(vm.filteredUsers).toHaveLength(3);
+        vm.handleSearch()
+        expect(vm.filteredUsers).toHaveLength(3)
         expect(showToastSpy).toHaveBeenCalledWith('Your searching phrase is too long.', 'danger')
     })
-
-    it('handles filtering by online value correctly', async () => {
-        await wrapper.setData({
-            users: usersData,
-            filteredUsers: usersData
-        });
-        wrapper.setData({ currentFilter: 'online' });
-        await wrapper.vm.$nextTick();
-        //new filter will find offline users
-        vm.handleFilterChange();
-        expect(vm.filteredUsers).toHaveLength(1);
-    });
 })
