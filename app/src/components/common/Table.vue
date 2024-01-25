@@ -74,9 +74,9 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 export default class Table extends Vue {
   @Prop({ required: true }) columns!: TableColumn[]
   @Prop({ required: true }) data!: Array<{ [key: string]: string }>
-  sortedData: Array<any> = []
+  sortedData: Array<{ [key: string]: string }> = []
   sortingColumn: TableColumn | undefined = undefined
-  sortingRules : SortRule[] = [
+  sortingRules: SortRule[] = [
     {
       currSort: SortOrder.NEUTRAL,
       nextSort: SortOrder.ASC
@@ -84,18 +84,18 @@ export default class Table extends Vue {
     {
       currSort: SortOrder.ASC,
       nextSort: SortOrder.DESC,
-      compareFn: (a: any, b: any) =>
-        typeof a === 'string' && typeof b === 'string'
-          ? a.toLowerCase().localeCompare(b.toLowerCase())
-          : a > b ? 1 : -1
+      compareFn: (firstObjectToSort: any, secondObjectToSort: any) =>
+          typeof firstObjectToSort === 'string' && typeof secondObjectToSort === 'string'
+              ? firstObjectToSort.toLowerCase().localeCompare(secondObjectToSort.toLowerCase())
+              : firstObjectToSort > secondObjectToSort ? 1 : -1
     },
     {
       currSort: SortOrder.DESC,
       nextSort: SortOrder.NEUTRAL,
-      compareFn: (a: any, b: any) =>
-        typeof a === 'string' && typeof b === 'string'
-          ? b.toLowerCase().localeCompare(a.toLowerCase())
-          : a > b ? -1 : 1
+      compareFn: (firstObjectToSort: any, secondObjectToSort: any) =>
+          typeof firstObjectToSort === 'string' && typeof secondObjectToSort === 'string'
+              ? secondObjectToSort.toLowerCase().localeCompare(firstObjectToSort.toLowerCase())
+              : firstObjectToSort > secondObjectToSort ? -1 : 1
     }
   ]
 
@@ -119,13 +119,13 @@ export default class Table extends Vue {
     if (column.isSortable) {
       this.sortingColumn = column
       column.sortOrder = this.sortingRules.find(
-        (rule) => rule.currSort === column.sortOrder
+          (rule) => rule.currSort === column.sortOrder
       )!.nextSort
       this.updateSortedData()
     }
   }
 
-  get displayData () : Array<any> {
+  get displayData (): Array<any> {
     this.sortedData = this.data.slice()
     this.updateSortedData()
     return this.sortedData
@@ -135,11 +135,11 @@ export default class Table extends Vue {
     if (this.sortingColumn) {
       const rule = this.sortingRules.find((rule) => rule.currSort === this.sortingColumn!.sortOrder)
       if (rule && rule.currSort !== SortOrder.NEUTRAL) {
-        this.sortedData.sort((a: any, b: any) =>
-          rule.compareFn!(
-            a[ this.sortingColumn!.key ],
-            b[ this.sortingColumn!.key ]
-          )
+        this.sortedData.sort((firstObjectToSort: any, secondObjectToSort: any) =>
+            rule.compareFn!(
+                firstObjectToSort[ this.sortingColumn!.key ],
+                secondObjectToSort[ this.sortingColumn!.key ]
+            )
         )
         return this.sortedData
       } else return this.data

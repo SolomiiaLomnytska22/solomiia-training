@@ -111,8 +111,9 @@ describe('Table.vue', () => {
   })
 
   it('renders sorted data when clicking on sortable column header', async () => {
+    const columnHeader = wrapper.find('thead th:nth-child(2)')
     //ascending sorting option
-    await wrapper.find('thead th:nth-child(2)').trigger('click')
+    await columnHeader.trigger('click')
     expect(wrapper.findAll('tbody tr').at(0).text()).toContain(
       data[ 1 ].age.toString()
     )
@@ -120,7 +121,7 @@ describe('Table.vue', () => {
       data[ 0 ].age.toString()
     )
     //descending sorting option
-    await wrapper.find('thead th:nth-child(2)').trigger('click')
+    await columnHeader.trigger('click')
     expect(wrapper.findAll('tbody tr').at(0).text()).toContain(
       data[ 2 ].age.toString()
     )
@@ -128,7 +129,7 @@ describe('Table.vue', () => {
       data[ 0 ].age.toString()
     )
     //neutral sorting option
-    await wrapper.find('thead th:nth-child(2)').trigger('click')
+    await columnHeader.trigger('click')
     expect(wrapper.findAll('tbody tr').at(0).text()).toContain(
       data[ 0 ].age.toString()
     )
