@@ -33,7 +33,6 @@
         id="search"
         v-model="searchPhrase"
         pattern="^.{0,100}$"
-        title="Your search phrase is too long!"
       />
       <Button
         style-type="primary"
