@@ -29,9 +29,17 @@
       </ConfirmationDialog>
     </div>
     <UserTable
-      :users="users"
+      :users="paginatedUsers"
       @edit="handleEditUser"
       @delete="handleDeleteUser"
+    />
+    <Pagination
+      :total-rows="users.length"
+      :current-page="currentPage"
+      :rows-per-page="rowsPerPage"
+      :max-visible-pages="3"
+      @page-change="handlePageChange"
+      @rows-per-page-change="handleRowsPerPageChange"
     />
     <Toast
       ref="toast"
@@ -53,9 +61,11 @@ import { User } from './types'
 import ConfirmationDialog from '@/components/common/ConfirmationDialog.vue'
 import Toast from './components/common/Toast.vue'
 import { Ref } from 'vue-property-decorator'
+import Pagination from '@/components/common/Pagination.vue'
 
 @Component({
   components: {
+    Pagination,
     ConfirmationDialog,
     UserInfoModal,
     UserTable,
@@ -71,9 +81,28 @@ export default class Users extends Vue {
   showConfirmation: boolean = false
   message: string = ''
   styleType: string = 'success'
+  currentPage: number = 1;
+  rowsPerPage: number  = 5;
+
+  get paginatedUsers (): User[] {
+    const startIndex = (this.currentPage - 1) * this.rowsPerPage;
+    const endIndex = startIndex + this.rowsPerPage;
+    return this.users.slice(startIndex, endIndex);
+  }
+
+  handlePageChange (newPage: number) {
+    this.currentPage = newPage;
+  }
+
+  handleRowsPerPageChange (newRowsPerPage: number) {
+    this.rowsPerPage = newRowsPerPage
+    this.currentPage = 1
+  }
 
   mounted () {
-    this.getData()
+    this.getData().then(()=>{
+      this.rowsPerPage  = this.users.length
+    })
   }
 
   handleEditUser (user: User) {

@@ -18,7 +18,7 @@ export default class Button extends Vue {
   @Prop({
     required: false,
     default: 'primary',
-    validator: (value: string) => [ 'primary', 'secondary' ].includes(value)
+    validator: (value: string) => [ 'primary', 'secondary', 'disabled' ].includes(value)
   })
   styleType!: string
   @Prop({
@@ -64,5 +64,18 @@ button {
   background: #c9c9c9;
   border-color: #327136;
   color: #327136;
+}
+
+.disabled {
+  background: #ccc;
+  border-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.disabled:hover {
+  background: #ccc;
+  border-color: #ccc;
+  color: #666;
 }
 </style>
