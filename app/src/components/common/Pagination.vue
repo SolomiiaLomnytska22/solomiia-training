@@ -4,7 +4,7 @@
       id="number-input"
       label="Rows per page"
       :min="1"
-      :max="100"
+      :max="totalRows"
       :value="rowsPerPage"
       type="number"
       @input="updateRowsPerPage"
