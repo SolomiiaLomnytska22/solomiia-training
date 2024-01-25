@@ -132,17 +132,14 @@ describe('Users.vue', () => {
     })
 
     it('filters data by a phrase', async () => {
-        await wrapper.setData({ users: usersData })
-
-        wrapper.setData({ searchPhrase: 'John' })
+        await wrapper.setData({ users: usersData, searchPhrase: 'John' })
 
         vm.handleSearch()
         expect(vm.filteredUsers).toHaveLength(1)
     })
 
     it('returns all data when the empty string is entered', async () => {
-        await wrapper.setData({ users: usersData })
-        wrapper.setData({ searchPhrase: '' })
+        await wrapper.setData({ users: usersData, searchPhrase: '' })
 
         vm.handleSearch()
         expect(vm.filteredUsers).toHaveLength(3)
@@ -150,8 +147,7 @@ describe('Users.vue', () => {
 
     it('shows toast notification when the unique string is entered', async () => {
         const showToastSpy = jest.spyOn(wrapper.vm as any, 'showToast')
-        await wrapper.setData({ users: usersData })
-        wrapper.setData({ searchPhrase: 'helloworld' })
+        await wrapper.setData({ users: usersData, searchPhrase: 'helloworld' })
 
         vm.handleSearch()
         expect(vm.filteredUsers).toHaveLength(3)
@@ -160,8 +156,7 @@ describe('Users.vue', () => {
 
     it('shows toast notification when the string is too long', async () => {
         const showToastSpy = jest.spyOn(wrapper.vm as any, 'showToast')
-        await wrapper.setData({ users: usersData })
-        wrapper.setData({ searchPhrase: Array(101).fill('x').join('') })
+        await wrapper.setData({ users: usersData, searchPhrase: Array(101).fill('x').join('') })
 
         vm.handleSearch()
         expect(vm.filteredUsers).toHaveLength(3)
