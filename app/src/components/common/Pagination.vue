@@ -11,13 +11,14 @@
     />
     <div class="pages">
       <Button
-        :style-type="currentPage === 1 ? 'disabled' : 'secondary'"
+        style-type="secondary"
+        :is-disabled="isLeftDisabled"
         @click="moveToLeft"
       >
         {{ '<' }}
       </Button>
       <Button
-        v-if="currentPage > 2 && totalPages > maxVisiblePages"
+        v-if="showFirstPage"
         style-type="secondary"
         class="first"
         @click="moveToFirstPage"
@@ -31,7 +32,7 @@
       <Button
         v-for="pageNumber in visiblePageNumbers"
         :key="pageNumber"
-        :style-type="pageNumber === currentPage ? 'primary' : 'secondary'"
+        :style-type="getPageNumberStyle(pageNumber)"
         @click="goToPage(pageNumber)"
       >
         {{ pageNumber }}
@@ -41,7 +42,7 @@
         class="ellipsis"
       >...</span>
       <Button
-        v-if="currentPage < totalPages - 1 && totalPages > maxVisiblePages"
+        v-if="showLastPage"
         style-type="secondary"
         class="last"
         @click="moveToLastPage"
@@ -49,7 +50,8 @@
         {{ totalPages }}
       </Button>
       <Button
-        :style-type="currentPage === totalPages ? 'disabled' : 'secondary'"
+        style-type="secondary"
+        :is-disabled="isRightDisabled"
         @click="moveToRight"
       >
         {{ '>' }}
@@ -103,12 +105,31 @@ export default class Pagination extends Vue {
     return result
   }
 
+  get showFirstPage (): boolean {
+    return this.currentPage > 2 && this.totalPages > this.maxVisiblePages
+  }
+
+  get showLastPage (): boolean {
+    return this.currentPage < this.totalPages - 1 && this.totalPages > this.maxVisiblePages
+  }
   get showLeftEllipsis (): boolean {
     return this.currentPage > this.maxVisiblePages
   }
 
   get showRightEllipsis (): boolean {
     return this.currentPage < this.totalPages - this.maxVisiblePages + 1
+  }
+
+  get isLeftDisabled (): boolean {
+    return this.currentPage === 1
+  }
+
+  get isRightDisabled (): boolean {
+    return this.currentPage === this.totalPages
+  }
+
+  getPageNumberStyle (pageNumber : number) : string {
+    return pageNumber === this.currentPage ? 'primary' : 'secondary'
   }
 
   moveToFirstPage (): void {

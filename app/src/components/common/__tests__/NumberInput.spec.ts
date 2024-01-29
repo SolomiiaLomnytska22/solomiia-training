@@ -25,8 +25,8 @@ describe('NumberInput.vue', () => {
   })
 
   it('emits input event when input value changes', async () => {
-    const inputField = wrapper.find('input')
-    ;(inputField.element as HTMLInputElement).value = '30'
+    const inputField = wrapper.find('input');
+    (inputField.element as HTMLInputElement).value = '30'
     inputField.trigger('input')
     await wrapper.vm.$nextTick()
     expect(wrapper.emitted().input).toHaveLength(1)
