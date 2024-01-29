@@ -44,17 +44,6 @@ input {
   border-radius: 4px;
 }
 
-label {
-  margin-bottom: 5px;
-}
-
-input {
-  margin-bottom: 15px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
 input:invalid {
   background-color: #ffd6db;
 }
