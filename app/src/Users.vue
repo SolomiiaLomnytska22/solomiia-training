@@ -124,7 +124,7 @@ export default class Users extends Vue {
     const searchTerm = this.searchPhrase.toLowerCase()
     return this.users.filter((user) => {
       const searchableValues = Object.values(user).map((value) =>
-          value ? value.toString().toLowerCase() : ''
+        value ? value.toString().toLowerCase() : ''
       )
       return searchableValues.some((value) => value.includes(searchTerm))
     })
@@ -168,7 +168,7 @@ export default class Users extends Vue {
   async deleteUser (user: User): Promise<void> {
     try {
       const response: AxiosResponse = await axios.delete(
-          `http://localhost:3000/users/${user.id}`
+        `http://localhost:3000/users/${user.id}`
       )
       if (response.status === 200) {
         this.showConfirmation = false
@@ -186,7 +186,7 @@ export default class Users extends Vue {
   async getData (): Promise<void> {
     try {
       const response: AxiosResponse = await axios.get(
-          'http://localhost:3000/users'
+        'http://localhost:3000/users'
       )
       if (response.status === 200 && response.data != null) {
         this.users = response.data
