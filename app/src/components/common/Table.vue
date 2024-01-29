@@ -12,11 +12,11 @@
               {{ getLabel(column) }}
               <span v-if="column.isSortable">
                 <font-awesome-icon
-                  v-if="column.sortOrder === SortOrder.ASC"
+                  v-if="isAscending(column.sortOrder)"
                   icon="fa-plus fa-sort-up"
                 />
                 <font-awesome-icon
-                  v-else-if="column.sortOrder === SortOrder.DESC"
+                  v-else-if="isDescending(column.sortOrder)"
                   icon="fa-plus fa-sort-down"
                 />
                 <font-awesome-icon
@@ -64,13 +64,7 @@
 import { TableColumn, SortOrder, SortRule } from '@/types'
 import { Vue, Component, Prop } from 'vue-property-decorator'
 
-@Component({
-  computed: {
-    SortOrder () {
-      return SortOrder
-    }
-  }
-})
+@Component
 export default class Table extends Vue {
   @Prop({ required: true }) columns!: TableColumn[]
   @Prop({ required: true }) data!: Array<{ [key: string]: string }>
@@ -131,6 +125,13 @@ export default class Table extends Vue {
     return this.sortedData
   }
 
+  isAscending (order : SortOrder|undefined): boolean {
+    return order === SortOrder.ASC
+  }
+
+  isDescending (order : SortOrder|undefined): boolean {
+    return order === SortOrder.DESC
+  }
   updateSortedData () {
     if (this.sortingColumn) {
       const rule = this.sortingRules.find((rule) => rule.currSort === this.sortingColumn!.sortOrder)
@@ -141,9 +142,8 @@ export default class Table extends Vue {
                 secondObjectToSort[ this.sortingColumn!.key ]
             )
         )
-        return this.sortedData
-      } else return this.data
-    } else return this.data
+      }
+    }
   }
 }
 </script>
