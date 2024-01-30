@@ -28,8 +28,27 @@
         <p>You can't undo this action.</p>
       </ConfirmationDialog>
     </div>
+    <div class="search">
+      <TextInput
+        id="search"
+        v-model="searchPhrase"
+        pattern="^.{0,100}$"
+      />
+      <Button
+        style-type="primary"
+        @click="handleSearch"
+      >
+        <font-awesome-icon icon="fa-magnifying-glass" />
+      </Button>
+      <Button
+        style-type="secondary"
+        @click="emptyInput"
+      >
+        <font-awesome-icon icon="fa-trash-can" />
+      </Button>
+    </div>
     <UserTable
-      :users="users"
+      :users="filteredUsers"
       @edit="handleEditUser"
       @delete="handleDeleteUser"
     />
@@ -53,9 +72,11 @@ import { User } from './types'
 import ConfirmationDialog from '@/components/common/ConfirmationDialog.vue'
 import Toast from './components/common/Toast.vue'
 import { Ref } from 'vue-property-decorator'
+import TextInput from '@/components/common/TextInput.vue'
 
 @Component({
   components: {
+    TextInput,
     ConfirmationDialog,
     UserInfoModal,
     UserTable,
@@ -71,9 +92,42 @@ export default class Users extends Vue {
   showConfirmation: boolean = false
   message: string = ''
   styleType: string = 'success'
+  searchPhrase: string = ''
+  filteredUsers: User[] = []
+  maxSymbols: number = 100
 
   mounted () {
     this.getData()
+  }
+
+  emptyInput () {
+    this.searchPhrase = ''
+    this.handleSearch()
+  }
+
+  handleSearch () {
+    if (this.searchPhrase.length <= this.maxSymbols) {
+      if (this.findPhrase().length) {
+        this.filteredUsers = this.findPhrase()
+      } else {
+        this.showToast('There is no entry with your search query.', 'warning')
+        this.filteredUsers = this.users.slice()
+      }
+    } else {
+      this.showToast('Your searching phrase is too long.', 'danger')
+      this.filteredUsers = this.users.slice()
+      this.emptyInput()
+    }
+  }
+
+  findPhrase (): User[] {
+    const searchTerm = this.searchPhrase.toLowerCase()
+    return this.users.filter((user) => {
+      const searchableValues = Object.values(user).map((value) =>
+        value ? value.toString().toLowerCase() : ''
+      )
+      return searchableValues.some((value) => value.includes(searchTerm))
+    })
   }
 
   handleEditUser (user: User) {
@@ -136,6 +190,7 @@ export default class Users extends Vue {
       )
       if (response.status === 200 && response.data != null) {
         this.users = response.data
+        this.filteredUsers = this.users
       } else {
         this.showToast('An error occurred while loading information.', 'danger')
       }
@@ -157,5 +212,17 @@ export default class Users extends Vue {
 
 .table-page {
   margin: 50px 5% 10px;
+}
+
+.search button {
+  margin-left: 5px;
+}
+
+.search {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: flex-start;
+  width: 100%;
 }
 </style>
