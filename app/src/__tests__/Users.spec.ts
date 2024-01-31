@@ -6,6 +6,7 @@ import ConfirmationDialog from '@/components/common/ConfirmationDialog.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
+  faMagnifyingGlass,
   faCheckCircle,
   faInfoCircle,
   faExclamationTriangle,
@@ -13,11 +14,14 @@ import {
   faPlus,
   faPencil,
   faTrashCan,
-  faMagnifyingGlass
+  faSortUp,
+  faSortDown,
+  faSort
 } from '@fortawesome/free-solid-svg-icons'
 import VTooltip from '@/directives/TooltipDirective'
 
 library.add(
+  faMagnifyingGlass,
   faCheckCircle,
   faCircleXmark,
   faInfoCircle,
@@ -25,7 +29,9 @@ library.add(
   faPlus,
   faPencil,
   faTrashCan,
-  faMagnifyingGlass
+  faSortUp,
+  faSortDown,
+  faSort
 )
 const localVue = createLocalVue()
 localVue.component('FontAwesomeIcon', FontAwesomeIcon)
@@ -127,7 +133,6 @@ describe('Users.vue', () => {
       'An error occurred while deleting the user.',
       'danger'
     )
-
     showToastSpy.mockRestore()
   })
 

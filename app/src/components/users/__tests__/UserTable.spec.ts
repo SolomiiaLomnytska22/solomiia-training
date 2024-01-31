@@ -4,12 +4,16 @@ import { User } from '@/types'
 import {
   faPlus,
   faPencil,
-  faTrashCan
+  faTrashCan,
+  faSortUp,
+  faSortDown,
+  faSort
 } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VTooltip from '@/directives/TooltipDirective'
-library.add(faPlus, faPencil, faTrashCan)
+
+library.add( faPlus, faPencil, faTrashCan, faSortUp, faSortDown, faSort )
 const localVue = createLocalVue()
 localVue.component('FontAwesomeIcon', FontAwesomeIcon)
 localVue.directive('tooltip', VTooltip)
@@ -17,7 +21,7 @@ describe('UserTable.vue', () => {
   let wrapper: Wrapper<Vue>
 
   beforeEach(() => {
-    const defaultUsers:User[] = [
+    const defaultUsers: User[] = [
       {
         id: 1,
         name: 'John',
@@ -46,18 +50,16 @@ describe('UserTable.vue', () => {
   })
 
   it('emits edit event when Edit button is clicked', async () => {
-    const editButton = wrapper.findComponent(FontAwesomeIcon)
+    const editButton = wrapper.find('.fa-pencil')
     await editButton.trigger('click')
-
     expect(wrapper.emitted('edit')).toHaveLength(1)
     const firstInputValue = wrapper.emitted('edit')?.[ 0 ]?.[ 0 ] ?? null
     expect(firstInputValue).toEqual(wrapper.props('users')[ 0 ])
   })
 
   it('emits delete event when Remove button is clicked', () => {
-    const deleteButton = wrapper.findAllComponents(FontAwesomeIcon).at(1)
+    const deleteButton = wrapper.find('.fa-trash-can')
     deleteButton.trigger('click')
-
     expect(wrapper.emitted('delete')).toHaveLength(1)
     const firstInputValue = wrapper.emitted('delete')?.[ 0 ]?.[ 0 ] ?? null
     expect(firstInputValue).toEqual(wrapper.props('users')[ 0 ])
