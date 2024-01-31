@@ -17,7 +17,8 @@ import {
   faTrashCan,
   faSortUp,
   faSortDown,
-  faSort
+  faSort,
+  faMagnifyingGlass
 } from '@fortawesome/free-solid-svg-icons'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -36,7 +37,8 @@ library.add(
   faTrashCan,
   faSortUp,
   faSortDown,
-  faSort
+  faSort,
+  faMagnifyingGlass
 )
 const localVue = createLocalVue()
 localVue.component('FontAwesomeIcon', FontAwesomeIcon)

@@ -4,11 +4,27 @@ import Header from '@/components/header/Header.vue'
 import VueRouter from 'vue-router'
 import router from '@/router'
 import Users from '@/Users.vue'
-import { faPlus, faPencil, faTrashCan, faMagnifyingGlass, faSortUp, faSortDown, faSort } from '@fortawesome/free-solid-svg-icons'
+import {
+  faPlus,
+  faPencil,
+  faTrashCan,
+  faMagnifyingGlass,
+  faSortUp,
+  faSortDown,
+  faSort
+} from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faPlus, faPencil, faTrashCan, faSortUp, faSortDown, faSort, faMagnifyingGlass)
+library.add(
+  faPlus,
+  faPencil,
+  faTrashCan,
+  faSortUp,
+  faSortDown,
+  faSort,
+  faMagnifyingGlass
+)
 const localVue = createLocalVue()
 localVue.use(VueRouter)
 localVue.component('FontAwesomeIcon', FontAwesomeIcon)

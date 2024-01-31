@@ -23,7 +23,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 
 library.add(
-    faMagnifyingGlass,
+  faMagnifyingGlass,
   faCheckCircle,
   faCircleXmark,
   faInfoCircle,
