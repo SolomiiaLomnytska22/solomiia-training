@@ -18,7 +18,7 @@ export default class Button extends Vue {
   @Prop({
     required: false,
     default: 'primary',
-    validator: (value: string) => [ 'primary', 'secondary' ].includes(value)
+    validator: (value: string) => [ 'primary', 'secondary', 'disabled' ].includes(value)
   })
   styleType!: string
   @Prop({
