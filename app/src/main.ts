@@ -4,6 +4,7 @@ import router from './router'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
+  faMagnifyingGlass,
   faCheckCircle,
   faInfoCircle,
   faExclamationTriangle,
@@ -22,6 +23,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons'
 
 library.add(
+    faMagnifyingGlass,
   faCheckCircle,
   faCircleXmark,
   faInfoCircle,
