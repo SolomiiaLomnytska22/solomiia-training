@@ -6,8 +6,25 @@
           <th
             v-for="column in columns"
             :key="column.key"
+            @click="setSortingColumn(column)"
           >
-            {{ getLabel(column) }}
+            <div class="header-item">
+              {{ getLabel(column) }}
+              <span v-if="column.isSortable">
+                <font-awesome-icon
+                  v-if="isAscending(column.sortOrder)"
+                  icon="fa-plus fa-sort-up"
+                />
+                <font-awesome-icon
+                  v-else-if="isDescending(column.sortOrder)"
+                  icon="fa-plus fa-sort-down"
+                />
+                <font-awesome-icon
+                  v-else
+                  icon="fa-plus fa-sort"
+                />
+              </span>
+            </div>
           </th>
         </tr>
       </thead>
@@ -52,7 +69,7 @@
 </template>
 
 <script lang="ts">
-import { TableColumn } from '@/types'
+import { TableColumn, SortOrder, SortRule } from '@/types'
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import Pagination from '@/components/common/Pagination.vue'
 
@@ -64,9 +81,41 @@ export default class Table extends Vue {
   @Prop({ required: true }) data!: Array<{ [key: string]: string }>
   currentPage: number = 1
   rowsPerPage: number = 0
+  sortedData: Array<{ [key: string]: string }> = []
+  sortingColumn: TableColumn | undefined = undefined
+  sortingRules: SortRule[] = [
+    {
+      currSort: SortOrder.NEUTRAL,
+      nextSort: SortOrder.ASC
+    },
+    {
+      currSort: SortOrder.ASC,
+      nextSort: SortOrder.DESC,
+      compareFn: (firstObjectToSort: any, secondObjectToSort: any) =>
+          typeof firstObjectToSort === 'string' && typeof secondObjectToSort === 'string'
+              ? firstObjectToSort.toLowerCase().localeCompare(secondObjectToSort.toLowerCase())
+              : firstObjectToSort > secondObjectToSort ? 1 : -1
+    },
+    {
+      currSort: SortOrder.DESC,
+      nextSort: SortOrder.NEUTRAL,
+      compareFn: (firstObjectToSort: any, secondObjectToSort: any) =>
+          typeof firstObjectToSort === 'string' && typeof secondObjectToSort === 'string'
+              ? secondObjectToSort.toLowerCase().localeCompare(firstObjectToSort.toLowerCase())
+              : firstObjectToSort > secondObjectToSort ? -1 : 1
+    }
+  ]
+
+  mounted () {
+    this.columns.forEach((column) => {
+      if (column.isSortable && !column.sortOrder) {
+        this.$set(column, 'sortOrder', SortOrder.NEUTRAL)
+      }
+    })
+  }
 
   getLabel (column: TableColumn): string {
-    return column.label ? column.label : ''
+    return column.label || ''
   }
 
   getEntry (column: TableColumn, item: { [key: string]: string }): string {
@@ -76,7 +125,7 @@ export default class Table extends Vue {
   get paginatedData (): { [key: string]: string }[] {
     const startIndex = (this.currentPage - 1) * this.currentRowsPerPage
     const endIndex = startIndex + this.currentRowsPerPage
-    return this.data.slice(startIndex, endIndex)
+    return this.displayData.slice(startIndex, endIndex)
   }
 
   get currentRowsPerPage (): number {
@@ -93,6 +142,43 @@ export default class Table extends Vue {
   handleRowsPerPageChange (newRowsPerPage: number) {
     this.rowsPerPage = newRowsPerPage
     this.currentPage = 1
+  }
+
+  setSortingColumn (column: TableColumn) {
+    if (column.isSortable) {
+      this.sortingColumn = column
+      column.sortOrder = this.sortingRules.find(
+          (rule) => rule.currSort === column.sortOrder
+      )!.nextSort
+      this.updateSortedData()
+    }
+  }
+
+  get displayData (): Array<any> {
+    this.sortedData = this.data.slice()
+    this.updateSortedData()
+    return this.sortedData
+  }
+
+  isAscending (order : SortOrder|undefined): boolean {
+    return order === SortOrder.ASC
+  }
+
+  isDescending (order : SortOrder|undefined): boolean {
+    return order === SortOrder.DESC
+  }
+  updateSortedData () {
+    if (this.sortingColumn) {
+      const rule = this.sortingRules.find((rule) => rule.currSort === this.sortingColumn!.sortOrder)
+      if (rule && rule.currSort !== SortOrder.NEUTRAL) {
+        this.sortedData.sort((firstObjectToSort: any, secondObjectToSort: any) =>
+            rule.compareFn!(
+                firstObjectToSort[ this.sortingColumn!.key ],
+                secondObjectToSort[ this.sortingColumn!.key ]
+            )
+        )
+      }
+    }
   }
 }
 </script>
@@ -127,5 +213,10 @@ export default class Table extends Vue {
 
 .user-table tbody tr td p {
   text-align: center;
+}
+
+.header-item {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

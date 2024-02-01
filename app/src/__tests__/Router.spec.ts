@@ -15,6 +15,9 @@ import {
   faPlus,
   faPencil,
   faTrashCan,
+  faSortUp,
+  faSortDown,
+  faSort,
   faMagnifyingGlass
 } from '@fortawesome/free-solid-svg-icons'
 
@@ -32,6 +35,9 @@ library.add(
   faPlus,
   faPencil,
   faTrashCan,
+  faSortUp,
+  faSortDown,
+  faSort,
   faMagnifyingGlass
 )
 const localVue = createLocalVue()
