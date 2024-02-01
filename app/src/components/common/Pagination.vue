@@ -110,7 +110,10 @@ export default class Pagination extends Vue {
   }
 
   get showLastPage (): boolean {
-    return this.currentPage < this.totalPages - 1 && this.totalPages > this.maxVisiblePages
+    return (
+      this.currentPage < this.totalPages - 1 &&
+      this.totalPages > this.maxVisiblePages
+    )
   }
   get showLeftEllipsis (): boolean {
     return this.currentPage > this.maxVisiblePages
@@ -128,7 +131,7 @@ export default class Pagination extends Vue {
     return this.currentPage === this.totalPages
   }
 
-  getPageNumberStyle (pageNumber : number) : string {
+  getPageNumberStyle (pageNumber: number): string {
     return pageNumber === this.currentPage ? 'primary' : 'secondary'
   }
 
@@ -157,7 +160,8 @@ export default class Pagination extends Vue {
   }
 
   updateRowsPerPage (value: number): void {
-    this.$emit('rows-per-page-change', +value)
+    if (value > 0 && value < this.totalRows)
+      this.$emit('rows-per-page-change', +value)
   }
 }
 </script>

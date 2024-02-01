@@ -48,17 +48,9 @@
       </Button>
     </div>
     <UserTable
-      :users="paginatedUsers"
+      :users="filteredUsers"
       @edit="handleEditUser"
       @delete="handleDeleteUser"
-    />
-    <Pagination
-      :total-rows="users.length"
-      :current-page="currentPage"
-      :rows-per-page="rowsPerPage"
-      :max-visible-pages="3"
-      @page-change="handlePageChange"
-      @rows-per-page-change="handleRowsPerPageChange"
     />
     <Toast
       ref="toast"
@@ -105,28 +97,9 @@ export default class Users extends Vue {
   searchPhrase: string = ''
   filteredUsers: User[] = []
   maxSymbols: number = 100
-  currentPage: number = 1;
-  rowsPerPage: number  = 5;
-
-  get paginatedUsers (): User[] {
-    const startIndex = (this.currentPage - 1) * this.rowsPerPage;
-    const endIndex = startIndex + this.rowsPerPage;
-    return this.filteredUsers.slice(startIndex, endIndex);
-  }
-
-  handlePageChange (newPage: number) {
-    this.currentPage = newPage;
-  }
-
-  handleRowsPerPageChange (newRowsPerPage: number) {
-    this.rowsPerPage = newRowsPerPage
-    this.currentPage = 1
-  }
 
   mounted () {
-    this.getData().then(()=>{
-      this.rowsPerPage  = this.users.length
-    })
+    this.getData()
   }
 
   emptyInput () {
