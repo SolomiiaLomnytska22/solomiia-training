@@ -1,6 +1,6 @@
 <template>
   <button
-    :class="styleType"
+    :class="isDisabled ? 'disabled' : styleType"
     :type="type"
     @click="handleClick"
   >
@@ -27,6 +27,7 @@ export default class Button extends Vue {
     validator: (value: string) => [ 'button', 'submit', 'reset' ].includes(value)
   })
   type!: string
+  @Prop({ required: false, default: false }) isDisabled!: boolean
 
   handleClick (): void {
     this.$emit('click')
@@ -64,5 +65,12 @@ button {
   background: #c9c9c9;
   border-color: #327136;
   color: #327136;
+}
+
+.disabled {
+  background: #ccc;
+  border-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
 }
 </style>

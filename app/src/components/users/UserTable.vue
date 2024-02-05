@@ -49,7 +49,6 @@ import Table from '@/components/common/Table.vue'
 })
 export default class UserTable extends Vue {
   @Prop({ required: true }) users!: User[]
-  colspan: number = 0
   columns: TableColumn[] = [
     { key: 'id', label: 'ID', isSortable: true },
     { key: 'name', label: 'Name', isSortable: true },
@@ -63,11 +62,6 @@ export default class UserTable extends Vue {
 
   getOnline (user: User): boolean {
     return user.online
-  }
-
-  mounted () {
-    this.colspan =
-      this.$el.querySelector('.user-table thead tr')?.childElementCount || 0
   }
 }
 </script>
