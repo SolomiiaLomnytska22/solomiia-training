@@ -73,12 +73,10 @@ import ConfirmationDialog from '@/components/common/ConfirmationDialog.vue'
 import Toast from './components/common/Toast.vue'
 import { Ref } from 'vue-property-decorator'
 import TextInput from '@/components/common/TextInput.vue'
-import Pagination from '@/components/common/Pagination.vue'
 
 @Component({
   components: {
     TextInput,
-    Pagination,
     ConfirmationDialog,
     UserInfoModal,
     UserTable,
