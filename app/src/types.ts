@@ -34,4 +34,45 @@ interface TimelineItem {
   description: string
 }
 
-export { User, MenuItem, CardItem, TimelineItem, SocialLink }
+interface TableColumn {
+  key: string
+  label?: string
+  slot?: string
+  isSortable?: boolean
+  sortOrder?: SortOrder
+}
+
+interface Point {
+  x: number
+  y: number
+}
+
+interface Size {
+  width: number
+  height: number
+}
+
+enum SortOrder {
+  ASC = 'asc',
+  DESC = 'desc',
+  NEUTRAL = 'neutral'
+}
+
+interface SortRule {
+  currSort: SortOrder
+  nextSort: SortOrder
+  compareFn?: (a: any, b: any) => number
+}
+
+export {
+  User,
+  MenuItem,
+  CardItem,
+  TimelineItem,
+  SocialLink,
+  Point,
+  Size,
+  TableColumn,
+  SortOrder,
+  SortRule
+}

@@ -1,13 +1,3 @@
-<script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
-import { CardItem } from '@/types'
-
-@Component({})
-export default class ScrollableCards extends Vue {
-  @Prop({ required: true }) items!: CardItem[]
-}
-</script>
-
 <template>
   <div class="scrollable-cards">
     <div
@@ -28,6 +18,16 @@ export default class ScrollableCards extends Vue {
     </div>
   </div>
 </template>
+
+<script lang="ts">
+import { Vue, Component, Prop } from 'vue-property-decorator'
+import { CardItem } from '@/types'
+
+@Component({})
+export default class ScrollableCards extends Vue {
+  @Prop({ required: true }) items!: CardItem[]
+}
+</script>
 
 <style scoped>
 .scrollable-cards {
@@ -85,9 +85,11 @@ export default class ScrollableCards extends Vue {
     }
   }
 }
+
 .card:hover {
   transform: scale(105%);
   cursor: pointer;
+
   .card-image .image-overlay {
     background: rgba(32, 73, 34, 0.6);
   }

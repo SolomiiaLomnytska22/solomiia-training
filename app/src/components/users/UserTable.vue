@@ -1,64 +1,38 @@
 <template>
-  <div class="table-container">
-    <table class="user-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Surname</th>
-          <th>Date of birth</th>
-          <th>Position</th>
-          <th>Country</th>
-          <th>Online</th>
-          <th />
-        </tr>
-      </thead>
-      <tbody v-if="users.length > 0">
-        <tr
-          v-for="user in users"
-          :key="user.id"
-        >
-          <td>{{ user.id }}</td>
-          <td>{{ user.name }}</td>
-          <td>{{ user.surname }}</td>
-          <td>{{ user.dateOfBirth }}</td>
-          <td>{{ user.position }}</td>
-          <td>{{ user.country }}</td>
-          <td style="text-align: center">
-            <span
-              :class="{
-                'online-dot': user.online,
-                'offline-dot': !user.online
-              }"
+  <div>
+    <Table
+      :columns="columns"
+      :data="users"
+    >
+      <template #actions="{ item }">
+        <div class="button-col">
+          <div v-tooltip="{ text: 'Edit', styleType: 'top' }">
+            <font-awesome-icon
+              icon="fa-pencil"
+              class="icon-button"
+              @click="$emit('edit', item)"
             />
-          </td>
-          <td>
-            <div class="button-col">
-              <Button
-                type="button"
-                @click="$emit('edit', user)"
-              >
-                Edit
-              </Button>
-              <Button
-                type="button"
-                style-type="secondary"
-                @click="$emit('delete', user)"
-              >
-                Remove
-              </Button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-      <tbody v-else>
-        <tr>
-          <td :colspan="colspan">
-            <p>Fetching your data!</p>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </div>
+          <div v-tooltip="{ text: 'Delete', styleType: 'top' }">
+            <font-awesome-icon
+              icon="fa-trash-can"
+              class="icon-button"
+              @click="$emit('delete', item)"
+            />
+          </div>
+        </div>
+      </template>
+      <template #online="{ item }">
+        <div class="button-col">
+          <span
+            :class="{
+              'online-dot': getOnline(item),
+              'offline-dot': !getOnline(item)
+            }"
+          />
+        </div>
+      </template>
+    </Table>
   </div>
 </template>
 
@@ -66,36 +40,33 @@
 import Component from 'vue-class-component'
 import Vue from 'vue'
 import { Prop } from 'vue-property-decorator'
-import { User } from '@/types'
+import { TableColumn, User } from '@/types'
 import Button from '@/components/common/Button.vue'
+import Table from '@/components/common/Table.vue'
 
 @Component({
-  components: { Button }
+  components: { Button, Table }
 })
 export default class UserTable extends Vue {
   @Prop({ required: true }) users!: User[]
-  colspan: number = 0
+  columns: TableColumn[] = [
+    { key: 'id', label: 'ID', isSortable: true },
+    { key: 'name', label: 'Name', isSortable: true },
+    { key: 'surname', label: 'Surname', isSortable: true },
+    { key: 'dateOfBirth', label: 'Date of birth', isSortable: true },
+    { key: 'position', label: 'Position', isSortable: true },
+    { key: 'country', label: 'Country', isSortable: true },
+    { key: 'online', label: 'Online', slot: 'online', isSortable: false },
+    { key: 'actions', label: 'Actions', slot: 'actions', isSortable: false }
+  ]
 
-  mounted () {
-    this.colspan =
-      this.$el.querySelector('.user-table thead tr')?.childElementCount || 0
+  getOnline (user: User): boolean {
+    return user.online
   }
 }
 </script>
 
 <style scoped>
-@media only screen and (max-width: 768px) {
-  .table-container {
-    overflow-x: auto;
-  }
-}
-
-.user-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
 .button-col {
   height: 100%;
   display: flex;
@@ -105,21 +76,6 @@ export default class UserTable extends Vue {
 
 .button-col Button {
   margin: 0 5px;
-}
-
-.user-table th,
-.user-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: left;
-}
-
-.user-table th {
-  background-color: #f2f2f2;
-}
-
-.user-table tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
 }
 
 .online-dot,
@@ -150,5 +106,15 @@ export default class UserTable extends Vue {
 
 .offline-dot {
   background-color: #ccc;
+}
+
+.icon-button {
+  color: #333;
+  margin: 10px;
+}
+
+.icon-button:hover {
+  cursor: pointer;
+  color: #4caf50;
 }
 </style>

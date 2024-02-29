@@ -39,7 +39,7 @@ describe('DateInput.vue', () => {
   })
 
   it('emits input event when input value changes', async () => {
-    const inputField = (wrapper.find('input').element as HTMLInputElement);
+    const inputField = wrapper.find('input').element as HTMLInputElement
     inputField.value = '2023-01-01'
     wrapper.find('input').trigger('input')
     await wrapper.vm.$nextTick()
