@@ -120,7 +120,7 @@ export default class Table extends Vue {
 
   getEntry (column: TableColumn, item: TableInput): string {
     const keyValue = item as { [key: string]: string | boolean | number }
-    return keyValue[ column.key ].toString()
+    return keyValue[ column.key ]? keyValue[ column.key ].toString() : ''
   }
 
   get paginatedData (): TableInput [] {
