@@ -40,7 +40,7 @@
 import Component from 'vue-class-component'
 import Vue from 'vue'
 import { Prop } from 'vue-property-decorator'
-import { TableColumn, User } from '@/types'
+import { TableColumn, TableInput, User } from '@/types'
 import Button from '@/components/common/Button.vue'
 import Table from '@/components/common/Table.vue'
 
@@ -60,8 +60,8 @@ export default class UserTable extends Vue {
     { key: 'actions', label: 'Actions', slot: 'actions', isSortable: false }
   ]
 
-  getOnline (user: User): boolean {
-    return user.online
+  getOnline (user: TableInput): boolean {
+    return (user as User).online
   }
 }
 </script>

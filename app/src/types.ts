@@ -64,6 +64,8 @@ interface SortRule {
   compareFn?: (a: any, b: any) => number
 }
 
+type TableInput = { [key: string]: string | boolean | number } | User
+
 export {
   User,
   MenuItem,
@@ -74,5 +76,6 @@ export {
   Size,
   TableColumn,
   SortOrder,
-  SortRule
+  SortRule,
+  TableInput
 }

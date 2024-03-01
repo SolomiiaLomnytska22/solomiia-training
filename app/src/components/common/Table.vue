@@ -69,7 +69,7 @@
 </template>
 
 <script lang="ts">
-import { TableColumn, SortOrder, SortRule } from '@/types'
+import { TableColumn, SortOrder, SortRule, TableInput } from '@/types'
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import Pagination from '@/components/common/Pagination.vue'
 
@@ -78,10 +78,10 @@ import Pagination from '@/components/common/Pagination.vue'
 })
 export default class Table extends Vue {
   @Prop({ required: true }) columns!: TableColumn[]
-  @Prop({ required: true }) data!: Array<{ [key: string]: string }>
+  @Prop({ required: true }) data!: Array<TableInput>
   currentPage: number = 1
   rowsPerPage: number = 0
-  sortedData: Array<{ [key: string]: string }> = []
+  sortedData: Array<TableInput> = []
   sortingColumn: TableColumn | undefined = undefined
   sortingRules: SortRule[] = [
     {
@@ -118,11 +118,12 @@ export default class Table extends Vue {
     return column.label || ''
   }
 
-  getEntry (column: TableColumn, item: { [key: string]: string }): string {
-    return item[ column.key ]
+  getEntry (column: TableColumn, item: TableInput): string {
+    const keyValue = item as { [key: string]: string | boolean | number }
+    return keyValue[ column.key ].toString()
   }
 
-  get paginatedData (): { [key: string]: string }[] {
+  get paginatedData (): TableInput [] {
     const startIndex = (this.currentPage - 1) * this.currentRowsPerPage
     const endIndex = startIndex + this.currentRowsPerPage
     return this.displayData.slice(startIndex, endIndex)
@@ -154,7 +155,7 @@ export default class Table extends Vue {
     }
   }
 
-  get displayData (): Array<any> {
+  get displayData (): Array<TableInput> {
     this.sortedData = this.data.slice()
     this.updateSortedData()
     return this.sortedData
