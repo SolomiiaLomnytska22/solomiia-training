@@ -78,10 +78,10 @@ import Pagination from '@/components/common/Pagination.vue'
 })
 export default class Table extends Vue {
   @Prop({ required: true }) columns!: TableColumn[]
-  @Prop({ required: true }) data!: Array<TableInput>
+  @Prop({ required: true }) data!: TableInput[]
   currentPage: number = 1
   rowsPerPage: number = 0
-  sortedData: Array<TableInput> = []
+  sortedData: TableInput[] = []
   sortingColumn: TableColumn | undefined = undefined
   sortingRules: SortRule[] = [
     {

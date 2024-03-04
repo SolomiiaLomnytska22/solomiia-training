@@ -17,11 +17,10 @@ describe('TooltipDirective', () => {
     wrapper.destroy()
   })
 
-  it('binds the tooltip directive and sets initial content', async () => {
+  it('binds the tooltip directive and sets initial content', () => {
     expect(wrapper.find('.tooltip-element').exists()).toBe(true)
     expect(wrapper.find('.text').text()).toBe('Edit')
     expect(wrapper.element.querySelector('.text')?.classList[ 1 ]).toBe('top')
-
   })
 
   it('removes tooltip element from the DOM on unbind', () => {
